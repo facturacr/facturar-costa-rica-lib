@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/marnutux/facturar-costa-rica#readme",
   "devDependencies": {
+    "@types/node": "^12.7.5",
     "@typescript-eslint/eslint-plugin": "^2.3.0",
     "@typescript-eslint/parser": "^2.3.0",
     "dotenv-cli": "^2.0.1",
@@ -38,5 +39,9 @@
     "nodemon": "^1.19.2",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^3.12.20",
+    "xml-crypto": "^1.4.0"
   }
 }
