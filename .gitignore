@@ -1,0 +1,11 @@
+dist
+package-lock.json
+node_modules
+src/generated
+.idea
+.vscode
+*.log
+.env*
+
+# Mac files
+.DS_Store
