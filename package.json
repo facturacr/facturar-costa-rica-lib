@@ -1,0 +1,26 @@
+{
+  "name": "facturacr.org",
+  "version": "1.0.0",
+  "description": "Factura Costa Rica",
+  "main": ".eslintrc.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marnutux/facturar-costa-rica.git"
+  },
+  "keywords": [
+    "factura",
+    "hacienda"
+  ],
+  "author": "Minor Arrieta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marnutux/facturar-costa-rica/issues"
+  },
+  "homepage": "https://github.com/marnutux/facturar-costa-rica#readme"
+}
