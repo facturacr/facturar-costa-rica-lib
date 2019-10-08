@@ -1,19 +1,8 @@
+import { ClaveOpts } from './interfaces'
 import { tipoDocumento } from '../data/tipoDocumento'
 // import { tipoCedula } from '../data/tipoCedula'
 
-interface IClaveOpts {
-  tipoDocumento: string,
-  tipoCedula: string,
-  cedula: string,
-  situacion: string,
-  codigoPais: string,
-  consecutivo: string,
-  codigoSeguridad: string,
-  sucursal: string,
-  terminal: string
-}
-
-export default (opts: IClaveOpts) => {
+export default (opts: ClaveOpts): void => {
   const codigoDocumento = tipoDocumento[opts.tipoDocumento]
   // const codigoCedula = tipoCedula[opts.tipoCedula]
   const consecutivoFinal = opts.sucursal + opts.terminal + codigoDocumento + opts.consecutivo

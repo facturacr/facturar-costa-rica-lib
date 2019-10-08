@@ -1,0 +1,152 @@
+[
+  {
+    "codigo": 35,
+    "nombrePartido": "ACCESIBILIDAD SIN EXCLUSION",
+    "iniciales": "PASE",
+    "escala": "N"
+  },
+  {
+    "codigo": 11,
+    "nombrePartido": "ACCION CIUDADANA",
+    "iniciales": "PAC",
+    "escala": "N"
+  },
+  {
+    "codigo": 232,
+    "nombrePartido": "ACTUEMOS YA",
+    "iniciales": "PAY",
+    "escala": "P"
+  },
+  {
+    "codigo": 156,
+    "nombrePartido": "ALIANZA DEMOCRATA CRISTIANA",
+    "iniciales": "ADC",
+    "escala": "N"
+  },
+  {
+    "codigo": 175,
+    "nombrePartido": "AUTENTICO LIMONENSE",
+    "iniciales": "PAL",
+    "escala": "P"
+  },
+  {
+    "codigo": 190,
+    "nombrePartido": "COMUNAL UNIDO",
+    "iniciales": "PCU",
+    "escala": "P"
+  },
+  {
+    "codigo": 229,
+    "nombrePartido": "DE LOS TRABAJADORES",
+    "iniciales": "PDLTR",
+    "escala": "N"
+  },
+  {
+    "codigo": 163,
+    "nombrePartido": "DE LOS TRANSPORTISTAS",
+    "iniciales": "PDLT",
+    "escala": "P"
+  },
+  {
+    "codigo": 73,
+    "nombrePartido": "FRENTE AMPLIO",
+    "iniciales": "FA",
+    "escala": "N"
+  },
+  {
+    "codigo": 201,
+    "nombrePartido": "FUERZAS UNIDAS PARA EL CAMBIO",
+    "iniciales": "PFUPEC",
+    "escala": "P"
+  },
+  {
+    "codigo": 13,
+    "nombrePartido": "INTEGRACION NACIONAL",
+    "iniciales": "PIN",
+    "escala": "N"
+  },
+  {
+    "codigo": 4,
+    "nombrePartido": "LIBERACION NACIONAL",
+    "iniciales": "PLN",
+    "escala": "N"
+  },
+  {
+    "codigo": 221,
+    "nombrePartido": "LIBERAL PROGRESISTA",
+    "iniciales": "PLP",
+    "escala": "P"
+  },
+  {
+    "codigo": 9,
+    "nombrePartido": "MOVIMIENTO LIBERTARIO",
+    "iniciales": "PML",
+    "escala": "N"
+  },
+  {
+    "codigo": 149,
+    "nombrePartido": "NUEVA GENERACION",
+    "iniciales": "PNG",
+    "escala": "N"
+  },
+  {
+    "codigo": 220,
+    "nombrePartido": "NUEVO PARTIDO SOCIALISTA",
+    "iniciales": "NPS",
+    "escala": "P"
+  },
+  {
+    "codigo": 160,
+    "nombrePartido": "PATRIA, IGUALDAD Y DEMOCRACIA",
+    "iniciales": "PID",
+    "escala": "P"
+  },
+  {
+    "codigo": 189,
+    "nombrePartido": "RECUPERANDO VALORES",
+    "iniciales": "PAREVA",
+    "escala": "P"
+  },
+  {
+    "codigo": 16,
+    "nombrePartido": "RENOVACION COSTARRICENSE",
+    "iniciales": "PRC",
+    "escala": "N"
+  },
+  {
+    "codigo": 164,
+    "nombrePartido": "REPUBLICANO SOCIAL CRISTIANO",
+    "iniciales": "PRSC",
+    "escala": "N"
+  },
+  {
+    "codigo": 33,
+    "nombrePartido": "RESTAURACION NACIONAL",
+    "iniciales": "PRN",
+    "escala": "N"
+  },
+  {
+    "codigo": 222,
+    "nombrePartido": "TODOS",
+    "iniciales": "PT",
+    "escala": "P"
+  },
+  {
+    "codigo": 6,
+    "nombrePartido": "UNIDAD SOCIAL CRISTIANA",
+    "iniciales": "PUSC",
+    "escala": "N"
+  },
+  {
+    "codigo": 233,
+    "nombrePartido": "UNION GUANACASTECA",
+    "iniciales": "PUG",
+    "escala": "P"
+  },
+  {
+    "codigo": 231,
+    "nombrePartido": "VAMOS",
+    "iniciales": "PVA",
+    "escala": "P"
+  }
+]
