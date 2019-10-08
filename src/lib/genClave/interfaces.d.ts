@@ -1,9 +1,9 @@
 export interface ClaveOpts {
+  codigoPais: string;
   tipoDocumento: string;
   tipoCedula: string;
-  cedula: string;
-  situacion: string;
-  codigoPais: string;
+  cedulaEmisor: string;
+  situacionCE: string;
   consecutivo: string;
   codigoSeguridad: string;
   sucursal: string;
