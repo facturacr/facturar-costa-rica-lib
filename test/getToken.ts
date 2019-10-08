@@ -12,7 +12,7 @@ getToken({
   username: USERNAME_TEST,
   password: PASSWORD_TEST
 }).then((result) => {
-  console.log('res', result)
+  console.log('res', result.data)
 }).catch((e) => {
   console.log('e', e.response.data)
 })
