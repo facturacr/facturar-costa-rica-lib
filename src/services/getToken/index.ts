@@ -2,9 +2,9 @@ import axios from 'axios'
 import qs from 'querystring'
 
 const MAIN_DOMAIN = 'https://idp.comprobanteselectronicos.go.cr'
-const STG_PATH = '/auth/realms/rut-stag/protocol/openid-connect/token'
-const PROD_PATH = '/auth/realms/rut/protocol/openid-connect/token'
-const PATH = (process.env.IS_STG) ? STG_PATH : PROD_PATH
+const RUT = (process.env.IS_STG) ? 'rut-stag' : 'rut'
+const PATH = `/auth/realms/${RUT}/protocol/openid-connect/token`
+
 const TOKEN_URL = MAIN_DOMAIN + PATH
 
 type IPostTokenOptions = {
@@ -25,5 +25,4 @@ export default (postOptions: IPostTokenOptions) => {
 
 /*
  * https://www.hacienda.go.cr/docs/5d16ade309fe0_Guia_IdP.pdf
- *
  */
