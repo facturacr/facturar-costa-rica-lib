@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'querystring'
+import { IPostTokenOptions } from './requestTokenParam'
 
 const MAIN_DOMAIN = 'https://idp.comprobanteselectronicos.go.cr'
 const RUT = (process.env.IS_STG) ? 'rut-stag' : 'rut'
@@ -7,15 +8,7 @@ const PATH = `/auth/realms/${RUT}/protocol/openid-connect/token`
 
 const TOKEN_URL = MAIN_DOMAIN + PATH
 
-type IPostTokenOptions = {
-  client_id: String, // eslint-disable-line camelcase
-  grant_type: String, // eslint-disable-line camelcase
-  client_secret?: String, // eslint-disable-line camelcase
-  username?: String,
-  password?: String
-}
-
-export default (postOptions: IPostTokenOptions) => {
+export default (postOptions: IPostTokenOptions): object => {
   return axios.post(TOKEN_URL, qs.stringify(postOptions), {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
