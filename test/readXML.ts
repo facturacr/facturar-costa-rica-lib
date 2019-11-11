@@ -1,15 +1,14 @@
 // test file
-
 import fs from 'fs'
 import * as parser from 'fast-xml-parser'
-const sourceURI = 'src/lib/genXML/facturaElectronica.xml'
-const xmlString = fs.readFileSync(sourceURI, 'utf8')
 
 const options = {
   ignoreAttributes: false,
   ignoreNameSpace: false
 }
 
+const sourceURI = process.env.SOURCE_URI
+const xmlString = fs.readFileSync(sourceURI, 'utf8')
 const json = parser.parse(xmlString, options)
 const Parser = parser.j2xParser
 
