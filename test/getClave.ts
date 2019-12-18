@@ -15,14 +15,14 @@ export interface ClaveOpts {
 
 const clave: ClaveOpts = {
   codigoPais: '506',
-  tipoDocumento: 'FE2',
+  tipoDocumento: 'FE',
   tipoCedula: '1',
   cedulaEmisor: '504130864',
-  situacionCE: 'E1',
-  consecutivo: '21',
+  situacionCE: '1',
+  consecutivo: '0000000001',
   codigoSeguridad: '',
   sucursal: '001',
-  terminal: '0001'
+  terminal: '00001'
 };
 
 const result = genClave(clave);

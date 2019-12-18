@@ -14,15 +14,15 @@ function getConsecutivo(opts: ClaveOpts): string {
 }
 
 function getDateInfo(date: Date): string {
-  const day = date.getDay().toString().padStart(2, '0')
-  const month = date.getMonth().toString().padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0')
   const year = date.getFullYear() - 2000
   return day + month + year
 }
 
 function getSecurityCode(): string {
   const securityCodeLength = Number(process.env.SECURITY_CODE_LENGTH)
-  const ramdom = Math.floor(Math.random() * securityCodeLength);
+  const ramdom = Math.floor(Math.random() * securityCodeLength)
   return ramdom.toString()
 }
 
@@ -30,7 +30,11 @@ function getCountryCode(code: string): string {
   if(code || !code.length) {
     return DEFAULT_VALUES.codigoPais
   }
-  return code.padStart(3, '0');
+  return code.padStart(3, '0')
+}
+
+function getIssuerCard(issuerCard: string): string {
+  return issuerCard.padStart(12, '0')
 }
 
 export default (opts: ClaveOpts): string => {
@@ -38,7 +42,7 @@ export default (opts: ClaveOpts): string => {
   const clave = {
     codigoPais: getCountryCode(opts.codigoPais),
     fecha: getDateInfo(today),
-    cedulaEmisor: opts.cedulaEmisor,
+    cedulaEmisor: getIssuerCard(opts.cedulaEmisor),
     consecutivoFinal: getConsecutivo(opts),
     situacion: opts.situacionCE,
     codigoSeguridad: getSecurityCode(),
