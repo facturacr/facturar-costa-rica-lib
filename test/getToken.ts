@@ -6,9 +6,9 @@ const PASSWORD_TEST = process.env.PASSWORD_TEST
 console.log('process.env.IS_STG', IS_STG)
 
 getToken({
-  client_id: 'api-stag', // eslint-disable-line camelcase
-  client_secret: '', // eslint-disable-line camelcase
-  grant_type: 'password', // eslint-disable-line camelcase
+  client_id: 'api-stag', // eslint-disable-line @typescript-eslint/camelcase
+  client_secret: '', // eslint-disable-line @typescript-eslint/camelcase
+  grant_type: 'password', // eslint-disable-line @typescript-eslint/camelcase
   username: USERNAME_TEST,
   password: PASSWORD_TEST
 }).then((result) => {
