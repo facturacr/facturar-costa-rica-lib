@@ -8,7 +8,7 @@ const PATH = `/auth/realms/${RUT}/protocol/openid-connect/token`
 
 const TOKEN_URL = MAIN_DOMAIN + PATH
 
-export default (postOptions: postTokenOptions): object => {
+export default (postOptions: postTokenOptions): Record<string, any> => {
   return axios.post(TOKEN_URL, qs.stringify(postOptions), {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'

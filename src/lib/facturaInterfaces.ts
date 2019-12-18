@@ -1,73 +1,73 @@
-export interface IDetalleServicio {
+export interface DetalleServicio {
   LineaDetalle: {
-    NumeroLinea: Number,
-    Cantidad: Number,
-    UnidadMedida: String,
-    Detalle: String,
-    PrecioUnitario: Number,
-    MontoTotal: Number,
-    SubTotal: Number,
-    BaseImponible: Number,
-    MontoTotalLinea: Number
-  }
+    NumeroLinea: number;
+    Cantidad: number;
+    UnidadMedida: string;
+    Detalle: string;
+    PrecioUnitario: number;
+    MontoTotal: number;
+    SubTotal: number;
+    BaseImponible: number;
+    MontoTotalLinea: number;
+  };
 }
 
-export interface IResumen {
+export interface Resumen {
   CodigoTipoMoneda: {
-    CodigoMoneda: String,
-    TipoCambio: String
-  },
-  TotalServGravados: Number,
-  TotalServExentos: Number,
-  TotalMercanciasGravadas: Number,
-  TotalMercanciasExentas: Number,
-  TotalGravado: Number,
-  TotalExento: Number,
-  TotalVenta: Number,
-  TotalDescuentos: Number,
-  TotalVentaNeta: Number,
-  TotalImpuesto: Number,
-  TotalComprobante: Number
+    CodigoMoneda: string;
+    TipoCambio: string;
+  };
+  TotalServGravados: number;
+  TotalServExentos: number;
+  TotalMercanciasGravadas: number;
+  TotalMercanciasExentas: number;
+  TotalGravado: number;
+  TotalExento: number;
+  TotalVenta: number;
+  TotalDescuentos: number;
+  TotalVentaNeta: number;
+  TotalImpuesto: number;
+  TotalComprobante: number;
 }
 
-export interface IPersona {
-  Nombre: String,
+export interface Persona {
+  Nombre: string;
   Identificacion: {
-    Tipo: String,
-    Numero: String
-  },
-  NombreComercial: String,
+    Tipo: string;
+    Numero: string;
+  };
+  NombreComercial: string;
   Ubicacion?: {
-    Provincia: String,
-    Canton: String,
-    Distrito: String,
-    Barrio: String,
-    OtrasSenas: String
-  },
+    Provincia: string;
+    Canton: string;
+    Distrito: string;
+    Barrio: string;
+    OtrasSenas: string;
+  };
   Telefono: {
-    CodigoPais: String,
-    NumTelefono: String
-  },
+    CodigoPais: string;
+    NumTelefono: string;
+  };
   Fax?: {
-    CodigoPais: String,
-    NumTelefono: String
-  },
-  CorreoElectronico: String
+    CodigoPais: string;
+    NumTelefono: string;
+  };
+  CorreoElectronico: string;
 }
 
-export interface IFacturaElectronica {
-  Clave: Number,
-  CodigoActividad: Number,
-  NumeroConsecutivo: Number,
-  FechaEmision: Date,
-  Emisor: IPersona,
-  Receptor: IPersona,
-  CondicionVenta: Number,
-  PlazoCredito: Number,
-  MedioPago: Number,
-  DetalleServicio: IDetalleServicio,
-  ResumenFactura: IResumen,
+export interface FacturaElectronica {
+  Clave: number;
+  CodigoActividad: number;
+  NumeroConsecutivo: number;
+  FechaEmision: Date;
+  Emisor: Persona;
+  Receptor: Persona;
+  CondicionVenta: number;
+  PlazoCredito: number;
+  MedioPago: number;
+  DetalleServicio: DetalleServicio;
+  ResumenFactura: Resumen;
   Otros: {
-    OtroTexto: String
-  }
+    OtroTexto: string;
+  };
 }
