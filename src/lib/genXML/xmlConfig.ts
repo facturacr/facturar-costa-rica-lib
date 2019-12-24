@@ -3,6 +3,10 @@ const XML_SCHEMA_XSI = 'https://www.hacienda.go.cr/ATV/ComprobanteElectronico/do
 
 export const declaration = '<?xml version="1.0" encoding="utf-8"?>'
 
+export const defaultOptions = {
+  attrNodeName: 'attr'
+}
+
 export const XML_ATTRS = {
   xmlns: XML_SCHEMA_NS,
   'xmlns:ds': 'http://www.w3.org/2000/09/xmldsig#',
