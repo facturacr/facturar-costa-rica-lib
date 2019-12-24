@@ -1,7 +1,7 @@
 dist
 package-lock.json
 node_modules
-src/generated
+test/input
 .idea
 .vscode
 *.log

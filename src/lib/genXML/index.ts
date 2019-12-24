@@ -1,9 +1,14 @@
-import { FacturaElectronica } from '../facturaInterfaces'
 import { j2xParser } from 'fast-xml-parser'
+import { XML_ATTRS, declaration } from './xmlConfig'
 
-const defaultOptions = {}
+const defaultOptions = {
+  attrNodeName: 'attr'
+}
 
-export default (facturaElectronica: FacturaElectronica): any => {
+export default (obj: object): any => {
   const parser = new j2xParser(defaultOptions) // eslint-disable-line new-cap
-  return parser.parse(facturaElectronica)
+  const mainKey = Object.keys(obj)[0]
+  console.log('mainKey', mainKey)
+  obj[mainKey].attr = XML_ATTRS
+  return declaration + parser.parse(obj)
 }

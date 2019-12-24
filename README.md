@@ -20,3 +20,8 @@ Para probar getToken
 ```
 ts-node --require dotenv/config test/getToken.ts
 ```
+
+Para probar getXML
+```
+ts-node --require dotenv/config test/genXML.ts
+```
