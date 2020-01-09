@@ -13,7 +13,7 @@ Para probar las funcionalidades se recomienda crear un .env en donde se especifi
 USERNAME_TEST=
 PASSWORD_TEST=
 IS_STG=
-SOURCE_URI=
+SOURCE_JSON_URI=
 ```
 
 Para probar getToken
@@ -22,7 +22,10 @@ ts-node --require dotenv/config test/getToken.ts
 ```
 
 Generar la clave
-
 ```
 ts-node --require dotenv/config test/getClave.ts
+
+Para probar getXML
+```
+ts-node --require dotenv/config test/genXML.ts
 ```
