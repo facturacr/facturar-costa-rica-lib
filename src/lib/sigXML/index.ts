@@ -1,26 +1,45 @@
-import pem from 'pem'
-import NodeRSA from 'node-rsa'
-import x509 from 'x509'
+import * as XAdES from 'xadesjs'
+import { Crypto } from '@peculiar/webcrypto'
+import { getCryptoKey } from './getCryptoKey'
+import { XMLSerializer } from 'xmldom-alpha'
 
-export const sigXML = (xml: string, p12Options: any): any => {
-  const { buffer, password } = p12Options
-  return new Promise((resolve, reject) => {
-    pem.readPkcs12(buffer, {
-      p12Password: password
-    }, (error, keybundle) => {
-      if (error) {
-        return error
-      }
-      const key = new NodeRSA(keybundle.key)
-      const modules = key.keyPair.n
-      const exponent = key.keyPair.e
-      const cert = x509.parseCert(keybundle.cert)
-      resolve(keybundle)
-    })
-  })
+const alg = {
+  name: 'RSASSA-PKCS1-v1_5',
+  hash: 'SHA-256'
+}
+const crypto = new Crypto()
+XAdES.Application.setEngine('NodeJS', crypto)
+const xadesXml = new XAdES.SignedXml()
+
+function preparePem (pem): string {
+  return pem
+    .replace(/-----(BEGIN|END)[\w\d\s]+-----/g, '')
+    .replace(/[\r\n]/g, '')
 }
 
-// https://github.com/Dexus/pem/tree/6dd09b0e4c54082a099fa72f064dbb85b3d1249d
-// https://github.com/digitalbazaar/forge/issues/338
-// https://stackoverflow.com/questions/52009637/phps-openssl-sign-equivalent-in-node-js
-// https://github.com/digitalbazaar/forge#x509
+export default async function signXML (xmlStr: string, p12: string, p12Password: string): Promise<string> {
+  const { cryptoKey, certificate } = getCryptoKey(crypto, p12, p12Password)
+  const xml = XAdES.Parse(xmlStr)
+  const x509 = preparePem(certificate)
+  const signature = await xadesXml.Sign( // Signing document
+    alg, // algorithm
+    await cryptoKey, // key
+    xml, // document
+    { // options
+      references: [
+        { hash: 'SHA-256', transforms: ['c14n', 'enveloped'] }
+      ],
+      policy: {
+        hash: 'SHA-256',
+        identifier: {
+          qualifier: 'OIDAsURI',
+          value: 'https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronica'
+        }
+      },
+      signingCertificate: x509
+    })
+  xml.documentElement.appendChild(signature.GetXml())
+  const oSerializer = new XMLSerializer()
+  const sXML = oSerializer.serializeToString(xml)
+  return sXML.toString()
+}

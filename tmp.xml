@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FacturaElectronica
+  xmlns="https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronica"
+  xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronicahttps://www.hacienda.go.cr/ATV/ComprobanteElectronico/docs/esquemas/2016/v4.3/FacturaElectronica_V4.3.xsd">
+  <Clave>50622121900310102418000200001010004899125177161463</Clave>
+  <CodigoActividad>659202</CodigoActividad>
+  <NumeroConsecutivo>00200001010004899125</NumeroConsecutivo>
+  <FechaEmision>2019-12-22T08:25:55-06:00</FechaEmision>
+  <Emisor>
+    <Nombre>Credomatic de Costa Rica. S.A.</Nombre>
+    <Identificacion>
+      <Tipo>02</Tipo>
+      <Numero>3101024180</Numero>
+    </Identificacion>
+    <NombreComercial>Credomatic de Costa Rica. S.A.</NombreComercial>
+    <CorreoElectronico>factelectronicacredomatic@baccredomatic.cr</CorreoElectronico>
+  </Emisor>
+  <Receptor>
+    <Nombre>MINOR A/ARRIETA ROJAS</Nombre>
+    <Identificacion>
+      <Tipo>01</Tipo>
+      <Numero>206920142</Numero>
+    </Identificacion>
+    <CorreoElectronico>m.adrian15@gmail.com</CorreoElectronico>
+  </Receptor>
+  <CondicionVenta>01</CondicionVenta>
+  <PlazoCredito>0.00</PlazoCredito>
+  <MedioPago>01</MedioPago>
+  <DetalleServicio>
+    <LineaDetalle>
+      <NumeroLinea>1</NumeroLinea>
+      <Cantidad>1.000</Cantidad>
+      <UnidadMedida>Os</UnidadMedida>
+      <Detalle>DB. ADM COMPASS NOV 19</Detalle>
+      <PrecioUnitario>2042.25000</PrecioUnitario>
+      <MontoTotal>2042.25000</MontoTotal>
+      <SubTotal>2042.25000</SubTotal>
+      <Impuesto>
+        <Codigo>01</Codigo>
+        <CodigoTarifa>08</CodigoTarifa>
+        <Tarifa>13.00</Tarifa>
+        <Monto>265.49000</Monto>
+      </Impuesto>
+      <MontoTotalLinea>2307.74000</MontoTotalLinea>
+    </LineaDetalle>
+    <LineaDetalle>
+      <NumeroLinea>2</NumeroLinea>
+      <Cantidad>1.000</Cantidad>
+      <UnidadMedida>Os</UnidadMedida>
+      <Detalle>ADMINISTRACIÓN DE CUENTA</Detalle>
+      <PrecioUnitario>500.00000</PrecioUnitario>
+      <MontoTotal>500.00000</MontoTotal>
+      <SubTotal>500.00000</SubTotal>
+      <MontoTotalLinea>500.00000</MontoTotalLinea>
+    </LineaDetalle>
+  </DetalleServicio>
+  <ResumenFactura>
+    <CodigoTipoMoneda>
+      <CodigoMoneda>CRC</CodigoMoneda>
+      <TipoCambio>1.00000</TipoCambio>
+    </CodigoTipoMoneda>
+    <TotalServGravados>2042.25000</TotalServGravados>
+    <TotalServExentos>500.00000</TotalServExentos>
+    <TotalServExonerado>0.00000</TotalServExonerado>
+    <TotalMercanciasGravadas>0.00000</TotalMercanciasGravadas>
+    <TotalMercanciasExentas>0.00000</TotalMercanciasExentas>
+    <TotalMercExonerada>0.00000</TotalMercExonerada>
+    <TotalGravado>2042.25000</TotalGravado>
+    <TotalExento>500.00000</TotalExento>
+    <TotalExonerado>0.00000</TotalExonerado>
+    <TotalVenta>2542.25000</TotalVenta>
+    <TotalVentaNeta>2542.25000</TotalVentaNeta>
+    <TotalImpuesto>265.49000</TotalImpuesto>
+    <TotalIVADevuelto>0.00000</TotalIVADevuelto>
+    <TotalOtrosCargos>0.00000</TotalOtrosCargos>
+    <TotalComprobante>2807.74000</TotalComprobante>
+  </ResumenFactura>
+  <ds:Signature Id="id-72a2a6f91ee7">
+    <ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+      <ds:Reference>
+        <ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+        <ds:DigestValue>lusXS2NDEbZ1liIFC5NkngF2BJSg45ojDy5tqhDKaEo=</ds:DigestValue>
+      </ds:Reference>
+      <ds:Reference URI="#xades-id-72a2a6f91ee7" Type="http://uri.etsi.org/01903#SignedProperties"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+        <ds:DigestValue>0ey8zUHqSFjeN+UYirm0L1fTHOqKLzK4DxMpZTK8qUE=</ds:DigestValue>
+      </ds:Reference>
+    </ds:SignedInfo>
+    <ds:SignatureValue>aV8r1hObSOQvD3IfZGiAUIEJB0dvlSjzqxgQq16UxipimFr+L+omqPCrJDLxME33BBk7+2wxfBzr0QlVgs4e5wReS5K6HZ0zt08KvCh/nKte14cbwTU00wORN4Qp/pSoUfOtMuHpnZ3b/B4XiPQrTry5lecZFq+cQUqwXTcuVlVW1L3+P/g8+ahSqynANyRi+9ktUKLdppoEK67+Mg5N0Wg2qxaCPoL39BrDrEKwC88BfROAI9JWF+B25RMpmvXzjct1ZaXedj1yUjhVkQmMN3j7mlrUGts354YBOy1TtEcr0wH/o4AuC/tOcQT30PbkiRLxWHAptARk6XRIhs4OzQ==</ds:SignatureValue>
+    <ds:Object>
+      <xades:QualifyingProperties Target="#id-72a2a6f91ee7" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#">
+        <xades:SignedProperties Id="xades-id-72a2a6f91ee7">
+          <xades:SignedSignatureProperties>
+            <xades:SigningTime>2020-01-10T01:14:59.950Z</xades:SigningTime>
+            <xades:SigningCertificate>
+              <xades:Cert>
+                <xades:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+                  <ds:DigestValue>nf2g8udb8151OiciTTOMNJXCo30UpyYHw8SzwrwB4VM=</ds:DigestValue>
+                </xades:CertDigest>
+                <xades:IssuerSerial>
+                  <ds:X509IssuerName>C=CR, O=MINISTERIO DE HACIENDA - SANDBOX, OU=DGT, CN=CA PERSONA JURIDICA - SANDBOX</ds:X509IssuerName>
+                  <ds:X509SerialNumber>1577809073021</ds:X509SerialNumber>
+                </xades:IssuerSerial>
+              </xades:Cert>
+            </xades:SigningCertificate>
+            <xades:SignaturePolicyIdentifier>
+              <xades:SignaturePolicyId>
+                <xades:SigPolicyId>
+                  <xades:Identifier Qualifier="OIDAsURI">https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronica</xades:Identifier>
+                </xades:SigPolicyId>
+                <xades:SigPolicyHash><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+                  <ds:DigestValue>QQnFQDyuX6iK+FjVNcug0woh/NJ6E6mxFzYbvXSNsqQ=</ds:DigestValue>
+                </xades:SigPolicyHash>
+              </xades:SignaturePolicyId>
+            </xades:SignaturePolicyIdentifier>
+          </xades:SignedSignatureProperties>
+        </xades:SignedProperties>
+      </xades:QualifyingProperties>
+    </ds:Object>
+  </ds:Signature>
+</FacturaElectronica>

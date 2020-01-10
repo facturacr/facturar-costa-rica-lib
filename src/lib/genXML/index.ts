@@ -1,6 +1,6 @@
 import { j2xParser } from 'fast-xml-parser'
 import { XML_ATTRS, declaration, defaultOptions } from './xmlConfig'
-import { sigXML } from '../sigXML'
+import sigXML from '../sigXML'
 
 export const genXML = (obj: object): string => {
   const parser = new j2xParser(defaultOptions) // eslint-disable-line new-cap
@@ -9,10 +9,10 @@ export const genXML = (obj: object): string => {
   return declaration + parser.parse(obj)
 }
 
-export default (obj: object, p12Options?: any): string => {
+export default async (obj: object, p12Options?: any): Promise<string> => {
   const xml = genXML(obj)
   if (p12Options) {
-    return sigXML(xml, p12Options)
+    return sigXML(xml, p12Options.buffer, p12Options.password)
   }
   return xml
 }
