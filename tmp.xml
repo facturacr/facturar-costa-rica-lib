@@ -5,95 +5,102 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronicahttps://www.hacienda.go.cr/ATV/ComprobanteElectronico/docs/esquemas/2016/v4.3/FacturaElectronica_V4.3.xsd">
-  <Clave>50622121900310102418000200001010004899125177161463</Clave>
-  <CodigoActividad>659202</CodigoActividad>
-  <NumeroConsecutivo>00200001010004899125</NumeroConsecutivo>
-  <FechaEmision>2019-12-22T08:25:55-06:00</FechaEmision>
+  <Clave>50626121900310275915700100001010000000041120745315</Clave>
+  <CodigoActividad>930903</CodigoActividad>
+  <NumeroConsecutivo>00100001010000000041</NumeroConsecutivo>
+  <FechaEmision>2019-12-26T18:52:11-06:00</FechaEmision>
   <Emisor>
-    <Nombre>Credomatic de Costa Rica. S.A.</Nombre>
+    <Nombre>SRL</Nombre>
     <Identificacion>
       <Tipo>02</Tipo>
-      <Numero>3101024180</Numero>
+      <Numero>3102759157</Numero>
     </Identificacion>
-    <NombreComercial>Credomatic de Costa Rica. S.A.</NombreComercial>
-    <CorreoElectronico>factelectronicacredomatic@baccredomatic.cr</CorreoElectronico>
+    <NombreComercial>CIENCIA DEL SABOR</NombreComercial>
+    <Ubicacion>
+      <Provincia>2</Provincia>
+      <Canton>06</Canton>
+      <Distrito>04</Distrito>
+      <Barrio>06</Barrio>
+      <OtrasSenas>25 norte 500 oeste restaurante El Faro</OtrasSenas>
+    </Ubicacion>
+    <Telefono>
+      <CodigoPais>506</CodigoPais>
+      <NumTelefono>88122479</NumTelefono>
+    </Telefono>
+    <CorreoElectronico>cienciadelsabor@gmail.com</CorreoElectronico>
   </Emisor>
   <Receptor>
-    <Nombre>MINOR A/ARRIETA ROJAS</Nombre>
+    <Nombre>COOPERATIVA DE PRODUCTORES DE CAFE Y SERVICIOS MULTIPLES DE NARANJO R L</Nombre>
     <Identificacion>
-      <Tipo>01</Tipo>
-      <Numero>206920142</Numero>
+      <Tipo>02</Tipo>
+      <Numero>3004045058</Numero>
     </Identificacion>
-    <CorreoElectronico>m.adrian15@gmail.com</CorreoElectronico>
+    <Ubicacion>
+      <Provincia>2</Provincia>
+      <Canton>06</Canton>
+      <Distrito>01</Distrito>
+      <OtrasSenas>Diagonal al mercado central</OtrasSenas>
+    </Ubicacion>
+    <CorreoElectronico>rrhh@coopronaranjorl.com</CorreoElectronico>
   </Receptor>
   <CondicionVenta>01</CondicionVenta>
-  <PlazoCredito>0.00</PlazoCredito>
   <MedioPago>01</MedioPago>
   <DetalleServicio>
     <LineaDetalle>
       <NumeroLinea>1</NumeroLinea>
-      <Cantidad>1.000</Cantidad>
-      <UnidadMedida>Os</UnidadMedida>
-      <Detalle>DB. ADM COMPASS NOV 19</Detalle>
-      <PrecioUnitario>2042.25000</PrecioUnitario>
-      <MontoTotal>2042.25000</MontoTotal>
-      <SubTotal>2042.25000</SubTotal>
+      <Cantidad>1.00</Cantidad>
+      <UnidadMedida>Unid</UnidadMedida>
+      <Detalle>Por servicio prestados en control de calidad</Detalle>
+      <PrecioUnitario>300000.00</PrecioUnitario>
+      <MontoTotal>300000.00</MontoTotal>
+      <SubTotal>300000.00</SubTotal>
       <Impuesto>
         <Codigo>01</Codigo>
         <CodigoTarifa>08</CodigoTarifa>
-        <Tarifa>13.00</Tarifa>
-        <Monto>265.49000</Monto>
+        <Tarifa>13</Tarifa>
+        <Monto>39000.00</Monto>
       </Impuesto>
-      <MontoTotalLinea>2307.74000</MontoTotalLinea>
-    </LineaDetalle>
-    <LineaDetalle>
-      <NumeroLinea>2</NumeroLinea>
-      <Cantidad>1.000</Cantidad>
-      <UnidadMedida>Os</UnidadMedida>
-      <Detalle>ADMINISTRACIÓN DE CUENTA</Detalle>
-      <PrecioUnitario>500.00000</PrecioUnitario>
-      <MontoTotal>500.00000</MontoTotal>
-      <SubTotal>500.00000</SubTotal>
-      <MontoTotalLinea>500.00000</MontoTotalLinea>
+      <ImpuestoNeto>39000.00</ImpuestoNeto>
+      <MontoTotalLinea>339000.00</MontoTotalLinea>
     </LineaDetalle>
   </DetalleServicio>
   <ResumenFactura>
     <CodigoTipoMoneda>
       <CodigoMoneda>CRC</CodigoMoneda>
-      <TipoCambio>1.00000</TipoCambio>
+      <TipoCambio>1</TipoCambio>
     </CodigoTipoMoneda>
-    <TotalServGravados>2042.25000</TotalServGravados>
-    <TotalServExentos>500.00000</TotalServExentos>
-    <TotalServExonerado>0.00000</TotalServExonerado>
-    <TotalMercanciasGravadas>0.00000</TotalMercanciasGravadas>
-    <TotalMercanciasExentas>0.00000</TotalMercanciasExentas>
-    <TotalMercExonerada>0.00000</TotalMercExonerada>
-    <TotalGravado>2042.25000</TotalGravado>
-    <TotalExento>500.00000</TotalExento>
-    <TotalExonerado>0.00000</TotalExonerado>
-    <TotalVenta>2542.25000</TotalVenta>
-    <TotalVentaNeta>2542.25000</TotalVentaNeta>
-    <TotalImpuesto>265.49000</TotalImpuesto>
-    <TotalIVADevuelto>0.00000</TotalIVADevuelto>
-    <TotalOtrosCargos>0.00000</TotalOtrosCargos>
-    <TotalComprobante>2807.74000</TotalComprobante>
+    <TotalServGravados>0</TotalServGravados>
+    <TotalServExentos>0</TotalServExentos>
+    <TotalServExonerado>0</TotalServExonerado>
+    <TotalMercanciasGravadas>300000.00</TotalMercanciasGravadas>
+    <TotalMercanciasExentas>0</TotalMercanciasExentas>
+    <TotalMercExonerada>0</TotalMercExonerada>
+    <TotalGravado>300000.00</TotalGravado>
+    <TotalExento>0</TotalExento>
+    <TotalExonerado>0</TotalExonerado>
+    <TotalVenta>300000.00</TotalVenta>
+    <TotalDescuentos>0</TotalDescuentos>
+    <TotalVentaNeta>300000.00</TotalVentaNeta>
+    <TotalImpuesto>39000.00</TotalImpuesto>
+    <TotalIVADevuelto>0</TotalIVADevuelto>
+    <TotalComprobante>339000.00</TotalComprobante>
   </ResumenFactura>
-  <ds:Signature Id="id-72a2a6f91ee7">
+  <ds:Signature Id="id-798fe8299d39">
     <ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
       <ds:Reference>
         <ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-        <ds:DigestValue>lusXS2NDEbZ1liIFC5NkngF2BJSg45ojDy5tqhDKaEo=</ds:DigestValue>
+        <ds:DigestValue>3n/Pm9wMSpqoPny05KJNYBonQr87XGG3tip0puYQpZQ=</ds:DigestValue>
       </ds:Reference>
-      <ds:Reference URI="#xades-id-72a2a6f91ee7" Type="http://uri.etsi.org/01903#SignedProperties"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-        <ds:DigestValue>0ey8zUHqSFjeN+UYirm0L1fTHOqKLzK4DxMpZTK8qUE=</ds:DigestValue>
+      <ds:Reference URI="#xades-id-798fe8299d39" Type="http://uri.etsi.org/01903#SignedProperties"><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+        <ds:DigestValue>RRK5km2bq10AR27hsJwQz4sHI6MZ+FdZrLmLck3QyCQ=</ds:DigestValue>
       </ds:Reference>
     </ds:SignedInfo>
-    <ds:SignatureValue>aV8r1hObSOQvD3IfZGiAUIEJB0dvlSjzqxgQq16UxipimFr+L+omqPCrJDLxME33BBk7+2wxfBzr0QlVgs4e5wReS5K6HZ0zt08KvCh/nKte14cbwTU00wORN4Qp/pSoUfOtMuHpnZ3b/B4XiPQrTry5lecZFq+cQUqwXTcuVlVW1L3+P/g8+ahSqynANyRi+9ktUKLdppoEK67+Mg5N0Wg2qxaCPoL39BrDrEKwC88BfROAI9JWF+B25RMpmvXzjct1ZaXedj1yUjhVkQmMN3j7mlrUGts354YBOy1TtEcr0wH/o4AuC/tOcQT30PbkiRLxWHAptARk6XRIhs4OzQ==</ds:SignatureValue>
+    <ds:SignatureValue>USuYISBaGq81L8ATy421JBy40OLEgHjx/2jNl1+rbhDrd5iFzUCllwaS8UQyPeUifrShA2BbioyuX/cq5nZhwWR4NiVZGm0o0eUaKme3Nlpqh+3o7W19vP+f7mZDCHnF7KBA4qa9+F9ZnFQxpC+rY0yFPIn9HPiiym1JyzcvujZ16OfBvdedCXamrjlQt1E1lZFlIazOIdU+cSSalfegxZYQe1Dox+DacnTTy5aaN1XIDKuqlcu/yY/XuBi4kTNBAwqQGDusNt2oywAqStGiIkXBzbT6S1EpYJWGD/teDoJPQ/3rfffHh+lJ9qxYBiWIKZEzk8fVutzbEPT/QTP6VQ==</ds:SignatureValue>
     <ds:Object>
-      <xades:QualifyingProperties Target="#id-72a2a6f91ee7" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#">
-        <xades:SignedProperties Id="xades-id-72a2a6f91ee7">
+      <xades:QualifyingProperties Target="#id-798fe8299d39" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#">
+        <xades:SignedProperties Id="xades-id-798fe8299d39">
           <xades:SignedSignatureProperties>
-            <xades:SigningTime>2020-01-10T01:14:59.950Z</xades:SigningTime>
+            <xades:SigningTime>2020-01-11T15:40:45.113Z</xades:SigningTime>
             <xades:SigningCertificate>
               <xades:Cert>
                 <xades:CertDigest><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
