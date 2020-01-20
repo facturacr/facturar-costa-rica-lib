@@ -28,7 +28,7 @@ export default (frontEndRequest: FrontEndRequest): any => {
     DetalleMensaje: DEFAULT_VALUES.detailsMessage,
     MontoTotalImpuesto: taxes,
     TotalFactura: frontEndRequest.total,
-    Signature: {}
+    Signature: {} // .p12 json
   }
   const XML = genXML(factura)
   console.log('XML', XML)
