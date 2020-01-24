@@ -1,5 +1,5 @@
 import { ClaveOpts } from './interfaces'
-import { tipoDocumento } from '../data/tipoDocumento'
+import { tipoDocumento } from '../../data/tipoDocumento'
 // import { tipoCedula } from '../data/tipoCedula'
 
 function getConsecutivo(opts: ClaveOpts): string {
