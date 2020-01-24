@@ -20,10 +20,10 @@ function getDateInfo(date: Date): string {
   return day + month + year
 }
 
-function getSecurityCode(): string {
-  const securityCodeLength = Number(process.env.SECURITY_CODE_LENGTH)
-  const ramdom = Math.floor(Math.random() * securityCodeLength)
-  return ramdom.toString()
+function getRandomSecurityCode(): string {
+  const securityCodeLength = Number(8)
+  const random = Math.floor(Math.random() * securityCodeLength)
+  return random.toString().padStart(8, '0')
 }
 
 function getCountryCode(code: string): string {
@@ -45,7 +45,7 @@ export default (opts: ClaveOpts): string => {
     cedulaEmisor: getIssuerCard(opts.cedulaEmisor),
     consecutivoFinal: getConsecutivo(opts),
     situacion: opts.situacionCE,
-    codigoSeguridad: getSecurityCode()
+    codigoSeguridad: opts.codigoSeguridad.padStart(8, '0') || getRandomSecurityCode()
   }
   return Object.values(clave).join('')
 }

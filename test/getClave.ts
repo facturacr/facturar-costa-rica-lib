@@ -26,4 +26,5 @@ const clave: ClaveOpts = {
 }
 
 const result = genClave(clave)
-console.log('Your clave is', result)
+console.log('Clave', result)
+console.log('Clave largo', result.length)
