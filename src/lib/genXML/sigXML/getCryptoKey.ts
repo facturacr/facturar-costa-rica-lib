@@ -1,16 +1,6 @@
 import forge from 'node-forge'
 
-function arrayBufferToString(buffer): string {
-  let binary = ''
-  const bytes = new Uint8Array(buffer)
-  const len = bytes.byteLength
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i])
-  }
-  return binary
-}
-
-function stringToArrayBuffer(data) {
+function stringToArrayBuffer(data): any {
   const arrBuff = new ArrayBuffer(data.length)
   const writer = new Uint8Array(arrBuff)
   for (let i = 0, len = data.length; i < len; i++) {
@@ -19,14 +9,14 @@ function stringToArrayBuffer(data) {
   return arrBuff
 }
 
-function getCertificate(certificateArr) {
+function getCertificate(certificateArr): any {
   const cert = certificateArr[0]
   const certPem = forge.pki.certificateToPem(cert.cert)
   const certDer = forge.pki.pemToDer(certPem)
   return forge.util.encode64(certDer.data)
 }
 
-function getCertAndPrivateKey(pkcs12) {
+function getCertAndPrivateKey(pkcs12): any {
   const certificateArr = []
   let privateKey
   for (let sci = 0; sci < pkcs12.safeContents.length; ++sci) {
@@ -50,7 +40,7 @@ function getCertAndPrivateKey(pkcs12) {
   return { privateKey, certificate }
 }
 
-function _privateKeyToPkcs8(privateKey) {
+function _privateKeyToPkcs8(privateKey): any {
   const rsaPrivateKey = forge.pki.privateKeyToAsn1(privateKey)
   const privateKeyInfo = forge.pki.wrapRsaPrivateKey(rsaPrivateKey)
   const privateKeyInfoDer = forge.asn1.toDer(privateKeyInfo).getBytes()
