@@ -71,3 +71,19 @@ export interface FacturaElectronica {
     OtroTexto: string;
   };
 }
+
+export interface SimpleFacturaElectronica {
+  Clave: number;
+  NombreEmisor: string;
+  TipoIdentificacionEmisor: string;
+  NumeroCedulaEmisor: string;
+  NombreReceptor: string;
+  TipoIdentificacionReceptor: string;
+  NumeroCedulaReceptor: string;
+  Mensaje: string;
+  DetalleMensaje: string;
+  MontoTotalImpuesto: number;
+  TotalFactura: number;
+  Signature: object
+}
+ 

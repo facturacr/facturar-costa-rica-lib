@@ -20,8 +20,15 @@ Para probar getToken
 ```
 ts-node --require dotenv/config test/getToken.ts
 ```
+Generar la clave
+```
+ts-node --require dotenv/config test/getClave.ts
 
 Para probar getXML
 ```
 ts-node --require dotenv/config test/genXML.ts
+```
+Para probar genJsonHeaderXML
+```
+ts-node --require dotenv/config test/genBasicXML.ts
 ```
