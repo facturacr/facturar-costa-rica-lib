@@ -3,12 +3,12 @@ import { SimpleFacturaElectronica } from '../facturaInterfaces'
 import genXML from '../genXML'
 import genClave from '../genClave'
 
-//Default XML Values
+// Default XML Values
 const DEFAULT_VALUES = {
   key: 0,
   message: 'Default msj',
   detailsMessage: 'Default details msj',
-  taxes: 100,
+  taxes: 100
 }
 
 export default (frontEndRequest: FrontEndRequest): any => {

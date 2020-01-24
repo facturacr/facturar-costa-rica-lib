@@ -27,7 +27,7 @@ function getSecurityCode(): string {
 }
 
 function getCountryCode(code: string): string {
-  if(code || !code.length) {
+  if (code || !code.length) {
     return DEFAULT_VALUES.codigoPais
   }
   return code.padStart(3, '0')
@@ -45,7 +45,7 @@ export default (opts: ClaveOpts): string => {
     cedulaEmisor: getIssuerCard(opts.cedulaEmisor),
     consecutivoFinal: getConsecutivo(opts),
     situacion: opts.situacionCE,
-    codigoSeguridad: getSecurityCode(),
+    codigoSeguridad: getSecurityCode()
   }
   return Object.values(clave).join('')
 }

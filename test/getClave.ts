@@ -1,5 +1,5 @@
 import genClave from '../src/lib/genClave'
-
+import { ClaveOpts } from '../src/lib/genClave/interfaces'
 
 export interface ClaveOpts {
   codigoPais: string;
@@ -23,7 +23,7 @@ const clave: ClaveOpts = {
   codigoSeguridad: '',
   sucursal: '001',
   terminal: '00001'
-};
+}
 
-const result = genClave(clave);
-console.log('Your clave is', result);
+const result = genClave(clave)
+console.log('Your clave is', result)

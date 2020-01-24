@@ -84,6 +84,5 @@ export interface SimpleFacturaElectronica {
   DetalleMensaje: string;
   MontoTotalImpuesto: number;
   TotalFactura: number;
-  Signature: object
+  Signature: object;
 }
- 
