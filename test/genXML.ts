@@ -12,11 +12,14 @@ const parsedObject = JSON.parse(jsonInput.toString())
 async function main() {
   const XML = await genXML(parsedObject, {
     buffer: pem,
-    password: SOURCE_P12_PASSPORT
+    password: SOURCE_P12_PASSPORT,
+    base64: true
   })
   console.log('XML', XML)
   fs.writeFile(OUTPUT_GEN_XML_TEST, XML, (err) => {
-    console.log(err)
+    if (err) {
+      console.log(err)
+    }
   })
 }
 

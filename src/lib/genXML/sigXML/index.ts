@@ -3,20 +3,20 @@ import { Crypto } from '@peculiar/webcrypto'
 import { getCryptoKey } from './getCryptoKey'
 import { XMLSerializer } from 'xmldom-alpha'
 
-function preparePem (pem: string): string {
+function preparePem(pem: string): string {
   return pem
     .replace(/-----(BEGIN|END)[\w\d\s]+-----/g, '')
     .replace(/[\r\n]/g, '')
 }
 
-function addSigToXML (xml: Document, signature: any): string {
+function addSigToXML(xml: Document, signature: any): string {
   xml.documentElement.appendChild(signature.GetXml())
   const oSerializer = new XMLSerializer()
   const sXML = oSerializer.serializeToString(xml)
   return sXML.toString()
 }
 
-function getOptions (certificate: string): any {
+function getOptions(certificate: string): any {
   const x509 = preparePem(certificate)
   return { // options
     references: [
@@ -33,7 +33,7 @@ function getOptions (certificate: string): any {
   }
 }
 
-export default async function signXML (xmlStr: string, p12: string, p12Password: string): Promise<string> {
+export default async function signXML(xmlStr: string, p12: string, p12Password: string): Promise<string> {
   const crypto = new Crypto()
   XAdES.Application.setEngine('NodeJS', crypto)
   const xadesXml = new XAdES.SignedXml()

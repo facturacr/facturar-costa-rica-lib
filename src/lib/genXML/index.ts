@@ -1,6 +1,11 @@
 import { j2xParser } from 'fast-xml-parser'
 import { XML_ATTRS, declaration, defaultOptions } from './xmlConfig'
-import sigXML from '../sigXML'
+import sigXML from './sigXML'
+
+const encodeXML = (xmlStr: string): string => {
+  const buffer = Buffer.from(xmlStr)
+  return buffer.toString('base64')
+}
 
 export const genXML = (obj: object): string => {
   const parser = new j2xParser(defaultOptions) // eslint-disable-line new-cap
@@ -9,10 +14,10 @@ export const genXML = (obj: object): string => {
   return declaration + parser.parse(obj)
 }
 
-export default async (obj: object, p12Options?: any): Promise<string> => {
+export default async (obj: object, options?: any): Promise<string> => {
   const xml = genXML(obj)
-  if (p12Options) {
-    return sigXML(xml, p12Options.buffer, p12Options.password)
-  }
-  return xml
+  if (!options) return xml
+  const signedXML = await sigXML(xml, options.buffer, options.password)
+  if (!options.base64) return signedXML
+  return encodeXML(signedXML)
 }

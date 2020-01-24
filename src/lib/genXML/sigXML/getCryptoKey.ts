@@ -1,6 +1,6 @@
 import forge from 'node-forge'
 
-function arrayBufferToString (buffer): string {
+function arrayBufferToString(buffer): string {
   let binary = ''
   const bytes = new Uint8Array(buffer)
   const len = bytes.byteLength
@@ -10,7 +10,7 @@ function arrayBufferToString (buffer): string {
   return binary
 }
 
-function stringToArrayBuffer (data) {
+function stringToArrayBuffer(data) {
   const arrBuff = new ArrayBuffer(data.length)
   const writer = new Uint8Array(arrBuff)
   for (let i = 0, len = data.length; i < len; i++) {
@@ -26,7 +26,7 @@ function getCertificate(certificateArr) {
   return forge.util.encode64(certDer.data)
 }
 
-function getCertAndPrivateKey (pkcs12) {
+function getCertAndPrivateKey(pkcs12) {
   const certificateArr = []
   let privateKey
   for (let sci = 0; sci < pkcs12.safeContents.length; ++sci) {
@@ -50,7 +50,7 @@ function getCertAndPrivateKey (pkcs12) {
   return { privateKey, certificate }
 }
 
-function _privateKeyToPkcs8 (privateKey) {
+function _privateKeyToPkcs8(privateKey) {
   const rsaPrivateKey = forge.pki.privateKeyToAsn1(privateKey)
   const privateKeyInfo = forge.pki.wrapRsaPrivateKey(rsaPrivateKey)
   const privateKeyInfoDer = forge.asn1.toDer(privateKeyInfo).getBytes()
@@ -58,7 +58,7 @@ function _privateKeyToPkcs8 (privateKey) {
   return privateKeyInfoDerBuff
 }
 
-export function getCryptoKey (
+export function getCryptoKey(
   crypto: Crypto,
   contents: Buffer|string,
   password: string):

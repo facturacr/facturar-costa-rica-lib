@@ -2,12 +2,12 @@ import { ClaveOpts } from './interfaces'
 import { tipoDocumento } from '../data/tipoDocumento'
 // import { tipoCedula } from '../data/tipoCedula'
 
-function getConsecutivo (opts: ClaveOpts): string {
+function getConsecutivo(opts: ClaveOpts): string {
   const codigoDocumento = tipoDocumento[opts.tipoDocumento]
   return opts.sucursal + opts.terminal + codigoDocumento + opts.consecutivo
 }
 
-function getDateInfo (date: Date): string {
+function getDateInfo(date: Date): string {
   const day = date.getDay().toString().padStart(2, '0')
   const month = date.getMonth().toString().padStart(2, '0')
   const year = date.getFullYear() - 2000

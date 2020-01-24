@@ -7,7 +7,7 @@ import { getCryptoKey } from '../src/lib/sigXML/getCryptoKey'
 const crypto = new Crypto()
 XAdES.Application.setEngine('NodeJS', crypto)
 
-function preparePem (pem) {
+function preparePem(pem) {
   return pem
   // remove BEGIN/END
     .replace(/-----(BEGIN|END)[\w\d\s]+-----/g, '')
@@ -15,13 +15,13 @@ function preparePem (pem) {
     .replace(/[\r\n]/g, '')
 }
 
-function pem2der (pem) {
+function pem2der(pem) {
   pem = preparePem(pem)
   // convert base64 to ArrayBuffer
   return new Uint8Array(Buffer.from(pem, 'base64')).buffer
 }
 
-async function main () {
+async function main() {
   const alg = {
     name: 'RSASSA-PKCS1-v1_5',
     hash: 'SHA-256'

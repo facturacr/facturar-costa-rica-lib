@@ -21,6 +21,12 @@ module.exports = {
     "@typescript-eslint"
   ],
   "rules": {
-    "@typescript-eslint/no-explicit-any": [0]
+    "@typescript-eslint/no-explicit-any": [0],
+    "space-before-function-paren": [
+      "warn", {
+        "anonymous": "never",
+        "named": "never"
+      }
+    ]
   }
 };
