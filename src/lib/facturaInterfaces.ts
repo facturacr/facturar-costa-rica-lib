@@ -56,7 +56,7 @@ export interface Persona {
 }
 
 export interface FacturaElectronica {
-  Clave: number;
+  Clave: string;
   CodigoActividad: number;
   NumeroConsecutivo: number;
   FechaEmision: Date;
@@ -73,7 +73,7 @@ export interface FacturaElectronica {
 }
 
 export interface SimpleFacturaElectronica {
-  Clave: number;
+  Clave: string;
   NombreEmisor: string;
   TipoIdentificacionEmisor: string;
   NumeroCedulaEmisor: string;

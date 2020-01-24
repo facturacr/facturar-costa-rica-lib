@@ -11,9 +11,45 @@ const DEFAULT_VALUES = {
   taxes: 100
 }
 
+// todo: find sender info in db
+function findSenderByID(): any {
+  return {
+    senderName: 'Carlos Blanco',
+    senderTypeID: '01'
+  }
+}
+
+// todo: find receiver info in db
+function findReceiverById(): any {
+  return {
+    receiverName: 'Carlos Rivera',
+    receiverTypeID: '01'
+  }
+}
+
+function getClave(frontEndRequest: FrontEndRequest, sender: any): string {
+  const claveOptions: ClaveOpts = {
+    cedulaEmisor: frontEndRequest.senderID,
+    codigoPais: frontEndRequest.countryCode,
+    codigoSeguridad: frontEndRequest.securityCode,
+    consecutivo: frontEndRequest.consecutive,
+    situacionCE: frontEndRequest.situationEC,
+    sucursal: frontEndRequest.sale,
+    terminal: frontEndRequest.terminal,
+    tipoCedula: sender.senderTypeID,
+    tipoDocumento: frontEndRequest.typeDocument
+  }
+  return genClave(claveOptions)
+}
+
+function calculateTaxes(billTotal: number, billTaxes: number): number {
+  const taxes = typeof billTaxes === 'number' ? billTaxes : DEFAULT_VALUES.taxes
+  return (billTotal * taxes) / 100
+}
+
 export default (frontEndRequest: FrontEndRequest): any => {
-  const sender = findSenderByID(frontEndRequest.senderID)
-  const receiver = findReceiverById(frontEndRequest.receiverId)
+  const sender = findSenderByID()
+  const receiver = findReceiverById()
   const taxes = calculateTaxes(frontEndRequest.total, frontEndRequest.tax)
   const key = getClave(frontEndRequest, sender)
   const factura: SimpleFacturaElectronica = {
@@ -32,40 +68,4 @@ export default (frontEndRequest: FrontEndRequest): any => {
   }
   const XML = genXML(factura)
   console.log('XML', XML)
-}
-
-// todo: find sender info in db
-function findSenderByID(id: string) {
-  return {
-    senderName: 'Carlos Blanco',
-    senderTypeID: '01'
-  }
-}
-
-// todo: find receiver info in db
-function findReceiverById(id: string) {
-  return {
-    receiverName: 'Carlos Rivera',
-    receiverTypeID: '01'
-  }
-}
-
-function getClave(frontEndRequest: FrontEndRequest, sender: any): number {
-  const claveOptions: ClaveOpts = {
-    cedulaEmisor: frontEndRequest.senderID,
-    codigoPais: frontEndRequest.countryCode,
-    codigoSeguridad: frontEndRequest.securityCode,
-    consecutivo: frontEndRequest.consecutive,
-    situacionCE: frontEndRequest.situationEC,
-    sucursal: frontEndRequest.sale,
-    terminal: frontEndRequest.terminal,
-    tipoCedula: sender.senderTypeID,
-    tipoDocumento: frontEndRequest.typeDocument
-  }
-  return Number(genClave(claveOptions))
-}
-
-function calculateTaxes(billTotal: number, billTaxes: number): number {
-  const taxes = typeof billTaxes === 'number' ? billTaxes : DEFAULT_VALUES.taxes
-  return (billTotal * taxes) / 100
 }
