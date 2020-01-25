@@ -75,6 +75,26 @@ export default (opts: ClaveOpts): string => {
   return genString(claveObj)
 }
 
+export function stringToClave(claveStr: string): Clave {
+  return {
+    codigoPais: claveStr.slice(0, 3),
+    fecha: {
+      dia: claveStr.slice(3, 5),
+      mes: claveStr.slice(5, 7),
+      ano: claveStr.slice(7, 9)
+    },
+    cedulaEmisor: claveStr.slice(9, 21),
+    consecutivo: {
+      sucursal: claveStr.slice(21, 24),
+      terminal: claveStr.slice(24, 29),
+      tipoDocumento: claveStr.slice(29, 31),
+      consecutivo: claveStr.slice(31, 41)
+    },
+    situacionCE: claveStr.slice(41, 42),
+    codigoSeguridad: claveStr.slice(42, 51)
+  }
+}
+
 /*
  * https://blog.hulipractice.com/que-es-y-como-funciona-la-clave-numerica-en-la-factura-electronica-de-costa-rica/
  */
