@@ -1,7 +1,6 @@
-import { FrontEndRequest, ClaveOpts } from './interfaces'
 import { SimpleFacturaElectronica } from '../facturaInterfaces'
+import { FrontEndRequest } from './interfaces'
 import genXML from '../genXML'
-import genClave from '../genClave'
 
 // Default XML Values
 const DEFAULT_VALUES = {
@@ -27,33 +26,17 @@ function findReceiverById(): any {
   }
 }
 
-function getClave(frontEndRequest: FrontEndRequest, sender: any): string {
-  const claveOptions: ClaveOpts = {
-    cedulaEmisor: frontEndRequest.senderID,
-    codigoPais: frontEndRequest.countryCode,
-    codigoSeguridad: frontEndRequest.securityCode,
-    consecutivo: frontEndRequest.consecutive,
-    situacionCE: frontEndRequest.situationEC,
-    sucursal: frontEndRequest.sale,
-    terminal: frontEndRequest.terminal,
-    tipoCedula: sender.senderTypeID,
-    tipoDocumento: frontEndRequest.typeDocument
-  }
-  return genClave(claveOptions)
-}
-
 function calculateTaxes(billTotal: number, billTaxes: number): number {
   const taxes = typeof billTaxes === 'number' ? billTaxes : DEFAULT_VALUES.taxes
   return (billTotal * taxes) / 100
 }
 
-export default (frontEndRequest: FrontEndRequest): any => {
+export default async (frontEndRequest: FrontEndRequest, clave: string, options: any): Promise<any> => {
   const sender = findSenderByID()
   const receiver = findReceiverById()
   const taxes = calculateTaxes(frontEndRequest.total, frontEndRequest.tax)
-  const key = getClave(frontEndRequest, sender)
   const factura: SimpleFacturaElectronica = {
-    Clave: key,
+    Clave: clave,
     NombreEmisor: sender.senderName,
     TipoIdentificacionEmisor: sender.senderTypeID,
     NumeroCedulaEmisor: frontEndRequest.senderID,
@@ -63,9 +46,8 @@ export default (frontEndRequest: FrontEndRequest): any => {
     Mensaje: DEFAULT_VALUES.message,
     DetalleMensaje: DEFAULT_VALUES.detailsMessage,
     MontoTotalImpuesto: taxes,
-    TotalFactura: frontEndRequest.total,
-    Signature: {} // .p12 json
+    TotalFactura: frontEndRequest.total
   }
-  const XML = genXML(factura)
-  console.log('XML', XML)
+  const XML = await genXML(factura, options)
+  return XML
 }
