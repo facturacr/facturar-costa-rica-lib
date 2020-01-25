@@ -1,4 +1,4 @@
-import { ClaveOpts } from './interfaces'
+import { ClaveOpts, Clave, ClaveFecha, Consecutivo } from './interfaces'
 import { tipoDocumento } from '../../data/tipoDocumento'
 // import { tipoCedula } from '../data/tipoCedula'
 
@@ -7,17 +7,26 @@ const DEFAULT_VALUES = {
   codigoPais: '506'
 }
 
-function getConsecutivo(opts: ClaveOpts): string {
+function getConsecutivo(opts: ClaveOpts): Consecutivo {
   const typeDocument = tipoDocumento[opts.tipoDocumento]
   const codeDocument = typeDocument ? typeDocument.code : DEFAULT_VALUES.tipoDocumento
-  return opts.sucursal + opts.terminal + codeDocument + opts.consecutivo
+  return {
+    sucursal: opts.sucursal,
+    terminal: opts.terminal,
+    tipoDocumento: codeDocument,
+    consecutivo: opts.consecutivo
+  }
 }
 
-function getDateInfo(date: Date): string {
+function getDateInfo(date: Date): ClaveFecha {
   const day = String(date.getDate()).padStart(2, '0')
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const year = date.getFullYear() - 2000
-  return day + month + year
+  return {
+    dia: day,
+    mes: month,
+    ano: year.toString()
+  }
 }
 
 function getRandomSecurityCode(): string {
@@ -37,17 +46,33 @@ function getIssuerCard(issuerCard: string): string {
   return issuerCard.padStart(12, '0')
 }
 
-export default (opts: ClaveOpts): string => {
+export function genClaveObj(opts: ClaveOpts): Clave {
   const today = new Date()
-  const clave = {
+  return {
     codigoPais: getCountryCode(opts.codigoPais),
     fecha: getDateInfo(today),
     cedulaEmisor: getIssuerCard(opts.cedulaEmisor),
-    consecutivoFinal: getConsecutivo(opts),
-    situacion: opts.situacionCE,
+    consecutivo: getConsecutivo(opts),
+    situacionCE: opts.situacionCE,
     codigoSeguridad: opts.codigoSeguridad.padStart(8, '0') || getRandomSecurityCode()
   }
+}
+
+export function genString(claveObj: Clave): string {
+  const clave = {
+    codigoPais: claveObj.codigoPais,
+    fecha: Object.values(claveObj.fecha).join(''),
+    cedulaEmisor: claveObj.cedulaEmisor,
+    consecutivo: Object.values(claveObj.consecutivo).join(''),
+    situacionCE: claveObj.situacionCE,
+    codigoSeguridad: claveObj.codigoSeguridad
+  }
   return Object.values(clave).join('')
+}
+
+export default (opts: ClaveOpts): string => {
+  const claveObj = genClaveObj(opts)
+  return genString(claveObj)
 }
 
 /*
