@@ -8,7 +8,7 @@ const PATH = `${RUT}/v1/recepcion/`
 const URL = MAIN_DOMAIN + PATH
 
 export default (token: string, postOptions: any): Record<string, any> => {
-  console.log('postOptions', postOptions)
+  // console.log('postOptions', postOptions)
   return axios({
     url: URL,
     method: 'post',
@@ -22,4 +22,5 @@ export default (token: string, postOptions: any): Record<string, any> => {
 
 /*
  * https://www.hacienda.go.cr/docs/5d16ade309fe0_Guia_IdP.pdf
+ * https://www.hacienda.go.cr/ATV/ComprobanteElectronico/docs/esquemas/2016/v4.2/comprobantes-electronicos-api.html#
  */

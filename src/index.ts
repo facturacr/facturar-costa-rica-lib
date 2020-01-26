@@ -52,7 +52,7 @@ export default async (token, frontEndRequest: FrontEndRequest, xmlOpt) => {
     },
     comprobanteXml: XML
   }
-  await send(token, finalMesage).catch((err) => {
+  return send(token, finalMesage).catch((err) => {
     console.log('error', err)
   })
 }
