@@ -8,9 +8,11 @@ const PATH = `${RUT}/v1/recepcion/`
 const URL = MAIN_DOMAIN + PATH
 
 export default (token: string, postOptions: any): Record<string, any> => {
-  const data = JSON.stringify(postOptions)
-  console.log('data', data)
-  return axios.post(URL, data, {
+  console.log('postOptions', postOptions)
+  return axios({
+    url: URL,
+    method: 'post',
+    data: postOptions,
     headers: {
       Authorization: 'bearer ' + token,
       'Content-Type': 'application/json'
