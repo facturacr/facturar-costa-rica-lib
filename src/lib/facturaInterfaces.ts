@@ -56,7 +56,7 @@ export interface Persona {
 }
 
 export interface FacturaElectronica {
-  Clave: number;
+  Clave: string;
   CodigoActividad: number;
   NumeroConsecutivo: number;
   FechaEmision: Date;
@@ -70,4 +70,18 @@ export interface FacturaElectronica {
   Otros: {
     OtroTexto: string;
   };
+}
+
+export interface SimpleFacturaElectronica {
+  Clave: string;
+  NombreEmisor: string;
+  TipoIdentificacionEmisor: string;
+  NumeroCedulaEmisor: string;
+  NombreReceptor: string;
+  TipoIdentificacionReceptor: string;
+  NumeroCedulaReceptor: string;
+  Mensaje: string;
+  DetalleMensaje: string;
+  MontoTotalImpuesto: number;
+  TotalFactura: number;
 }

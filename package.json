@@ -41,8 +41,15 @@
     "typescript": "^3.6.3"
   },
   "dependencies": {
+    "@peculiar/webcrypto": "^1.0.22",
     "axios": "^0.19.0",
     "fast-xml-parser": "^3.12.20",
+    "google-p12-pem": "^2.0.3",
+    "node-forge": "^0.9.1",
+    "node-rsa": "^1.0.7",
+    "pem": "^1.14.3",
+    "x509": "^0.3.4",
+    "xadesjs": "^2.0.16",
     "xml-crypto": "^1.4.0"
   }
 }

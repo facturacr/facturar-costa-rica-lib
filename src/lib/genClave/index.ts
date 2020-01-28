@@ -1,30 +1,98 @@
-import { ClaveOpts } from './interfaces'
-import { tipoDocumento } from '../data/tipoDocumento'
+import { ClaveOpts, Clave, ClaveFecha, Consecutivo } from './interfaces'
+import { tipoDocumento } from '../../data/tipoDocumento'
 // import { tipoCedula } from '../data/tipoCedula'
 
-function getConsecutivo (opts: ClaveOpts): string {
-  const codigoDocumento = tipoDocumento[opts.tipoDocumento]
-  return opts.sucursal + opts.terminal + codigoDocumento + opts.consecutivo
+const DEFAULT_VALUES = {
+  tipoDocumento: '01',
+  codigoPais: '506'
 }
 
-function getDateInfo (date: Date): string {
-  const day = date.getDay().toString().padStart(2, '0')
-  const month = date.getMonth().toString().padStart(2, '0')
+function getConsecutivo(opts: ClaveOpts): Consecutivo {
+  const typeDocument = tipoDocumento[opts.tipoDocumento]
+  const codeDocument = typeDocument ? typeDocument.code : DEFAULT_VALUES.tipoDocumento
+  return {
+    sucursal: opts.sucursal,
+    terminal: opts.terminal,
+    tipoDocumento: codeDocument,
+    consecutivo: opts.consecutivo
+  }
+}
+
+function getDateInfo(date: Date): ClaveFecha {
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0')
   const year = date.getFullYear() - 2000
-  return day + month + year
+  return {
+    dia: day,
+    mes: month,
+    ano: year.toString()
+  }
+}
+
+function getRandomSecurityCode(): string {
+  const securityCodeLength = Number(8)
+  const random = Math.floor(Math.random() * securityCodeLength)
+  return random.toString().padStart(8, '0')
+}
+
+function getCountryCode(code: string): string {
+  if (code || !code.length) {
+    return DEFAULT_VALUES.codigoPais
+  }
+  return code.padStart(3, '0')
+}
+
+function getIssuerCard(issuerCard: string): string {
+  return issuerCard.padStart(12, '0')
+}
+
+export function genClaveObj(opts: ClaveOpts): Clave {
+  const today = new Date()
+  return {
+    codigoPais: getCountryCode(opts.codigoPais),
+    fecha: getDateInfo(today),
+    cedulaEmisor: getIssuerCard(opts.cedulaEmisor),
+    consecutivo: getConsecutivo(opts),
+    situacionCE: opts.situacionCE,
+    codigoSeguridad: opts.codigoSeguridad.padStart(8, '0') || getRandomSecurityCode()
+  }
+}
+
+export function genString(claveObj: Clave): string {
+  const clave = {
+    codigoPais: claveObj.codigoPais,
+    fecha: Object.values(claveObj.fecha).join(''),
+    cedulaEmisor: claveObj.cedulaEmisor,
+    consecutivo: Object.values(claveObj.consecutivo).join(''),
+    situacionCE: claveObj.situacionCE,
+    codigoSeguridad: claveObj.codigoSeguridad
+  }
+  return Object.values(clave).join('')
 }
 
 export default (opts: ClaveOpts): string => {
-  const today = new Date()
-  const clave = {
-    codigoPais: opts.codigoPais.padStart(3, '0') || '506',
-    fecha: getDateInfo(today),
-    cedulaEmisor: opts.cedulaEmisor,
-    consecutivoFinal: getConsecutivo(opts),
-    situacion: opts.situacionCE,
-    codigoSeguridad: opts.codigoSeguridad
+  const claveObj = genClaveObj(opts)
+  return genString(claveObj)
+}
+
+export function stringToClave(claveStr: string): Clave {
+  return {
+    codigoPais: claveStr.slice(0, 3),
+    fecha: {
+      dia: claveStr.slice(3, 5),
+      mes: claveStr.slice(5, 7),
+      ano: claveStr.slice(7, 9)
+    },
+    cedulaEmisor: claveStr.slice(9, 21),
+    consecutivo: {
+      sucursal: claveStr.slice(21, 24),
+      terminal: claveStr.slice(24, 29),
+      tipoDocumento: claveStr.slice(29, 31),
+      consecutivo: claveStr.slice(31, 41)
+    },
+    situacionCE: claveStr.slice(41, 42),
+    codigoSeguridad: claveStr.slice(42, 51)
   }
-  return Object.values(clave).join('')
 }
 
 /*
