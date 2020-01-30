@@ -1,5 +1,5 @@
-import { FacturaElectronica, Message, Resumen, Persona } from '../facturaInterfaces'
-import { FrontEndRequest } from './interfaces'
+import { FacturaElectronica, Message, Resumen, Persona } from '../../types/facturaInterfaces'
+import { FrontEndRequest } from '../../types/globalInterfaces'
 import genXML from '../genXML'
 
 // Default XML Values

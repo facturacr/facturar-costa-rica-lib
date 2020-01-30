@@ -1,5 +1,4 @@
 import axios from 'axios'
-import qs from 'querystring'
 
 const MAIN_DOMAIN = 'https://api.comprobanteselectronicos.go.cr/'
 const RUT = (process.env.IS_STG) ? 'recepcion-sandbox' : 'recepcion'

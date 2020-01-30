@@ -1,4 +1,5 @@
-import { Persona } from '../facturaInterfaces'
+import { Persona } from './facturaInterfaces'
+
 export interface FrontEndRequest {
   Emisor: Persona;
   Receptor: Persona;
@@ -24,4 +25,17 @@ export interface ClaveOpts {
   codigoSeguridad: string;
   sucursal: string;
   terminal: string;
+}
+
+interface FinalMessagePerson {
+  tipoIdentificacion: string;
+  numeroIdentificacion: string;
+}
+
+interface FinalMessage {
+  clave: string;
+  fecha: string;
+  emisor: FinalMessagePerson;
+  receptor: FinalMessagePerson;
+  comprobanteXML: string;
 }

@@ -1,4 +1,4 @@
-import { FrontEndRequest } from '../src/lib/genJSON/interfaces'
+import { FrontEndRequest } from '../src/types/globalInterfaces'
 import getToken from '../src/services/getToken'
 import fe from './input/frontendRequest'
 import send from '../src'

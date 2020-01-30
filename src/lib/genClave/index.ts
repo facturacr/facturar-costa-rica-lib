@@ -1,8 +1,10 @@
 import { ClaveOpts, Clave, ClaveFecha, Consecutivo } from './interfaces'
+import { FrontEndRequest, FinalMessagePerson } from '../../types/globalInterfaces'
 import { tipoDocumento } from '../../data/tipoDocumento'
 
 const DEFAULT_VALUES = {
   tipoDocumento: '01',
+  tipoIdentificacion: '01',
   codigoPais: '506'
 }
 
@@ -14,6 +16,14 @@ function getConsecutivo(opts: ClaveOpts): Consecutivo {
     terminal: opts.terminal,
     tipoDocumento: codeDocument,
     consecutivo: opts.consecutivo
+  }
+}
+
+function getSender(frontEndRequest: FrontEndRequest): FinalMessagePerson {
+  const sender = frontEndRequest.Emisor
+  return {
+    tipoIdentificacion: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
+    numeroIdentificacion: sender.Identificacion.Numero
   }
 }
 
@@ -63,7 +73,7 @@ export function genString(claveObj: Clave): string {
   return Object.values(clave).join('')
 }
 
-export default (opts: ClaveOpts): string => {
+export default function genClave(opts: ClaveOpts): string {
   const claveObj = genClaveObj(opts)
   return genString(claveObj)
 }
@@ -86,6 +96,22 @@ export function stringToClave(claveStr: string): Clave {
     situacionCE: claveStr.slice(41, 42),
     codigoSeguridad: claveStr.slice(42, 51)
   }
+}
+
+export function getClave(frontEndRequest: FrontEndRequest): string {
+  const sender = getSender(frontEndRequest)
+  const claveOptions: ClaveOpts = {
+    cedulaEmisor: sender.numeroIdentificacion,
+    codigoPais: frontEndRequest.codigoPais,
+    codigoSeguridad: frontEndRequest.codigoSeguridad,
+    consecutivo: frontEndRequest.consecutivo,
+    situacionCE: frontEndRequest.situationEC,
+    sucursal: frontEndRequest.sucursal,
+    terminal: frontEndRequest.terminal,
+    tipoCedula: sender.tipoIdentificacion,
+    tipoDocumento: frontEndRequest.tipoDocumento
+  }
+  return genClave(claveOptions)
 }
 
 /*

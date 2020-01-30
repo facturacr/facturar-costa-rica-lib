@@ -1,30 +1,13 @@
-import { FrontEndRequest, ClaveOpts } from './lib/genJSON/interfaces'
-import genClave from './lib/genClave'
-import genJSON from './lib/genJSON'
-import send from './services/send'
+import { FrontEndRequest, FinalMessagePerson } from './types/globalInterfaces'
+import { getClave } from './lib/genClave/index'
+import genJSON from './lib/genJSON/index'
+import send from './services/send/index'
 
 const DEFAULT_VALUES = {
   tipoIdentificacion: '01'
 }
-interface Person {
-  tipoIdentificacion: string;
-  numeroIdentificacion: string;
-}
 
-interface FinalMessagePerson {
-  tipoIdentificacion: string;
-  numeroIdentificacion: string;
-}
-
-interface FinalMessage {
-  clave: string;
-  fecha: string;
-  emisor: FinalMessagePerson;
-  receptor: FinalMessagePerson;
-  comprobanteXML: string;
-}
-
-function getSender(frontEndRequest: FrontEndRequest): Person {
+function getSender(frontEndRequest: FrontEndRequest): FinalMessagePerson {
   const sender = frontEndRequest.Emisor
   return {
     tipoIdentificacion: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
@@ -32,7 +15,7 @@ function getSender(frontEndRequest: FrontEndRequest): Person {
   }
 }
 
-function getReceiver(frontEndRequest: FrontEndRequest): Person {
+function getReceiver(frontEndRequest: FrontEndRequest): FinalMessagePerson {
   const receiver = frontEndRequest.Receptor
   return {
     tipoIdentificacion: receiver.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
@@ -40,23 +23,7 @@ function getReceiver(frontEndRequest: FrontEndRequest): Person {
   }
 }
 
-function getClave(frontEndRequest: FrontEndRequest): string {
-  const sender = getSender(frontEndRequest)
-  const claveOptions: ClaveOpts = {
-    cedulaEmisor: sender.numeroIdentificacion,
-    codigoPais: frontEndRequest.codigoPais,
-    codigoSeguridad: frontEndRequest.codigoSeguridad,
-    consecutivo: frontEndRequest.consecutivo,
-    situacionCE: frontEndRequest.situationEC,
-    sucursal: frontEndRequest.sucursal,
-    terminal: frontEndRequest.terminal,
-    tipoCedula: sender.tipoIdentificacion,
-    tipoDocumento: frontEndRequest.tipoDocumento
-  }
-  return genClave(claveOptions)
-}
-
-export default async (token, frontEndRequest: FrontEndRequest, xmlOpt) => {
+export default async (token, frontEndRequest: FrontEndRequest, xmlOpt): Promise<any> => {
   const clave = getClave(frontEndRequest)
   const date = new Date()
   const XML = await genJSON(frontEndRequest, clave, {
@@ -72,8 +39,10 @@ export default async (token, frontEndRequest: FrontEndRequest, xmlOpt) => {
     comprobanteXml: XML
   }
 
-  console.log('final mesagge', finalMesage)
+  // console.log('final mesagge', finalMesage)
   return send(token, finalMesage).catch((err) => {
-    console.log('error', err)
+    const response = err.response || {}
+    const header = response.headers || {}
+    console.log('x-error-cause', header['x-error-cause'])
   })
 }

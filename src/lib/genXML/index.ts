@@ -1,6 +1,6 @@
 import { j2xParser } from 'fast-xml-parser'
 import { declaration, defaultOptions } from './xmlConfig'
-import sigXML from './sigXML'
+import sigXML from './sigXML/index'
 
 const encodeXML = (xmlStr: string): string => {
   const buffer = Buffer.from(xmlStr)
@@ -9,7 +9,7 @@ const encodeXML = (xmlStr: string): string => {
 
 export const genXML = (obj: object): string => {
   const parser = new j2xParser(defaultOptions) // eslint-disable-line new-cap
-  const mainKey = Object.keys(obj)[0]
+  // const mainKey = Object.keys(obj)[0]
   // obj[mainKey].attr = XML_ATTRS
   return declaration + parser.parse(obj)
 }
