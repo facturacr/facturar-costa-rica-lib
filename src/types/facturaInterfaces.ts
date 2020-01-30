@@ -77,3 +77,7 @@ export interface FacturaElectronica {
     OtroTexto: string;
   };
 }
+
+export interface FacturaElectronicaContenedor {
+  FacturaElectronica: FacturaElectronica;
+}

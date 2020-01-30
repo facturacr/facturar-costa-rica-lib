@@ -30,7 +30,6 @@ export default async (token, frontEndRequest: FrontEndRequest, xmlOpt): Promise<
     ...xmlOpt,
     base64: true
   })
-  // console.log('frontEndRequest', frontEndRequest)
   const finalMesage = {
     clave: clave,
     fecha: date.toISOString(),
@@ -39,7 +38,6 @@ export default async (token, frontEndRequest: FrontEndRequest, xmlOpt): Promise<
     comprobanteXml: XML
   }
 
-  // console.log('final mesagge', finalMesage)
   return send(token, finalMesage).catch((err) => {
     const response = err.response || {}
     const header = response.headers || {}

@@ -1,4 +1,4 @@
-import { FacturaElectronica, Message, Resumen, Persona } from '../../types/facturaInterfaces'
+import { FacturaElectronicaContenedor, Message, Resumen, Persona } from '../../types/facturaInterfaces'
 import { FrontEndRequest } from '../../types/globalInterfaces'
 import genXML from '../genXML'
 
@@ -58,14 +58,16 @@ export default async (frontEndRequest: FrontEndRequest, clave: string, options: 
   const receiver = getReceiver(frontEndRequest)
   const sender = getSender(frontEndRequest)
   const message = getDefaultMessage()
-  const factura: FacturaElectronica = {
-    Clave: clave,
-    Emisor: receiver,
-    Receptor: sender,
-    Mensaje: message,
-    ResumenFactura: resum,
-    CodigoActividad: frontEndRequest.actividad,
-    NumeroConsecutivo: frontEndRequest.consecutivo
+  const factura: FacturaElectronicaContenedor = {
+    FacturaElectronica: {
+      Clave: clave,
+      Emisor: receiver,
+      Receptor: sender,
+      Mensaje: message,
+      ResumenFactura: resum,
+      CodigoActividad: frontEndRequest.actividad,
+      NumeroConsecutivo: frontEndRequest.consecutivo
+    }
   }
   const XML = await genXML(factura, options)
   return XML
