@@ -1,4 +1,4 @@
-import { j2xParser } from 'fast-xml-parser'
+import { j2xParser, parse } from 'fast-xml-parser'
 import { declaration, defaultOptions, FE_XML_ATTRS } from './xmlConfig'
 import sigXML from './sigXML/index'
 
@@ -20,4 +20,17 @@ export default async (obj: object, options?: any): Promise<string> => {
   const signedXML = await sigXML(xml, options.buffer, options.password)
   if (!options.base64) return signedXML
   return encodeXML(signedXML)
+}
+
+export const xmlToJson = (xml: string): any => {
+  try {
+    const json = parse(xml, {
+      ignoreAttributes: false,
+      ignoreNameSpace: false,
+      parseNodeValue: false
+    })
+    return json.FacturaElectronica
+  } catch (err) {
+    return null
+  }
 }
