@@ -1,18 +1,6 @@
 import genClave from '../src/lib/genClave'
 import { ClaveOpts } from '../src/lib/genClave/interfaces'
 
-export interface ClaveOpts {
-  codigoPais: string;
-  tipoDocumento: string;
-  tipoCedula: string;
-  cedulaEmisor: string;
-  situacionCE: string;
-  consecutivo: string;
-  codigoSeguridad: string;
-  sucursal: string;
-  terminal: string;
-}
-
 const clave: ClaveOpts = {
   codigoPais: '506',
   tipoDocumento: 'FE',

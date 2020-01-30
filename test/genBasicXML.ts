@@ -7,17 +7,30 @@ const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
 const frontEndRequest: FrontEndRequest = {
-  senderID: '003102759157',
-  receiverId: '206920142',
-  sale: '001',
+  Emisor: {
+    Nombre: '',
+    Identificacion: {
+      Tipo: '001',
+      Numero: '003102759157'
+    }
+  },
+  Receptor: {
+    Nombre: '',
+    Identificacion: {
+      Tipo: '001',
+      Numero: '206920142'
+    }
+  },
+  sucursal: '001',
   terminal: '00001',
-  typeDocument: 'FE',
-  countryCode: '506',
-  consecutive: '0000000042',
-  securityCode: '',
+  tipoDocumento: 'FE',
+  codigoPais: '506',
+  consecutivo: 1,
+  codigoSeguridad: '',
   situationEC: '1',
   total: 904000,
-  tax: 10
+  impuesto: 10,
+  actividad: 12121
 }
 
 const XML = genJSON(frontEndRequest, {

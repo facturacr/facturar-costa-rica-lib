@@ -1,15 +1,17 @@
+import { Persona } from '../facturaInterfaces'
 export interface FrontEndRequest {
-  senderID: string;
-  receiverId: string;
-  sale: string;
+  Emisor: Persona;
+  Receptor: Persona;
+  sucursal: string;
   terminal: string;
-  typeDocument: string;
-  countryCode: string;
-  securityCode: string;
-  consecutive: string;
+  tipoDocumento: string;
+  codigoPais: string;
+  codigoSeguridad: string;
+  consecutivo: string;
   situationEC: string;
+  actividad: number;
   total: number;
-  tax: number;
+  impuesto: number;
 }
 
 export interface ClaveOpts {

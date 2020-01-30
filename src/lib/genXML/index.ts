@@ -1,5 +1,5 @@
 import { j2xParser } from 'fast-xml-parser'
-import { XML_ATTRS, declaration, defaultOptions } from './xmlConfig'
+import { declaration, defaultOptions } from './xmlConfig'
 import sigXML from './sigXML'
 
 const encodeXML = (xmlStr: string): string => {
