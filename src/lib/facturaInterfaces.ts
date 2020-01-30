@@ -13,30 +13,30 @@ export interface DetalleServicio {
 }
 
 export interface Resumen {
-  CodigoTipoMoneda: {
+  CodigoTipoMoneda?: {
     CodigoMoneda: string;
     TipoCambio: string;
   };
-  TotalServGravados: number;
-  TotalServExentos: number;
-  TotalMercanciasGravadas: number;
-  TotalMercanciasExentas: number;
-  TotalGravado: number;
-  TotalExento: number;
+  TotalServGravados?: number;
+  TotalServExentos?: number;
+  TotalMercanciasGravadas?: number;
+  TotalMercanciasExentas?: number;
+  TotalGravado?: number;
+  TotalExento?: number;
   TotalVenta: number;
-  TotalDescuentos: number;
-  TotalVentaNeta: number;
+  TotalDescuentos?: number;
+  TotalVentaNeta?: number;
   TotalImpuesto: number;
-  TotalComprobante: number;
+  TotalComprobante?: number;
 }
 
 export interface Persona {
   Nombre: string;
   Identificacion: {
-    Tipo: string;
+    Tipo?: string;
     Numero: string;
   };
-  NombreComercial: string;
+  NombreComercial?: string;
   Ubicacion?: {
     Provincia: string;
     Canton: string;
@@ -44,7 +44,7 @@ export interface Persona {
     Barrio: string;
     OtrasSenas: string;
   };
-  Telefono: {
+  Telefono?: {
     CodigoPais: string;
     NumTelefono: string;
   };
@@ -52,36 +52,28 @@ export interface Persona {
     CodigoPais: string;
     NumTelefono: string;
   };
-  CorreoElectronico: string;
+  CorreoElectronico?: string;
+}
+
+export interface Message {
+  Mensaje: string;
+  DetalleMensaje: string;
 }
 
 export interface FacturaElectronica {
   Clave: string;
   CodigoActividad: number;
-  NumeroConsecutivo: number;
-  FechaEmision: Date;
+  NumeroConsecutivo: string;
+  FechaEmision?: Date;
   Emisor: Persona;
   Receptor: Persona;
-  CondicionVenta: number;
-  PlazoCredito: number;
-  MedioPago: number;
-  DetalleServicio: DetalleServicio;
+  CondicionVenta?: number;
+  PlazoCredito?: number;
+  MedioPago?: number;
+  DetalleServicio?: DetalleServicio;
   ResumenFactura: Resumen;
-  Otros: {
+  Mensaje: Message;
+  Otros?: {
     OtroTexto: string;
   };
-}
-
-export interface SimpleFacturaElectronica {
-  Clave: string;
-  NombreEmisor: string;
-  TipoIdentificacionEmisor: string;
-  NumeroCedulaEmisor: string;
-  NombreReceptor: string;
-  TipoIdentificacionReceptor: string;
-  NumeroCedulaReceptor: string;
-  Mensaje: string;
-  DetalleMensaje: string;
-  MontoTotalImpuesto: number;
-  TotalFactura: number;
 }

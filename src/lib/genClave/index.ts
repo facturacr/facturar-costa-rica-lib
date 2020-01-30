@@ -1,6 +1,5 @@
 import { ClaveOpts, Clave, ClaveFecha, Consecutivo } from './interfaces'
 import { tipoDocumento } from '../../data/tipoDocumento'
-// import { tipoCedula } from '../data/tipoCedula'
 
 const DEFAULT_VALUES = {
   tipoDocumento: '01',
@@ -29,12 +28,6 @@ function getDateInfo(date: Date): ClaveFecha {
   }
 }
 
-function getRandomSecurityCode(): string {
-  const securityCodeLength = Number(8)
-  const random = Math.floor(Math.random() * securityCodeLength)
-  return random.toString().padStart(8, '0')
-}
-
 function getCountryCode(code: string): string {
   if (code || !code.length) {
     return DEFAULT_VALUES.codigoPais
@@ -54,7 +47,7 @@ export function genClaveObj(opts: ClaveOpts): Clave {
     cedulaEmisor: getIssuerCard(opts.cedulaEmisor),
     consecutivo: getConsecutivo(opts),
     situacionCE: opts.situacionCE,
-    codigoSeguridad: opts.codigoSeguridad.padStart(8, '0') || getRandomSecurityCode()
+    codigoSeguridad: opts.codigoSeguridad.padStart(8, '0')
   }
 }
 

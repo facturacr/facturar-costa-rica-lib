@@ -1,4 +1,4 @@
-import { SimpleFacturaElectronica } from '../facturaInterfaces'
+import { FacturaElectronica, Message, Resumen, Persona } from '../facturaInterfaces'
 import { FrontEndRequest } from './interfaces'
 import genXML from '../genXML'
 
@@ -7,22 +7,14 @@ const DEFAULT_VALUES = {
   key: 0,
   message: 'Default msj',
   detailsMessage: 'Default details msj',
-  taxes: 100
+  taxes: 100,
+  tipoIdentificacion: '01'
 }
 
-// todo: find sender info in db
-function findSenderByID(): any {
+function getDefaultMessage(): Message {
   return {
-    senderName: 'Carlos Blanco',
-    senderTypeID: '01'
-  }
-}
-
-// todo: find receiver info in db
-function findReceiverById(): any {
-  return {
-    receiverName: 'Carlos Rivera',
-    receiverTypeID: '01'
+    Mensaje: DEFAULT_VALUES.message,
+    DetalleMensaje: DEFAULT_VALUES.detailsMessage
   }
 }
 
@@ -31,22 +23,49 @@ function calculateTaxes(billTotal: number, billTaxes: number): number {
   return (billTotal * taxes) / 100
 }
 
+function getBillResum(frontEndRequest: FrontEndRequest): Resumen {
+  const taxes = calculateTaxes(frontEndRequest.total, frontEndRequest.impuesto)
+  return {
+    TotalImpuesto: taxes,
+    TotalVenta: frontEndRequest.total
+  }
+}
+
+function getSender(frontEndRequest: FrontEndRequest): Persona {
+  const sender = frontEndRequest.Emisor
+  return {
+    Nombre: sender.Nombre,
+    Identificacion: {
+      Numero: sender.Identificacion.Numero,
+      Tipo: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion
+    }
+  }
+}
+
+function getReceiver(frontEndRequest: FrontEndRequest): Persona {
+  const receiver = frontEndRequest.Receptor
+  return {
+    Nombre: receiver.Nombre,
+    Identificacion: {
+      Numero: receiver.Identificacion.Numero,
+      Tipo: receiver.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion
+    }
+  }
+}
+
 export default async (frontEndRequest: FrontEndRequest, clave: string, options: any): Promise<any> => {
-  const sender = findSenderByID()
-  const receiver = findReceiverById()
-  const taxes = calculateTaxes(frontEndRequest.total, frontEndRequest.tax)
-  const factura: SimpleFacturaElectronica = {
+  const resum = getBillResum(frontEndRequest)
+  const receiver = getReceiver(frontEndRequest)
+  const sender = getSender(frontEndRequest)
+  const message = getDefaultMessage()
+  const factura: FacturaElectronica = {
     Clave: clave,
-    NombreEmisor: sender.senderName,
-    TipoIdentificacionEmisor: sender.senderTypeID,
-    NumeroCedulaEmisor: frontEndRequest.senderID,
-    NombreReceptor: receiver.receiverName,
-    TipoIdentificacionReceptor: receiver.receiverTypeID,
-    NumeroCedulaReceptor: frontEndRequest.receiverId,
-    Mensaje: DEFAULT_VALUES.message,
-    DetalleMensaje: DEFAULT_VALUES.detailsMessage,
-    MontoTotalImpuesto: taxes,
-    TotalFactura: frontEndRequest.total
+    Emisor: receiver,
+    Receptor: sender,
+    Mensaje: message,
+    ResumenFactura: resum,
+    CodigoActividad: frontEndRequest.actividad,
+    NumeroConsecutivo: frontEndRequest.consecutivo
   }
   const XML = await genXML(factura, options)
   return XML

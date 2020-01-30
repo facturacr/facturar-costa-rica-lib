@@ -1,5 +1,5 @@
-import getToken from '../src/services/getToken'
 import { FrontEndRequest } from '../src/lib/genJSON/interfaces'
+import getToken from '../src/services/getToken'
 import fe from './input/frontendRequest'
 import send from '../src'
 import fs from 'fs'
@@ -15,7 +15,7 @@ const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
 const frontEndRequest: FrontEndRequest = fe
 
-async function main() {
+async function main(): Promise<void> {
   const token = await getToken({
     client_id: 'api-stag', // eslint-disable-line
     client_secret: '', // eslint-disable-line
