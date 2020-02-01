@@ -11,10 +11,10 @@ console.log('process.env.IS_STG', IS_STG)
 const SOURCE_P12_URI = process.env.SOURCE_P12_URI
 const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
 const XML_TO_CONFIRM = process.env.XML_TO_CONFIRM
-const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
-const xml = fs.readFileSync(XML_TO_CONFIRM, 'utf-8')
 
 async function main(): Promise<void> {
+  const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
+  const xml = fs.readFileSync(XML_TO_CONFIRM, 'utf-8')
   const token = await getToken({
     client_id: 'api-stag', // eslint-disable-line
     client_secret: '', // eslint-disable-line
@@ -22,7 +22,11 @@ async function main(): Promise<void> {
     username: USERNAME_TEST,
     password: PASSWORD_TEST
   })
-  confirmXML(token, xml)
+  const data = await confirmXML(token.data.access_token, xml, {
+    buffer: pem,
+    password: SOURCE_P12_PASSPORT
+  })
+  console.log('data', data)
 }
 
 main()

@@ -7,15 +7,19 @@ const encodeXML = (xmlStr: string): string => {
   return buffer.toString('base64')
 }
 
-export const genXML = (obj: object): string => {
+export const objToXML = (obj: object): string => {
   const parser = new j2xParser(defaultOptions) // eslint-disable-line new-cap
   const mainKey = Object.keys(obj)[0]
   obj[mainKey].attr = FE_XML_ATTRS
   return declaration + parser.parse(obj)
 }
 
-export default async (obj: object, options?: any): Promise<string> => {
-  const xml = genXML(obj)
+export async function genXML(obj: object, options?: {
+    buffer?: string;
+    password?: string;
+    base64?: boolean;
+  }): Promise<string> {
+  const xml = objToXML(obj)
   if (!options) return xml
   const signedXML = await sigXML(xml, options.buffer, options.password)
   if (!options.base64) return signedXML

@@ -28,7 +28,7 @@ async function main(): Promise<void> {
     password: SOURCE_P12_PASSPORT
   })
   if (data) {
-    console.log(data.statusText)
+    console.log(data)
   }
 }
 

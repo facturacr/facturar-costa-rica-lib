@@ -34,6 +34,10 @@ function getOptions(certificate: string): any {
 }
 
 export default async function signXML(xmlStr: string, p12: string, p12Password: string): Promise<string> {
+  if (!p12 || !p12Password) {
+    console.log('p12 options undefined')
+    return
+  }
   const crypto = new Crypto()
   XAdES.Application.setEngine('NodeJS', crypto)
   const xadesXml = new XAdES.SignedXml()

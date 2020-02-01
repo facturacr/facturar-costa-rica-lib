@@ -1,6 +1,6 @@
 import { FacturaElectronicaContenedor, Message, Resumen, Persona } from '../../types/facturaInterfaces'
 import { FrontEndRequest } from '../../types/globalInterfaces'
-import genXML from '../genXML'
+import { genXML } from '../genXML'
 
 // Default XML Values
 const DEFAULT_VALUES = {

@@ -10,6 +10,13 @@ interface MensajeReceptor {
   NumeroConsecutivoReceptor: string;
 }
 
+interface NumeroConsecutivo {
+  sucursal: string;
+  terminal: string;
+  tipoDocumento: string;
+  consecutivo: string;
+}
+
 export interface MensajeReceptorContenedor {
   MensajeReceptor: MensajeReceptor;
 }
