@@ -6,12 +6,22 @@ const PATH = `${RUT}/v1/recepcion/`
 
 const URL = MAIN_DOMAIN + PATH
 
-export default (token: string, postOptions: any): Record<string, any> => {
-  // console.log('postOptions', postOptions)
+export function send(token: string, postOptions: any): Record<string, any> {
   return axios({
     url: URL,
     method: 'post',
     data: postOptions,
+    headers: {
+      Authorization: 'bearer ' + token,
+      'Content-Type': 'application/json'
+    }
+  })
+}
+
+export function sendToCustomURL(token: string, url: string): Record<string, any> {
+  return axios({
+    url: url,
+    method: 'post',
     headers: {
       Authorization: 'bearer ' + token,
       'Content-Type': 'application/json'

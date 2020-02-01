@@ -1,6 +1,6 @@
 import { MensajeReceptorContenedor } from './types/xml/mensajeReceptor'
 import { xmlToJson, genXML } from './lib/genXML/index'
-import send from './services/send/index'
+import { send, sendToCustomURL } from './services/send/index'
 
 function getMsjObj(fullInvoice: any): MensajeReceptorContenedor {
   return {
@@ -42,7 +42,7 @@ export default async (token, xmlStr, pemOpt): Promise<any> => {
     comprobanteXml: xmlBase64
   }
 
-  return send(token, finalMesage).catch((err) => {
+  const firstResponse = await send(token, finalMesage).catch((err) => {
     const response = err.response || {}
     const header = response.headers || {}
     const data = response.data = {}
@@ -50,4 +50,18 @@ export default async (token, xmlStr, pemOpt): Promise<any> => {
     console.log('data', data)
     console.log('x-error-cause', header['x-error-cause'])
   })
+  if (firstResponse) {
+    const location = firstResponse.headers.location
+    console.log('data', location)
+    const secondResponse = await sendToCustomURL(token, location).catch((err) => {
+      const response = err.response || {}
+      const header = response.headers || {}
+      const data = response.data = {}
+      console.log('status', response.status)
+      console.log('data', data)
+      console.log('x-error-cause', header['x-error-cause'])
+    })
+    console.log('secondResponse', secondResponse)
+  }
+
 }
