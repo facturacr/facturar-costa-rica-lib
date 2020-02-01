@@ -21,7 +21,7 @@ export function send(token: string, postOptions: any): Record<string, any> {
 export function sendToCustomURL(token: string, url: string): Record<string, any> {
   return axios({
     url: url,
-    method: 'post',
+    method: 'get',
     headers: {
       Authorization: 'bearer ' + token,
       'Content-Type': 'application/json'
