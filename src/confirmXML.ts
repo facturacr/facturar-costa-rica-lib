@@ -61,7 +61,6 @@ export default async (token, xmlStr, pemOpt): Promise<any> => {
       console.log('data', data)
       console.log('x-error-cause', header['x-error-cause'])
     })
-    console.log('secondResponse', secondResponse)
+    console.log('secondResponse', secondResponse.data)
   }
-
 }

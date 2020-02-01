@@ -26,7 +26,6 @@ async function main(): Promise<void> {
     buffer: pem,
     password: SOURCE_P12_PASSPORT
   })
-  console.log('data', data)
 }
 
 main()
