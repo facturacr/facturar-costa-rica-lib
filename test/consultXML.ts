@@ -5,6 +5,11 @@ const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
 const location = process.env.CLAVE_TEST
 
+function decodeBase64(encodedStr: string): string {
+  const buff = Buffer.from(encodedStr, 'base64')
+  return buff.toString('ascii')
+}
+
 async function main(): Promise<any> {
   const token = await getToken({
     client_id: 'api-stag', // eslint-disable-line
@@ -13,7 +18,7 @@ async function main(): Promise<any> {
     username: USERNAME_TEST,
     password: PASSWORD_TEST
   })
-  const secondResponse = await sendToCustomURL(token, location).catch((err) => {
+  const secondResponse = await sendToCustomURL(token.data.access_token, location).catch((err) => {
     const response = err.response || {}
     const header = response.headers || {}
     const data = response.data = {}
@@ -23,7 +28,9 @@ async function main(): Promise<any> {
     console.log('err', err)
   })
   if (secondResponse) {
-    console.log('secondResponse', secondResponse.data)
+    const XMLResponse = secondResponse.data['respuesta-xml']
+    const text = decodeBase64(XMLResponse)
+    console.log('secondResponse', text)
   }
 }
 
