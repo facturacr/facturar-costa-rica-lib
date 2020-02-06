@@ -65,6 +65,11 @@ Generar la clave
 ts-node --require dotenv/config test/getClave.ts
 ```
 
+Para crear una nota de credito
+```
+ts-node --require dotenv/config test/createCreditNote.ts
+```
+
 ## Tools
 Para usar readXML establecer en .env
 ```
