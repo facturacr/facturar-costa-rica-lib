@@ -36,8 +36,8 @@ function getSender(frontEndRequest: FrontEndRequest): Persona {
   return {
     Nombre: sender.Nombre,
     Identificacion: {
-      Numero: sender.Identificacion.Numero,
-      Tipo: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion
+      Tipo: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
+      Numero: sender.Identificacion.Numero
     }
   }
 }
@@ -47,13 +47,13 @@ function getReceiver(frontEndRequest: FrontEndRequest): Persona {
   return {
     Nombre: receiver.Nombre,
     Identificacion: {
-      Numero: receiver.Identificacion.Numero,
-      Tipo: receiver.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion
+      Tipo: receiver.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
+      Numero: receiver.Identificacion.Numero
     }
   }
 }
 
-export default async (frontEndRequest: FrontEndRequest, clave: string, options: any): Promise<any> => {
+export default async (frontEndRequest: FrontEndRequest, date: any, clave: string, options: any): Promise<any> => {
   const resum = getBillResum(frontEndRequest)
   const receiver = getReceiver(frontEndRequest)
   const sender = getSender(frontEndRequest)
@@ -61,12 +61,13 @@ export default async (frontEndRequest: FrontEndRequest, clave: string, options: 
   const factura: FacturaElectronicaContenedor = {
     FacturaElectronica: {
       Clave: clave,
+      CodigoActividad: frontEndRequest.actividad.padStart(6, '0'),
+      NumeroConsecutivo: frontEndRequest.consecutivo.padStart(20, '0'),
+      FechaEmision: date,
       Emisor: sender,
       Receptor: receiver,
       Mensaje: message,
-      ResumenFactura: resum,
-      CodigoActividad: frontEndRequest.actividad,
-      NumeroConsecutivo: frontEndRequest.consecutivo
+      ResumenFactura: resum
     }
   }
   const XML = await genXML(factura, options)

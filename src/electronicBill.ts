@@ -26,7 +26,7 @@ function getReceiver(frontEndRequest: FrontEndRequest): FinalMessagePerson {
 export default async (token, frontEndRequest: FrontEndRequest, xmlOpt): Promise<any> => {
   const clave = getClave(frontEndRequest)
   const date = new Date()
-  const XML = await genJSON(frontEndRequest, clave, {
+  const XML = await genJSON(frontEndRequest, date.toISOString(), clave, {
     ...xmlOpt,
     base64: true
   })

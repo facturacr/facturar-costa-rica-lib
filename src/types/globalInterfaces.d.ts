@@ -10,7 +10,7 @@ export interface FrontEndRequest {
   codigoSeguridad: string;
   consecutivo: string;
   situationEC: string;
-  actividad: number;
+  actividad: string;
   total: number;
   impuesto: number;
 }

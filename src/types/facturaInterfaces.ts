@@ -62,7 +62,7 @@ export interface Message {
 
 export interface FacturaElectronica {
   Clave: string;
-  CodigoActividad: number;
+  CodigoActividad: string;
   NumeroConsecutivo: string;
   FechaEmision?: Date;
   Emisor: Persona;
