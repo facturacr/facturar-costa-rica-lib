@@ -10,13 +10,19 @@ function addSigToXML(xml: Document, signature: any): string {
   return sXML.toString()
 }
 
-function getOptions(publicKey: CryptoKey, x509: any): OptionsXAdES {
+const generateId = (crypto): string => {
+  return (`${1e7}-${1e3}-${4e3}-${8e3}-${1e11}`).replace(/[018]/g, (str: any) =>
+    (str ^ (crypto.getRandomValues(new Uint8Array(1)))[0] & 15 >> str / 4).toString(16)
+  )
+}
+
+function getOptions(publicKey: CryptoKey, x509: any, referenceId: string): OptionsXAdES {
   return { // options
     keyValue: publicKey,
-    id: 'Signature001',
     references: [
       {
-        id: 'Reference-001',
+        id: 'Reference-' + referenceId,
+        uri: '',
         hash: 'SHA-256',
         transforms: [
           // 'c14n',
@@ -54,6 +60,7 @@ export default async function signXML(xmlStr: string, p12: string, p12Password: 
     return
   }
   const crypto = new Crypto()
+  const referenceId = generateId(crypto)
   Application.setEngine('OpenSSL', crypto)
   const xadesXml = new SignedXml()
   const algorithm = getAlgorithm()
@@ -70,7 +77,7 @@ export default async function signXML(xmlStr: string, p12: string, p12Password: 
     algorithm,
     key,
     xml,
-    getOptions(publicKey, x509)
+    getOptions(publicKey, x509, referenceId)
   )
   return addSigToXML(xml, signature)
 }
