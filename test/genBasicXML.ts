@@ -10,6 +10,7 @@ const SOURCE_P12_URI = process.env.SOURCE_P12_URI
 const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 const clave = getClave(frontEndRequest)
+const outputSourceURI = process.env.SOURCE_URI_XML_OUTPUT
 
 async function main(): Promise<void> {
   const XML = await genJSON(frontEndRequest, clave, {
@@ -17,7 +18,10 @@ async function main(): Promise<void> {
     password: SOURCE_P12_PASSPORT,
     base64: false
   })
-  console.log('XML', XML)
+  const data = XML
+  fs.writeFile(outputSourceURI, data, (err) => {
+    if (err) throw err
+  })
 }
 
 main()

@@ -37,7 +37,6 @@ export default async (token, frontEndRequest: FrontEndRequest, xmlOpt): Promise<
     receptor: getReceiver(frontEndRequest),
     comprobanteXml: XML
   }
-
   return send(token, finalMesage).catch((err) => {
     const response = err.response || {}
     const header = response.headers || {}

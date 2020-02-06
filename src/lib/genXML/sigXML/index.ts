@@ -1,13 +1,7 @@
-import * as XAdES from 'xadesjs'
+import { Application, SignedXml, Parse, OptionsXAdES } from 'xadesjs'
 import { Crypto } from '@peculiar/webcrypto'
-import { getCryptoKey } from './getCryptoKey'
+import { genKeysAndCert } from './genKeysAndCert'
 import { XMLSerializer } from 'xmldom-alpha'
-
-function preparePem(pem: string): string {
-  return pem
-    .replace(/-----(BEGIN|END)[\w\d\s]+-----/g, '')
-    .replace(/[\r\n]/g, '')
-}
 
 function addSigToXML(xml: Document, signature: any): string {
   xml.documentElement.appendChild(signature.GetXml())
@@ -16,20 +10,41 @@ function addSigToXML(xml: Document, signature: any): string {
   return sXML.toString()
 }
 
-function getOptions(certificate: string): any {
-  const x509 = preparePem(certificate)
+function getOptions(publicKey: CryptoKey, x509: any): OptionsXAdES {
   return { // options
+    keyValue: publicKey,
+    id: 'Signature001',
     references: [
-      { hash: 'SHA-256', transforms: ['c14n', 'enveloped'] }
+      {
+        id: 'Reference-001',
+        hash: 'SHA-256',
+        transforms: [
+          // 'c14n',
+          'enveloped'
+        ]
+      }
     ],
+    signerRole: {
+      claimed: ['ObligadoTributario']
+    },
     policy: {
-      hash: 'SHA-256',
+      hash: 'SHA-1',
       identifier: {
         qualifier: 'OIDAsURI',
         value: 'https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronica'
       }
     },
+    x509: [x509],
     signingCertificate: x509
+  }
+}
+
+function getAlgorithm(): any {
+  return {
+    name: 'RSASSA-PKCS1-v1_5',
+    hash: 'SHA-256',
+    publicExponent: new Uint8Array([1, 0, 1]),
+    modulusLength: 2048
   }
 }
 
@@ -39,19 +54,23 @@ export default async function signXML(xmlStr: string, p12: string, p12Password: 
     return
   }
   const crypto = new Crypto()
-  XAdES.Application.setEngine('NodeJS', crypto)
-  const xadesXml = new XAdES.SignedXml()
-  const { cryptoKey, certificate } = getCryptoKey(crypto, p12, p12Password)
-  const xml = XAdES.Parse(xmlStr)
-  const alg = {
-    name: 'RSASSA-PKCS1-v1_5',
-    hash: 'SHA-256'
-  }
+  Application.setEngine('OpenSSL', crypto)
+  const xadesXml = new SignedXml()
+  const algorithm = getAlgorithm()
+  const result = genKeysAndCert(crypto, {
+    algorithm,
+    keyStr: p12,
+    password: p12Password
+  })
+  const x509 = result.cert.certPem
+  const xml = Parse(xmlStr)
+  const key = await result.privateKey
+  const publicKey = await result.publicKey
   const signature = await xadesXml.Sign(
-    alg,
-    await cryptoKey,
+    algorithm,
+    key,
     xml,
-    getOptions(certificate)
+    getOptions(publicKey, x509)
   )
   return addSigToXML(xml, signature)
 }

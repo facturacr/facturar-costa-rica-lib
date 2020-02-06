@@ -13,7 +13,7 @@ export const FE_XML_ATTRS = { // Factura Electronica
   'xmlns:ds': 'http://www.w3.org/2000/09/xmldsig#',
   'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
   'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-  'xsi:schemaLocation': `${FE_XML_SCHEMA_NS}${FE_XML_SCHEMA_XSI}`
+  'xsi:schemaLocation': `${FE_XML_SCHEMA_NS} ${FE_XML_SCHEMA_XSI}`
 }
 
 export const MR_XML_ATTRS = { // Mensaje Receptor

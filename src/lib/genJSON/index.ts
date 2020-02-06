@@ -61,8 +61,8 @@ export default async (frontEndRequest: FrontEndRequest, clave: string, options: 
   const factura: FacturaElectronicaContenedor = {
     FacturaElectronica: {
       Clave: clave,
-      Emisor: receiver,
-      Receptor: sender,
+      Emisor: sender,
+      Receptor: receiver,
       Mensaje: message,
       ResumenFactura: resum,
       CodigoActividad: frontEndRequest.actividad,
