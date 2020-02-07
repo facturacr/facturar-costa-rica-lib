@@ -38,7 +38,9 @@ function getSender(frontEndRequest: FrontEndRequest): Persona {
     Identificacion: {
       Tipo: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
       Numero: sender.Identificacion.Numero
-    }
+    },
+    NombreComercial: sender.NombreComercial,
+    Ubicacion: {}
   }
 }
 
@@ -66,6 +68,9 @@ export default async (frontEndRequest: FrontEndRequest, date: any, clave: string
       FechaEmision: date,
       Emisor: sender,
       Receptor: receiver,
+      CondicionVenta: '01',
+      MedioPago: '04',
+      DetalleServicio: {},
       Mensaje: message,
       ResumenFactura: resum
     }

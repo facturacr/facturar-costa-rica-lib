@@ -1,5 +1,5 @@
 export interface DetalleServicio {
-  LineaDetalle: {
+  LineaDetalle?: {
     NumeroLinea: number;
     Cantidad: number;
     UnidadMedida: string;
@@ -38,19 +38,19 @@ export interface Persona {
   };
   NombreComercial?: string;
   Ubicacion?: {
-    Provincia: string;
-    Canton: string;
-    Distrito: string;
-    Barrio: string;
-    OtrasSenas: string;
+    Provincia?: string;
+    Canton?: string;
+    Distrito?: string;
+    Barrio?: string;
+    OtrasSenas?: string;
   };
   Telefono?: {
-    CodigoPais: string;
-    NumTelefono: string;
+    CodigoPais?: string;
+    NumTelefono?: string;
   };
   Fax?: {
-    CodigoPais: string;
-    NumTelefono: string;
+    CodigoPais?: string;
+    NumTelefono?: string;
   };
   CorreoElectronico?: string;
 }
@@ -67,9 +67,9 @@ export interface FacturaElectronica {
   FechaEmision?: Date;
   Emisor: Persona;
   Receptor: Persona;
-  CondicionVenta?: number;
-  PlazoCredito?: number;
-  MedioPago?: number;
+  CondicionVenta?: string;
+  PlazoCredito?: string;
+  MedioPago?: string;
   DetalleServicio?: DetalleServicio;
   ResumenFactura: Resumen;
   Mensaje: Message;

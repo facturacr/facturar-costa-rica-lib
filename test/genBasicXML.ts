@@ -13,7 +13,8 @@ const clave = getClave(frontEndRequest)
 const outputSourceURI = process.env.SOURCE_URI_XML_OUTPUT
 
 async function main(): Promise<void> {
-  const XML = await genJSON(frontEndRequest, clave, {
+  const date = new Date()
+  const XML = await genJSON(frontEndRequest, date.toISOString(), clave, {
     buffer: pem,
     password: SOURCE_P12_PASSPORT,
     base64: false
