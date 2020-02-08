@@ -11,6 +11,7 @@ export interface FrontEndRequest {
   consecutivo: string;
   situationEC: string;
   actividad: string;
+  LineasDetalle: Array<any>;
   total: number;
   impuesto: number;
 }

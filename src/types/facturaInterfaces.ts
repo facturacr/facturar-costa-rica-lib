@@ -1,15 +1,17 @@
+interface LineaDetalle{
+  NumeroLinea: string;
+  Cantidad: number;
+  UnidadMedida: string;
+  Detalle: string;
+  PrecioUnitario: number;
+  MontoTotal: number;
+  SubTotal: number;
+  BaseImponible?: number;
+  MontoTotalLinea: number;
+}
+
 export interface DetalleServicio {
-  LineaDetalle?: {
-    NumeroLinea: number;
-    Cantidad: number;
-    UnidadMedida: string;
-    Detalle: string;
-    PrecioUnitario: number;
-    MontoTotal: number;
-    SubTotal: number;
-    BaseImponible: number;
-    MontoTotalLinea: number;
-  };
+  LineaDetalle: Array<LineaDetalle>;
 }
 
 export interface Resumen {
@@ -17,17 +19,19 @@ export interface Resumen {
     CodigoMoneda: string;
     TipoCambio: string;
   };
-  TotalServGravados?: number;
-  TotalServExentos?: number;
+  TotalServGravados: number;
+  TotalServExentos: number;
+  TotalServExonerado: number;
   TotalMercanciasGravadas?: number;
   TotalMercanciasExentas?: number;
   TotalGravado?: number;
-  TotalExento?: number;
+  TotalExento: number;
+  TotalExonerado: number;
   TotalVenta: number;
   TotalDescuentos?: number;
   TotalVentaNeta?: number;
   TotalImpuesto: number;
-  TotalComprobante?: number;
+  TotalComprobante: number;
 }
 
 export interface Persona {
@@ -72,7 +76,6 @@ export interface FacturaElectronica {
   MedioPago?: string;
   DetalleServicio?: DetalleServicio;
   ResumenFactura: Resumen;
-  Mensaje: Message;
   Otros?: {
     OtroTexto: string;
   };

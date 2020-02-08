@@ -26,8 +26,22 @@ function calculateTaxes(billTotal: number, billTaxes: number): number {
 function getBillResum(frontEndRequest: FrontEndRequest): Resumen {
   const taxes = calculateTaxes(frontEndRequest.total, frontEndRequest.impuesto)
   return {
+    CodigoTipoMoneda: {
+      CodigoMoneda: 'CRC',
+      TipoCambio: '585.69'
+    },
+    TotalServGravados: 0,
+    TotalServExentos: 0,
+    TotalServExonerado: 0,
+    TotalMercanciasGravadas: 0,
+    TotalMercanciasExentas: 0,
+    TotalExento: 0,
+    TotalExonerado: 0,
+    TotalVenta: frontEndRequest.total,
+    TotalDescuentos: 0,
+    TotalVentaNeta: frontEndRequest.total,
     TotalImpuesto: taxes,
-    TotalVenta: frontEndRequest.total
+    TotalComprobante: frontEndRequest.total
   }
 }
 
@@ -40,7 +54,10 @@ function getSender(frontEndRequest: FrontEndRequest): Persona {
       Numero: sender.Identificacion.Numero
     },
     NombreComercial: sender.NombreComercial,
-    Ubicacion: sender.Ubicacion
+    Ubicacion: sender.Ubicacion,
+    Telefono: sender.Telefono,
+    Fax: sender.Fax,
+    CorreoElectronico: sender.CorreoElectronico
   }
 }
 
@@ -72,8 +89,9 @@ export default async (frontEndRequest: FrontEndRequest, date: any, clave: string
       Receptor: receiver,
       CondicionVenta: '01',
       MedioPago: '04',
-      DetalleServicio: {},
-      Mensaje: message,
+      DetalleServicio: {
+        LineaDetalle: frontEndRequest.LineasDetalle
+      },
       ResumenFactura: resum
     }
   }
