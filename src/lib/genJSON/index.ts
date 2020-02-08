@@ -40,7 +40,7 @@ function getSender(frontEndRequest: FrontEndRequest): Persona {
       Numero: sender.Identificacion.Numero
     },
     NombreComercial: sender.NombreComercial,
-    Ubicacion: {}
+    Ubicacion: sender.Ubicacion
   }
 }
 
@@ -51,7 +51,9 @@ function getReceiver(frontEndRequest: FrontEndRequest): Persona {
     Identificacion: {
       Tipo: receiver.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
       Numero: receiver.Identificacion.Numero
-    }
+    },
+    NombreComercial: receiver.NombreComercial,
+    Ubicacion: receiver.Ubicacion
   }
 }
 
