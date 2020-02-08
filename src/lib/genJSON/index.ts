@@ -7,7 +7,7 @@ const DEFAULT_VALUES = {
   key: 0,
   message: 'Default msj',
   detailsMessage: 'Default details msj',
-  taxes: 100,
+  taxes: 0.13,
   tipoIdentificacion: '01'
 }
 
@@ -20,7 +20,7 @@ function getDefaultMessage(): Message {
 
 function calculateTaxes(billTotal: number, billTaxes: number): number {
   const taxes = typeof billTaxes === 'number' ? billTaxes : DEFAULT_VALUES.taxes
-  return (billTotal * taxes) / 100
+  return billTotal * taxes
 }
 
 function getBillResum(frontEndRequest: FrontEndRequest): Resumen {
@@ -33,15 +33,16 @@ function getBillResum(frontEndRequest: FrontEndRequest): Resumen {
     TotalServGravados: 0,
     TotalServExentos: 0,
     TotalServExonerado: 0,
-    TotalMercanciasGravadas: 0,
+    TotalMercanciasGravadas: frontEndRequest.total,
     TotalMercanciasExentas: 0,
+    TotalGravado: frontEndRequest.total,
     TotalExento: 0,
     TotalExonerado: 0,
     TotalVenta: frontEndRequest.total,
     TotalDescuentos: 0,
     TotalVentaNeta: frontEndRequest.total,
     TotalImpuesto: taxes,
-    TotalComprobante: frontEndRequest.total
+    TotalComprobante: frontEndRequest.total + taxes
   }
 }
 
@@ -88,7 +89,7 @@ export default async (frontEndRequest: FrontEndRequest, date: any, clave: string
       Emisor: sender,
       Receptor: receiver,
       CondicionVenta: '01',
-      MedioPago: '04',
+      MedioPago: '01',
       DetalleServicio: {
         LineaDetalle: frontEndRequest.LineasDetalle
       },

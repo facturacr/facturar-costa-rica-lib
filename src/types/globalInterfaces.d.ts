@@ -1,4 +1,4 @@
-import { Persona } from './facturaInterfaces'
+import { Persona, LineaDetalle } from './facturaInterfaces'
 
 export interface FrontEndRequest {
   Emisor: Persona;
@@ -11,7 +11,7 @@ export interface FrontEndRequest {
   consecutivo: string;
   situationEC: string;
   actividad: string;
-  LineasDetalle: Array<any>;
+  LineasDetalle: Array<LineaDetalle>;
   total: number;
   impuesto: number;
 }

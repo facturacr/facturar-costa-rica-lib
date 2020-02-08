@@ -1,4 +1,4 @@
-interface LineaDetalle{
+export interface LineaDetalle {
   NumeroLinea: string;
   Cantidad: number;
   UnidadMedida: string;
@@ -7,6 +7,12 @@ interface LineaDetalle{
   MontoTotal: number;
   SubTotal: number;
   BaseImponible?: number;
+  Impuesto: {
+    Codigo: string;
+    CodigoTarifa: string;
+    Tarifa: number;
+    Monto?: number;
+  },
   MontoTotalLinea: number;
 }
 
