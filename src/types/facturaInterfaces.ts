@@ -12,7 +12,7 @@ export interface LineaDetalle {
     CodigoTarifa: string;
     Tarifa: number;
     Monto?: number;
-  },
+  };
   MontoTotalLinea: number;
 }
 

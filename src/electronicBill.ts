@@ -1,5 +1,5 @@
 import { FrontEndRequest, FinalMessagePerson } from './types/globalInterfaces'
-import { getClave } from './lib/genClave/index'
+import { genClaveObj, genString, parseOptions } from './lib/genClave/index'
 import genJSON from './lib/genJSON/index'
 import { send } from './services/send/index'
 
@@ -24,14 +24,17 @@ function getReceiver(frontEndRequest: FrontEndRequest): FinalMessagePerson {
 }
 
 export default async (token, frontEndRequest: FrontEndRequest, xmlOpt): Promise<any> => {
-  const clave = getClave(frontEndRequest)
+  const parsedOpts = parseOptions(frontEndRequest)
+  const claveObj = genClaveObj(parsedOpts)
+  const claveStr = genString(claveObj)
   const date = new Date()
-  const XML = await genJSON(frontEndRequest, date.toISOString(), clave, {
+  const consecutivo = Object.values(claveObj.consecutivo).join('')
+  const XML = await genJSON(frontEndRequest, date.toISOString(), claveStr, consecutivo, {
     ...xmlOpt,
     base64: true
   })
   const finalMesage = {
-    clave: clave,
+    clave: claveStr,
     fecha: date.toISOString(),
     emisor: getSender(frontEndRequest),
     receptor: getReceiver(frontEndRequest),

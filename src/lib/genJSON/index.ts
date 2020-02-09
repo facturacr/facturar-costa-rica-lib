@@ -75,16 +75,15 @@ function getReceiver(frontEndRequest: FrontEndRequest): Persona {
   }
 }
 
-export default async (frontEndRequest: FrontEndRequest, date: any, clave: string, options: any): Promise<any> => {
+export default async (frontEndRequest: FrontEndRequest, date: any, clave: string, consecutivo: string, options: any): Promise<any> => {
   const resum = getBillResum(frontEndRequest)
   const receiver = getReceiver(frontEndRequest)
   const sender = getSender(frontEndRequest)
-  const message = getDefaultMessage()
   const factura: FacturaElectronicaContenedor = {
     FacturaElectronica: {
       Clave: clave,
       CodigoActividad: frontEndRequest.actividad.padStart(6, '0'),
-      NumeroConsecutivo: frontEndRequest.consecutivo.padStart(20, '0'),
+      NumeroConsecutivo: consecutivo,
       FechaEmision: date,
       Emisor: sender,
       Receptor: receiver,

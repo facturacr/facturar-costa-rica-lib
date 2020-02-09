@@ -98,9 +98,9 @@ export function stringToClave(claveStr: string): Clave {
   }
 }
 
-export function getClave(frontEndRequest: FrontEndRequest): string {
+export function parseOptions(frontEndRequest: FrontEndRequest): ClaveOpts {
   const sender = getSender(frontEndRequest)
-  const claveOptions: ClaveOpts = {
+  return {
     cedulaEmisor: sender.numeroIdentificacion,
     codigoPais: frontEndRequest.codigoPais,
     codigoSeguridad: frontEndRequest.codigoSeguridad,
@@ -111,6 +111,10 @@ export function getClave(frontEndRequest: FrontEndRequest): string {
     tipoCedula: sender.tipoIdentificacion,
     tipoDocumento: frontEndRequest.tipoDocumento
   }
+}
+
+export function getClave(frontEndRequest: FrontEndRequest): string {
+  const claveOptions = parseOptions(frontEndRequest)
   return genClave(claveOptions)
 }
 
