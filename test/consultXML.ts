@@ -29,6 +29,11 @@ async function main(): Promise<any> {
   })
   if (secondResponse) {
     const XMLResponse = secondResponse.data['respuesta-xml']
+    const state = secondResponse.data['ind-estado']
+    if (!XMLResponse) {
+      console.log('state', state)
+      return
+    }
     const text = decodeBase64(XMLResponse)
     console.log('secondResponse', text)
   }

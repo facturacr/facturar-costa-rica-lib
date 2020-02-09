@@ -47,12 +47,17 @@ async function main(): Promise<void> {
     password: SOURCE_P12_PASSPORT
   })
   if (data) {
-    const secondResponse = await getConfimation(token, data, 3000)
+    const secondResponse = await getConfimation(token, data, 5000)
       .catch(err => {
         const response = err.response || {}
         console.log('response', response)
       })
     const XMLResponse = secondResponse.data['respuesta-xml']
+    if (!XMLResponse) {
+      const state = secondResponse.data['ind-estado']
+      console.log('state', state)
+      return
+    }
     const text = decodeBase64(XMLResponse)
     console.log('secondResponse', text)
   }
