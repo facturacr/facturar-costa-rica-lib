@@ -30,10 +30,10 @@ function getBillResum(frontEndRequest: FrontEndRequest): Resumen {
       CodigoMoneda: 'CRC',
       TipoCambio: '585.69'
     },
-    TotalServGravados: 0,
+    TotalServGravados: frontEndRequest.total,
     TotalServExentos: 0,
     TotalServExonerado: 0,
-    TotalMercanciasGravadas: frontEndRequest.total,
+    TotalMercanciasGravadas: 0,
     TotalMercanciasExentas: 0,
     TotalGravado: frontEndRequest.total,
     TotalExento: 0,
