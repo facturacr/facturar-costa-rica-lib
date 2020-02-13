@@ -12,17 +12,25 @@ const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
 async function main(): Promise<void> {
-  const token = await getToken({
+  const tokenObj = await getToken({
     client_id: 'api-stag', // eslint-disable-line
     client_secret: '', // eslint-disable-line
     grant_type: 'password', // eslint-disable-line
     username: USERNAME_TEST,
     password: PASSWORD_TEST
   })
-  const data = await creditNote(token.data.access_token, frontEndRequest, {
+  const token = tokenObj.data.access_token
+  const xmlOpt = {
     buffer: pem,
-    password: SOURCE_P12_PASSPORT
+    password: SOURCE_P12_PASSPORT,
+    base64: false
+  }
+  const data = await creditNote({
+    token,
+    frontEndRequest,
+    xmlOpt
   })
+  console.log(typeof data)
   if (data) {
     console.log(data)
   }
