@@ -40,3 +40,9 @@ interface FinalMessage {
   receptor: FinalMessagePerson;
   comprobanteXML: string;
 }
+
+type XmlOpt = {
+  buffer: string;
+  password: string;
+  base64: boolean;
+}

@@ -1,5 +1,5 @@
 import { FrontEndRequest, XmlOpt } from './types/globalInterfaces'
-import { NotaCreditoContenedor } from './types/xml/notaDeCredito'
+import { NotaDebitoContenedor } from './types/xml/notaDeDebito'
 import { genXML } from './lib/genXML/index'
 import { send } from './services/send/index'
 import { genClaveObj, genString, parseOptions } from './lib/genClave/index'
@@ -11,19 +11,19 @@ import {
   getSimpleSender
 } from './helpers/comprobantes'
 
-const VOUCHER_TYPE = 'NC'
+const VOUCHER_TYPE = 'ND'
 
 export function parseCreditNote(options: {
   frontEndRequest: FrontEndRequest;
   consecutivo: string;
   clave: string;
   date: Date;
-}): NotaCreditoContenedor {
+}): NotaDebitoContenedor {
   const resum = getBillResum(options.frontEndRequest)
   const receiver = getReceiver(options.frontEndRequest)
   const sender = getSender(options.frontEndRequest)
   return {
-    NotaCreditoElectronica: {
+    NotaDebitoElectronica: {
       Clave: options.clave,
       CodigoActividad: options.frontEndRequest.actividad.padStart(6, '0'),
       NumeroConsecutivo: options.consecutivo,
@@ -52,9 +52,9 @@ function sendMessage(options: {
   const finalMesage = {
     clave: options.clave,
     fecha: options.date.toISOString(),
-    comprobanteXml: options.xml,
     emisor,
-    receptor
+    receptor,
+    comprobanteXml: options.xml
   }
   return send(options.token, finalMesage).catch((err) => {
     const response = err.response || {}

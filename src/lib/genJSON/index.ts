@@ -95,6 +95,6 @@ export default async (frontEndRequest: FrontEndRequest, date: any, clave: string
       ResumenFactura: resum
     }
   }
-  const XML = await genXML(factura, options)
+  const XML = await genXML('FE', factura, options)
   return XML
 }
