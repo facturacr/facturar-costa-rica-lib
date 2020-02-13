@@ -1,19 +1,21 @@
+export interface Impuesto {
+  Codigo: string;
+  CodigoTarifa: string;
+  Tarifa: number;
+  Monto?: number;
+}
+
 export interface LineaDetalle {
-  NumeroLinea: string;
-  Cantidad: number;
-  UnidadMedida: string;
+  NumeroLinea?: string;
+  Cantidad?: number;
+  UnidadMedida?: string;
   Detalle: string;
   PrecioUnitario: number;
-  MontoTotal: number;
-  SubTotal: number;
+  MontoTotal?: number;
+  SubTotal?: number;
   BaseImponible?: number;
-  Impuesto: {
-    Codigo: string;
-    CodigoTarifa: string;
-    Tarifa: number;
-    Monto?: number;
-  };
-  MontoTotalLinea: number;
+  Impuesto: Impuesto;
+  MontoTotalLinea?: number;
 }
 
 export interface DetalleServicio {

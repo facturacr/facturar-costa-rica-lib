@@ -1,5 +1,5 @@
-import { FacturaElectronicaContenedor, Message, Resumen, Persona } from '../../types/facturaInterfaces'
 import { FrontEndRequest } from '../../types/globalInterfaces'
+import { FacturaElectronicaContenedor, Resumen, Persona, Impuesto, LineaDetalle } from '../../types/facturaInterfaces'
 import { genXML } from '../genXML'
 
 // Default XML Values
@@ -7,19 +7,11 @@ const DEFAULT_VALUES = {
   key: 0,
   message: 'Default msj',
   detailsMessage: 'Default details msj',
-  taxes: 0.13,
   tipoIdentificacion: '01'
 }
 
-function getDefaultMessage(): Message {
-  return {
-    Mensaje: DEFAULT_VALUES.message,
-    DetalleMensaje: DEFAULT_VALUES.detailsMessage
-  }
-}
-
-function sumLines(opts: FrontEndRequest): any {
-  return opts.LineasDetalle.reduce((accumulator: any, currentValue: any) => {
+function sumLines(lines: LineaDetalle[]): any {
+  return lines.reduce((accumulator: any, currentValue: any) => {
     const prevTotal = accumulator.MontoTotal || 0
     const prevTax = accumulator.Impuesto || { Impuesto: { Monto: 0 } }
     return {
@@ -29,8 +21,8 @@ function sumLines(opts: FrontEndRequest): any {
   }, 0)
 }
 
-function getBillResum(opts: FrontEndRequest): Resumen {
-  const sum = sumLines(opts)
+function getBillResum(lines: LineaDetalle[]): Resumen {
+  const sum = sumLines(lines)
   return {
     CodigoTipoMoneda: {
       CodigoMoneda: 'CRC',
@@ -68,6 +60,36 @@ function getSender(frontEndRequest: FrontEndRequest): Persona {
   }
 }
 
+function setTaxObj(subtotal: number, taxObj: Impuesto): Impuesto {
+  const tax = taxObj.Tarifa || 13
+  return {
+    Codigo: taxObj.Codigo,
+    CodigoTarifa: taxObj.CodigoTarifa,
+    Tarifa: tax,
+    Monto: subtotal * (tax / 100)
+  }
+}
+
+function setLinesDefaults(lines: LineaDetalle[]): LineaDetalle[] {
+  return lines.map((line, index) => {
+    const quantity = line.Cantidad || 1
+    const total = line.PrecioUnitario * quantity
+    const subtotal = total // restar descuentos
+    const taxObj = setTaxObj(subtotal, line.Impuesto)
+    return {
+      NumeroLinea: (index + 1).toString(),
+      Cantidad: quantity,
+      UnidadMedida: line.UnidadMedida || 'Sp',
+      Detalle: line.Detalle,
+      PrecioUnitario: line.PrecioUnitario,
+      MontoTotal: total,
+      SubTotal: subtotal,
+      Impuesto: taxObj,
+      MontoTotalLinea: subtotal + taxObj.Monto
+    }
+  })
+}
+
 function getReceiver(frontEndRequest: FrontEndRequest): Persona {
   const receiver = frontEndRequest.Receptor
   return {
@@ -82,9 +104,9 @@ function getReceiver(frontEndRequest: FrontEndRequest): Persona {
 }
 
 export default async (frontEndRequest: FrontEndRequest, date: any, clave: string, consecutivo: string, options: any): Promise<any> => {
-  const resum = getBillResum(frontEndRequest)
   const receiver = getReceiver(frontEndRequest)
   const sender = getSender(frontEndRequest)
+  const lines = setLinesDefaults(frontEndRequest.LineasDetalle)
   const factura: FacturaElectronicaContenedor = {
     FacturaElectronica: {
       Clave: clave,
@@ -96,9 +118,9 @@ export default async (frontEndRequest: FrontEndRequest, date: any, clave: string
       CondicionVenta: '01',
       MedioPago: '01',
       DetalleServicio: {
-        LineaDetalle: frontEndRequest.LineasDetalle
+        LineaDetalle: lines
       },
-      ResumenFactura: resum
+      ResumenFactura: getBillResum(lines)
     }
   }
   const XML = await genXML('FE', factura, options)

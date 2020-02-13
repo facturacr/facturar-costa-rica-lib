@@ -12,8 +12,8 @@ function getConsecutivo(opts: ClaveOpts): Consecutivo {
   const typeDocument = tipoDocumento[opts.tipoDocumento]
   const codeDocument = typeDocument ? typeDocument.code : DEFAULT_VALUES.tipoDocumento
   return {
-    sucursal: opts.sucursal,
-    terminal: opts.terminal,
+    sucursal: opts.sucursal || '001',
+    terminal: opts.terminal || '00001',
     tipoDocumento: codeDocument,
     consecutivo: opts.consecutivo
   }
@@ -39,7 +39,7 @@ function getDateInfo(date: Date): ClaveFecha {
 }
 
 function getCountryCode(code: string): string {
-  if (code || !code.length) {
+  if (!code || !code.length) {
     return DEFAULT_VALUES.codigoPais
   }
   return code.padStart(3, '0')

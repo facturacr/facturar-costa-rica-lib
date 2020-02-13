@@ -3,17 +3,15 @@ import { Persona, LineaDetalle } from './facturaInterfaces'
 export interface FrontEndRequest {
   Emisor: Persona;
   Receptor: Persona;
-  sucursal: string;
-  terminal: string;
-  tipoDocumento: string;
-  codigoPais: string;
+  sucursal?: string;
+  terminal?: string;
+  tipoDocumento?: string;
+  codigoPais?: string;
   codigoSeguridad: string;
   consecutivo: string;
   situationEC: string;
   actividad: string;
   LineasDetalle: Array<LineaDetalle>;
-  total: number;
-  impuesto: number;
 }
 
 export interface ClaveOpts {
