@@ -1,4 +1,4 @@
-import { FrontEndRequest } from '../types/globalInterfaces'
+import { FrontEndRequest, FinalMessagePerson } from '../types/globalInterfaces'
 import { Resumen, Persona } from '../types/facturaInterfaces'
 
 const DEFAULT_VALUES = {
@@ -7,6 +7,22 @@ const DEFAULT_VALUES = {
   detailsMessage: 'Default details msj',
   taxes: 100,
   tipoIdentificacion: '01'
+}
+
+export function getSimpleSender(frontEndRequest: FrontEndRequest): FinalMessagePerson {
+  const sender = frontEndRequest.Emisor
+  return {
+    tipoIdentificacion: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
+    numeroIdentificacion: sender.Identificacion.Numero
+  }
+}
+
+export function getSimpleReceiver(frontEndRequest: FrontEndRequest): FinalMessagePerson {
+  const receiver = frontEndRequest.Receptor
+  return {
+    tipoIdentificacion: receiver.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
+    numeroIdentificacion: receiver.Identificacion.Numero
+  }
 }
 
 function calculateTaxes(billTotal: number, billTaxes: number): number {
