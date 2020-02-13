@@ -18,31 +18,37 @@ function getDefaultMessage(): Message {
   }
 }
 
-function calculateTaxes(billTotal: number, billTaxes: number): number {
-  const taxes = typeof billTaxes === 'number' ? billTaxes : DEFAULT_VALUES.taxes
-  return billTotal * taxes
+function sumLines(opts: FrontEndRequest): any {
+  return opts.LineasDetalle.reduce((accumulator: any, currentValue: any) => {
+    const prevTotal = accumulator.MontoTotal || 0
+    const prevTax = accumulator.Impuesto || { Impuesto: { Monto: 0 } }
+    return {
+      total: prevTotal + currentValue.MontoTotal,
+      taxes: prevTax.Impuesto.Monto + currentValue.Impuesto.Monto
+    }
+  }, 0)
 }
 
-function getBillResum(frontEndRequest: FrontEndRequest): Resumen {
-  const taxes = calculateTaxes(frontEndRequest.total, frontEndRequest.impuesto)
+function getBillResum(opts: FrontEndRequest): Resumen {
+  const sum = sumLines(opts)
   return {
     CodigoTipoMoneda: {
       CodigoMoneda: 'CRC',
       TipoCambio: '585.69'
     },
-    TotalServGravados: frontEndRequest.total,
+    TotalServGravados: sum.total,
     TotalServExentos: 0,
     TotalServExonerado: 0,
     TotalMercanciasGravadas: 0,
     TotalMercanciasExentas: 0,
-    TotalGravado: frontEndRequest.total,
+    TotalGravado: sum.total,
     TotalExento: 0,
     TotalExonerado: 0,
-    TotalVenta: frontEndRequest.total,
+    TotalVenta: sum.total,
     TotalDescuentos: 0,
-    TotalVentaNeta: frontEndRequest.total,
-    TotalImpuesto: taxes,
-    TotalComprobante: frontEndRequest.total + taxes
+    TotalVentaNeta: sum.total,
+    TotalImpuesto: sum.taxes,
+    TotalComprobante: sum.total + sum.taxes
   }
 }
 
