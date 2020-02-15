@@ -2,11 +2,14 @@ interface MensajeReceptor {
   Clave: string;
   NumeroCedulaEmisor: string;
   FechaEmisionDoc: string;
-  Mensage: string;
+  Mensaje: string;
   DetalleMensaje?: string;
   MontoTotalImpuesto: string;
   CodigoActividad: string;
+  CondicionImpuesto: string;
+  MontoTotalDeGastoAplicable: string;
   NumeroCedulaReceptor: string;
+  TotalFactura: string;
   NumeroConsecutivoReceptor: string;
 }
 

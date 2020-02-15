@@ -12,12 +12,15 @@ export const tipoDocumento = {
     code: '04'
   },
   CCE: { // Confirmacion Comprobante Electronico
-    code: '05'
+    code: '05',
+    msjReceptorCode: '1'
   },
   CPCE: { // Confirmacion Parcial Comprobante Electronico
-    code: '06'
+    code: '06',
+    msjReceptorCode: '2'
   },
   RCE: { // Rechazo Comprobante Electronico
-    code: '07'
+    code: '07',
+    msjReceptorCode: '3'
   }
 }

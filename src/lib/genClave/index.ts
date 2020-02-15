@@ -8,15 +8,24 @@ const DEFAULT_VALUES = {
   codigoPais: '506'
 }
 
-function getConsecutivo(opts: ClaveOpts): Consecutivo {
-  const typeDocument = tipoDocumento[opts.tipoDocumento]
-  const codeDocument = typeDocument ? typeDocument.code : DEFAULT_VALUES.tipoDocumento
+function getConsecutivo(opts: {
+  tipoDocKey?: string;
+  sucursal?: string;
+  terminal?: string;
+  consecutivo: string;
+}): Consecutivo {
+  const tipoDocNum = tipoDocumento[opts.tipoDocKey]
   return {
     sucursal: opts.sucursal || '001',
     terminal: opts.terminal || '00001',
-    tipoDocumento: codeDocument,
+    tipoDocumento: tipoDocNum.code || '01',
     consecutivo: opts.consecutivo
   }
+}
+
+export function consecutivoStr(consecutivoObj: any): string {
+  const cons = getConsecutivo(consecutivoObj)
+  return Object.values(cons).join('')
 }
 
 function getSender(frontEndRequest: FrontEndRequest): FinalMessagePerson {
@@ -109,7 +118,7 @@ export function parseOptions(frontEndRequest: FrontEndRequest): ClaveOpts {
     sucursal: frontEndRequest.sucursal,
     terminal: frontEndRequest.terminal,
     tipoCedula: sender.tipoIdentificacion,
-    tipoDocumento: frontEndRequest.tipoDocumento
+    tipoDocKey: frontEndRequest.tipoDocumento
   }
 }
 
@@ -117,9 +126,3 @@ export function getClave(frontEndRequest: FrontEndRequest): string {
   const claveOptions = parseOptions(frontEndRequest)
   return genClave(claveOptions)
 }
-
-/*
- * https://blog.hulipractice.com/que-es-y-como-funciona-la-clave-numerica-en-la-factura-electronica-de-costa-rica/
- */
-
-// https://github.com/CRLibre/API_Hacienda/blob/0e4256a5ade4be91b22d7844af48ed4a0ff6eb6f/api/contrib/clave/clave.php

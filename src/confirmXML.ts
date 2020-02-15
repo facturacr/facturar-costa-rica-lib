@@ -1,48 +1,35 @@
-import { MensajeReceptorContenedor } from './types/xml/mensajeReceptor'
+import { consecutivoStr } from './lib/genClave'
 import { xmlToJson, genXML } from './lib/genXML/index'
-import { send, sendToCustomURL } from './services/send/index'
+import { send } from './services/send/index'
+import { getFinalMessage, getMsjObj } from './lib/genJSON/confirmXML'
 
-function getMsjObj(fullInvoice: any): MensajeReceptorContenedor {
-  return {
-    MensajeReceptor: {
-      Clave: fullInvoice.Clave,
-      NumeroCedulaEmisor: fullInvoice.Emisor.Identificacion.Numero,
-      FechaEmisionDoc: fullInvoice.FechaEmision,
-      Mensage: '',
-      DetalleMensaje: '',
-      MontoTotalImpuesto: fullInvoice.ResumenFactura.TotalImpuesto,
-      CodigoActividad: fullInvoice.CodigoActividad,
-      NumeroCedulaReceptor: fullInvoice.Receptor.Identificacion.Numero,
-      NumeroConsecutivoReceptor: ''
-    }
-  }
+function getConsecutivoStr(opts: any): string {
+  return consecutivoStr({
+    sucursal: opts.consecutivo.sucursal,
+    terminal: opts.consecutivo.terminal,
+    tipoDocKey: opts.tipoDocKey,
+    consecutivo: opts.consecutivo.consecutivo
+  })
 }
 
-export default async (token, xmlStr, pemOpt): Promise<any> => {
-  const date = new Date()
-  const fullInvoice = xmlToJson(xmlStr)
-  const msjObj = getMsjObj(fullInvoice)
-  const xmlBase64 = await genXML(msjObj, {
+export default async (opts: {
+  token: string;
+  tipoDocKey: string;
+  consecutivo: any;
+  xmlStr: string;
+  pemOpt: any;
+}): Promise<any> => {
+  const { token, pemOpt, tipoDocKey } = opts
+  const consecutivo = getConsecutivoStr(opts)
+  const fullInvoice = xmlToJson(opts.xmlStr)
+  const msjObj = getMsjObj({ fullInvoice, consecutivo, tipoDocKey })
+  const xmlBase64 = await genXML(tipoDocKey, msjObj, {
     buffer: pemOpt.buffer,
     password: pemOpt.password,
     base64: true
   })
-  const finalMesage = {
-    clave: fullInvoice.Clave,
-    fecha: date.toISOString(),
-    emisor: {
-      tipoIdentificacion: '02',
-      numeroIdentificacion: '3101123456'
-    },
-    receptor: {
-      tipoIdentificacion: '02',
-      numeroIdentificacion: '3101123456'
-    },
-    consecutivoReceptor: '',
-    comprobanteXml: xmlBase64
-  }
-
-  const firstResponse = await send(token, finalMesage).catch((err) => {
+  const finalMesage = getFinalMessage(fullInvoice, consecutivo, xmlBase64)
+  return send(token, finalMesage).catch((err) => {
     const response = err.response || {}
     const header = response.headers || {}
     const data = response.data = {}
@@ -50,17 +37,4 @@ export default async (token, xmlStr, pemOpt): Promise<any> => {
     console.log('data', data)
     console.log('x-error-cause', header['x-error-cause'])
   })
-  if (firstResponse) {
-    const location = firstResponse.headers.location
-    console.log('data', location)
-    const secondResponse = await sendToCustomURL(token, location).catch((err) => {
-      const response = err.response || {}
-      const header = response.headers || {}
-      const data = response.data = {}
-      console.log('status', response.status)
-      console.log('data', data)
-      console.log('x-error-cause', header['x-error-cause'])
-    })
-    console.log('secondResponse', secondResponse.data)
-  }
 }

@@ -12,35 +12,33 @@ export const defaultOptions = {
   attrNodeName: 'attr'
 }
 
-const FE_XML_ATTRS = { // Factura Electronica
-  xmlns: FE_XML_SCHEMA_NS,
+const COMMON_STRUCTURE = {
   'xmlns:ds': 'http://www.w3.org/2000/09/xmldsig#',
   'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
-  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance'
+}
+
+const FE_XML_ATTRS = { // Factura Electronica
+  xmlns: FE_XML_SCHEMA_NS,
+  ...COMMON_STRUCTURE,
   'xsi:schemaLocation': `${FE_XML_SCHEMA_NS} ${FE_XML_SCHEMA_XSI}`
 }
 
 const NC_XML_ATTRS = { // Nota Credito Electronica
   xmlns: NC_XML_SCHEMA_NS,
-  'xmlns:ds': 'http://www.w3.org/2000/09/xmldsig#',
-  'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
-  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+  ...COMMON_STRUCTURE,
   'xsi:schemaLocation': `${NC_XML_SCHEMA_NS} ${NC_XML_SCHEMA_XSI}`
 }
 
 const ND_XML_ATTRS = { // Nota Credito Electronica
   xmlns: NC_XML_SCHEMA_NS,
-  'xmlns:ds': 'http://www.w3.org/2000/09/xmldsig#',
-  'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
-  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+  ...COMMON_STRUCTURE,
   'xsi:schemaLocation': `${ND_XML_SCHEMA_NS} ${ND_XML_SCHEMA_XSI}`
 }
 
 const MR_XML_ATTRS = { // Mensaje Receptor
-  xmlns: FE_XML_SCHEMA_NS,
-  'xmlns:ds': 'http://www.w3.org/2000/09/xmldsig#',
-  'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
-  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+  xmlns: MR_XML_SCHEMA_NS,
+  ...COMMON_STRUCTURE,
   'xsi:schemaLocation': `${MR_XML_SCHEMA_NS}`
 }
 
@@ -48,5 +46,7 @@ export const xmlExtructures = {
   FE: FE_XML_ATTRS,
   NC: NC_XML_ATTRS,
   ND: ND_XML_ATTRS,
-  MR: MR_XML_ATTRS
+  CCE: MR_XML_ATTRS,
+  CPCE: MR_XML_ATTRS,
+  RCE: MR_XML_ATTRS
 }

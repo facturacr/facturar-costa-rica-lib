@@ -14,6 +14,7 @@ export const objToXML = (xmlStructure: string, obj: object): string => {
   return declaration + parser.parse(obj)
 }
 
+// tipoDocKey = xmlStructure
 export async function genXML(xmlStructure: string, obj: object, options?: {
     buffer?: string;
     password?: string;
