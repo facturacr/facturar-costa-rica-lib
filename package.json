@@ -46,10 +46,8 @@
     "fast-xml-parser": "^3.17.4",
     "google-p12-pem": "^3.0.3",
     "node-forge": "^0.10.0",
-    "node-rsa": "^1.0.7",
-    "pem": "^1.14.4",
-    "x509": "^0.3.4",
     "xadesjs": "^2.1.1",
-    "xml-crypto": "^2.0.0"
+    "xml-crypto": "^2.0.0",
+    "xmldom-alpha": "^0.1.28"
   }
 }
