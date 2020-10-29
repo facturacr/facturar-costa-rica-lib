@@ -1,10 +1,10 @@
 import { FrontEndRequest } from '../src/types/globalInterfaces'
 import creditNote from './../src/creditNote'
 import getToken from '../src/services/getToken'
-import fe from './input/frontendRequest'
+import requestStub from './stubs/frontendRequest.stub'
 import fs from 'fs'
 
-const frontEndRequest: FrontEndRequest = fe
+const frontEndRequest: FrontEndRequest = requestStub
 const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
 const SOURCE_P12_URI = process.env.SOURCE_P12_URI

@@ -1,4 +1,3 @@
-import { FrontEndRequest } from '../src/types/globalInterfaces'
 import confirmXML from '../src/confirmXML'
 import { sendToCustomURL } from '../src/services/send/index'
 import getToken from '../src/services/getToken'

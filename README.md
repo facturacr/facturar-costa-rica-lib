@@ -18,38 +18,6 @@ SOURCE_P12_URI=
 SOURCE_P12_PASSPORT=
 ```
 
-Crear factura de prueba en ```test/input/frontendRequest.ts```(necesario para pruebas finales).
-
-Ejemplo de estructura
-```
-import { FrontEndRequest } from '../../src/types/globalInterfaces'
-const request: FrontEndRequest = {
-  Emisor: {
-    Nombre: 'Nombre Emisor',
-    Identificacion: {
-      Numero: '123456789101'
-    }
-  },
-  Receptor: {
-    Nombre: 'Nombre Receptor',
-    Identificacion: {
-      Numero: '123456789101'
-    }
-  },
-  sucursal: '001',
-  terminal: '00001',
-  tipoDocumento: 'FE',
-  codigoPais: '506',
-  consecutivo: '0000000001',
-  codigoSeguridad: '00000001',
-  situationEC: '1',
-  total: 1000,
-  actividad: 4,
-  impuesto: 100
-}
-
-export default request
-```
 Para probar crear y enviar factura
 ```
 ts-node --require dotenv/config test/createAndSend.ts

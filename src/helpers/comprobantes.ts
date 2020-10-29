@@ -90,4 +90,3 @@ export function getReceiver(frontEndRequest: FrontEndRequest): Persona {
     CorreoElectronico: receiver.CorreoElectronico
   }
 }
-

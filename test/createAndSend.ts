@@ -1,6 +1,6 @@
 import { FrontEndRequest } from '../src/types/globalInterfaces'
 import getToken from '../src/services/getToken'
-import fe from './input/frontendRequest'
+import requestStub from './stubs/frontendRequest.stub'
 import send from '../src/electronicBill'
 import { sendToCustomURL } from '../src/services/send/index'
 import fs from 'fs'
@@ -14,7 +14,7 @@ const SOURCE_P12_URI = process.env.SOURCE_P12_URI
 const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
-const frontEndRequest: FrontEndRequest = fe
+const frontEndRequest: FrontEndRequest = requestStub
 
 function decodeBase64(encodedStr: string): string {
   const buff = Buffer.from(encodedStr, 'base64')

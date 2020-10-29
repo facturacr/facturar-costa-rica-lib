@@ -1,8 +1,8 @@
 import { getClave } from '../src/lib/genClave'
-import fe from './input/frontendRequest'
+import requestStub from './stubs/frontendRequest.stub'
 import { FrontEndRequest } from '../src/types/globalInterfaces'
 
-const frontEndRequest: FrontEndRequest = fe
+const frontEndRequest: FrontEndRequest = requestStub
 const result = getClave(frontEndRequest)
 
 console.log('Clave', result)
