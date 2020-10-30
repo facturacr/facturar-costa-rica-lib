@@ -1,6 +1,10 @@
 
 🛑 En desarrollo❗️❗️❗️❗️ 🛑
 
+# Librería Javascript - API de Administración Tributaria Virtual (ATV) del Ministerio de Hacienda.
+
+[![Code Coverage][codecovimg]][codecov]
+
 Buscando colaboradores
 
 ## Descripción
@@ -13,9 +17,11 @@ Para probar las funcionalidades se recomienda crear un .env en donde se especifi
 ```
 USERNAME_TEST=
 PASSWORD_TEST=
-IS_STG=
+IS_STG=1
 SOURCE_P12_URI=
 SOURCE_P12_PASSPORT=
+SOURCE_URI_XML_OUTPUT=
+XML_TO_CONFIRM=
 ```
 
 Para probar crear y enviar factura

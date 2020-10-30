@@ -3,10 +3,8 @@ import { sendToCustomURL } from '../src/services/send/index'
 import getToken from '../src/services/getToken'
 import fs from 'fs'
 
-const IS_STG = process.env.IS_STG
 const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
-console.log('process.env.IS_STG', IS_STG)
 
 const SOURCE_P12_URI = process.env.SOURCE_P12_URI
 const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
@@ -29,45 +27,50 @@ function getConfimation(token: string, data: any, ms: number): Promise<any> {
   })
 }
 
+
 async function main(): Promise<void> {
-  const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
-  const xml = fs.readFileSync(XML_TO_CONFIRM, 'utf-8')
-  const token = await getToken({
-    client_id: 'api-stag', // eslint-disable-line
-    client_secret: '', // eslint-disable-line
-    grant_type: 'password', // eslint-disable-line
-    username: USERNAME_TEST,
-    password: PASSWORD_TEST
-  })
-  const consecutivo = {
-    consecutivo: '0000000013'
-  }
-  const data = await confirmXML({
-    token: token.data.access_token,
-    consecutivo: consecutivo,
-    xmlStr: xml,
-    tipoDocKey: 'CCE',
-    pemOpt: {
-      buffer: pem,
-      password: SOURCE_P12_PASSPORT
+  try {
+    const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
+    const xml = fs.readFileSync(XML_TO_CONFIRM, 'utf-8')
+    const token = await getToken({
+      client_id: 'api-stag', // eslint-disable-line
+      client_secret: '', // eslint-disable-line
+      grant_type: 'password', // eslint-disable-line
+      username: USERNAME_TEST,
+      password: PASSWORD_TEST
+    })
+    const consecutivo = {
+      consecutivo: '0000000013'
     }
-  })
-  if (data) {
-    const secondResponse = await getConfimation(token.data.access_token, data, 10000)
-      .catch(err => {
-        const response = err.response || {}
-        console.log('response', response)
-      })
-    const XMLResponse = secondResponse.data['respuesta-xml']
-    if (!XMLResponse) {
-      const state = secondResponse.data['ind-estado']
-      console.log('state', state)
-      return
+    const data = await confirmXML({
+      token: token.data.access_token,
+      consecutivo: consecutivo,
+      xmlStr: xml,
+      tipoDocKey: 'CCE',
+      pemOpt: {
+        buffer: pem,
+        password: SOURCE_P12_PASSPORT
+      }
+    })
+    if (data) {
+      const secondResponse = await getConfimation(token.data.access_token, data, 10000)
+        .catch(err => {
+          const response = err.response || {}
+          console.log('response', response)
+        })
+      const XMLResponse = secondResponse.data['respuesta-xml']
+      if (!XMLResponse) {
+        const state = secondResponse.data['ind-estado']
+        console.log('state', state)
+        return
+      }
+      const text = decodeBase64(XMLResponse)
+      console.log('secondResponse', text)
+    } else {
+      console.log('no data', data)
     }
-    const text = decodeBase64(XMLResponse)
-    console.log('secondResponse', text)
-  } else {
-    console.log('no data', data)
+  } catch (error) {
+    console.warn(error.code)
   }
 }
 
