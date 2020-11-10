@@ -1,18 +1,9 @@
-import genClave from '../src/lib/genClave'
-import { ClaveOpts } from '../src/lib/genClave/interfaces'
+import { getClave } from '../src/lib/genClave'
+import requestStub from './stubs/frontendRequest.stub'
+import { FrontEndRequest } from '../src/types/globalInterfaces'
 
-const clave: ClaveOpts = {
-  codigoPais: '506',
-  tipoDocumento: 'FE',
-  tipoCedula: '1',
-  cedulaEmisor: '504130864',
-  situacionCE: '1',
-  consecutivo: '0000000001',
-  codigoSeguridad: '',
-  sucursal: '001',
-  terminal: '00001'
-}
+const frontEndRequest: FrontEndRequest = requestStub
+const result = getClave(frontEndRequest)
 
-const result = genClave(clave)
 console.log('Clave', result)
-console.log('Clave largo', result.length === 50)
+console.log('pass test:', result.length === 50)

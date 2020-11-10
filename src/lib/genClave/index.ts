@@ -1,19 +1,38 @@
 import { ClaveOpts, Clave, ClaveFecha, Consecutivo } from './interfaces'
+import { FrontEndRequest, FinalMessagePerson } from '../../types/globalInterfaces'
 import { tipoDocumento } from '../../data/tipoDocumento'
 
 const DEFAULT_VALUES = {
   tipoDocumento: '01',
+  tipoIdentificacion: '01',
   codigoPais: '506'
 }
 
-function getConsecutivo(opts: ClaveOpts): Consecutivo {
-  const typeDocument = tipoDocumento[opts.tipoDocumento]
-  const codeDocument = typeDocument ? typeDocument.code : DEFAULT_VALUES.tipoDocumento
+function getConsecutivo(opts: {
+  tipoDocKey?: string;
+  sucursal?: string;
+  terminal?: string;
+  consecutivo: string;
+}): Consecutivo {
+  const tipoDocNum = tipoDocumento[opts.tipoDocKey]
   return {
-    sucursal: opts.sucursal,
-    terminal: opts.terminal,
-    tipoDocumento: codeDocument,
+    sucursal: opts.sucursal || '001',
+    terminal: opts.terminal || '00001',
+    tipoDocumento: tipoDocNum.code || '01',
     consecutivo: opts.consecutivo
+  }
+}
+
+export function consecutivoStr(consecutivoObj: any): string {
+  const cons = getConsecutivo(consecutivoObj)
+  return Object.values(cons).join('')
+}
+
+function getSender(frontEndRequest: FrontEndRequest): FinalMessagePerson {
+  const sender = frontEndRequest.Emisor
+  return {
+    tipoIdentificacion: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
+    numeroIdentificacion: sender.Identificacion.Numero
   }
 }
 
@@ -29,7 +48,7 @@ function getDateInfo(date: Date): ClaveFecha {
 }
 
 function getCountryCode(code: string): string {
-  if (code || !code.length) {
+  if (!code || !code.length) {
     return DEFAULT_VALUES.codigoPais
   }
   return code.padStart(3, '0')
@@ -63,7 +82,7 @@ export function genString(claveObj: Clave): string {
   return Object.values(clave).join('')
 }
 
-export default (opts: ClaveOpts): string => {
+export default function genClave(opts: ClaveOpts): string {
   const claveObj = genClaveObj(opts)
   return genString(claveObj)
 }
@@ -88,8 +107,22 @@ export function stringToClave(claveStr: string): Clave {
   }
 }
 
-/*
- * https://blog.hulipractice.com/que-es-y-como-funciona-la-clave-numerica-en-la-factura-electronica-de-costa-rica/
- */
+export function parseOptions(frontEndRequest: FrontEndRequest): ClaveOpts {
+  const sender = getSender(frontEndRequest)
+  return {
+    cedulaEmisor: sender.numeroIdentificacion,
+    codigoPais: frontEndRequest.codigoPais,
+    codigoSeguridad: frontEndRequest.codigoSeguridad,
+    consecutivo: frontEndRequest.consecutivo,
+    situacionCE: frontEndRequest.situationEC,
+    sucursal: frontEndRequest.sucursal,
+    terminal: frontEndRequest.terminal,
+    tipoCedula: sender.tipoIdentificacion,
+    tipoDocKey: frontEndRequest.tipoDocumento
+  }
+}
 
-// https://github.com/CRLibre/API_Hacienda/blob/0e4256a5ade4be91b22d7844af48ed4a0ff6eb6f/api/contrib/clave/clave.php
+export function getClave(frontEndRequest: FrontEndRequest): string {
+  const claveOptions = parseOptions(frontEndRequest)
+  return genClave(claveOptions)
+}
