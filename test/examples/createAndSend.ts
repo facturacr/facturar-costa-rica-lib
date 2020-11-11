@@ -1,8 +1,8 @@
-import { FrontEndRequest } from '../src/types/globalInterfaces'
-import getToken from '../src/services/getToken'
-import requestStub from './stubs/frontendRequest.stub'
-import send from '../src/electronicBill'
-import { sendToCustomURL } from '../src/services/send/index'
+import { FrontEndRequest } from '@src/types/globalInterfaces'
+import requestStub from '@test/stubs/frontendRequest.stub'
+import send from '@src/electronicBill'
+import getToken from '@src/services/getToken'
+import { sendToCustomURL } from '@src/services/send/index'
 import fs from 'fs'
 
 const IS_STG = process.env.IS_STG

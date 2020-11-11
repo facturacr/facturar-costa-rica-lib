@@ -1,6 +1,6 @@
-import confirmXML from '../src/confirmXML'
-import { sendToCustomURL } from '../src/services/send/index'
-import getToken from '../src/services/getToken'
+import confirmXML from '@src/confirmXML'
+import { sendToCustomURL } from '@src/services/send/index'
+import getToken from '@src/services/getToken'
 import fs from 'fs'
 
 const USERNAME_TEST = process.env.USERNAME_TEST

@@ -1,8 +1,8 @@
 import fs from 'fs'
-import genJSON from '../src/lib/genJSON'
-import { parseOptions, genClaveObj, genString } from '../src/lib/genClave'
-import requestStub from './stubs/frontendRequest.stub'
-import { FrontEndRequest } from '../src/types/globalInterfaces'
+import genJSON from '@src/lib/genJSON'
+import { parseOptions, genClaveObj, genString } from '@src/lib/genClave'
+import requestStub from '@test/stubs/frontendRequest.stub'
+import { FrontEndRequest } from '@src/types/globalInterfaces'
 
 const frontEndRequest: FrontEndRequest = requestStub
 
