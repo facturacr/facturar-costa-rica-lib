@@ -27,7 +27,6 @@ function getConfimation(token: string, data: any, ms: number): Promise<any> {
   })
 }
 
-
 async function main(): Promise<void> {
   try {
     const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
