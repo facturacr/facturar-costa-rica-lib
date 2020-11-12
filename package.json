@@ -7,7 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "dev": "dotenv -- nodemon -e ts,graphql -x 'yarn lint & ts-node src/index.ts'",
+    "dev": "dotenv -- nodemon -e ts,graphql -x 'yarn lint & ts-node -r tsconfig-paths/register src/index.ts'",
+    "build": "yarn lint & ts-node -r tsconfig-paths/register src/index.ts",
     "lint": "eslint --ext .ts, --ignore-path .gitignore .",
     "test": "test"
   },
