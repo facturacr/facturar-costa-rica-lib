@@ -1,5 +1,5 @@
-import { sendToCustomURL } from '../src/services/send'
-import getToken from '../src/services/getToken'
+import { sendToCustomURL } from '@src/services/send'
+import getToken from '@src/services/getToken'
 
 const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
