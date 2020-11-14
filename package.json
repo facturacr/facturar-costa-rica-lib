@@ -7,6 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "test:unit": "ENV_FILE=.env.test jest",
     "dev": "dotenv -- nodemon -e ts,graphql -x 'yarn lint & ts-node src/index.ts'",
     "lint": "eslint --ext .ts, --ignore-path .gitignore .",
     "test": "test"
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/marnutux/facturar-costa-rica#readme",
   "devDependencies": {
+    "@types/jest": "^26.0.15",
     "@types/node": "^14.14.5",
     "@typescript-eslint/eslint-plugin": "^2.3.0",
     "@typescript-eslint/parser": "^2.3.0",
@@ -36,7 +38,9 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "jest": "^26.6.3",
     "nodemon": "^1.19.2",
+    "ts-jest": "^26.4.4",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.3",
     "xmldsigjs": "^2.0.27"
