@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test:unit": "ENV_FILE=.env.test jest",
+    "test:unit": "dotenv jest",
     "dev": "dotenv -- nodemon -e ts,graphql -x 'yarn lint & ts-node src/index.ts'",
     "lint": "eslint --ext .ts, --ignore-path .gitignore .",
     "test": "test"
