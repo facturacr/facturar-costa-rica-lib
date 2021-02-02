@@ -44,7 +44,7 @@
     "xmldsigjs": "^2.1.2"
   },
   "dependencies": {
-    "@peculiar/webcrypto": "^1.1.3",
+    "@peculiar/webcrypto": "^1.1.5",
     "axios": "^0.21.0",
     "fast-xml-parser": "^3.17.4",
     "google-p12-pem": "^3.0.3",
