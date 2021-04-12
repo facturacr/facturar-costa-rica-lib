@@ -1442,9 +1442,10 @@ pkg-dir@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-pkijs@^2.1.90:
-  version "2.1.90"
-  resolved "https://registry.yarnpkg.com/pkijs/-/pkijs-2.1.90.tgz#49b4322cafcdc2a1cf09753a89ed788c930c9d71"
+pkijs@^2.1.93:
+  version "2.1.94"
+  resolved "https://registry.yarnpkg.com/pkijs/-/pkijs-2.1.94.tgz#503a71b2cec3804888ee4c9a87ebc07d6962ab04"
+  integrity sha512-DLZoCbgWVZhfQGCj7Rt/lFQbieD+X5PxjPLksDseoPvlw5epSe/5loqiv7QvbvwaeX1PQBP9ww8crFBaV2M5LQ==
   dependencies:
     asn1js "^2.0.26"
     bytestreamjs "^1.0.29"
@@ -1826,9 +1827,10 @@ tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
 
-tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.2, tslib@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.2, tslib@^2.0.3, tslib@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
+  integrity sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
 
 tsutils@^3.17.1:
   version "3.17.1"
@@ -2012,16 +2014,16 @@ xmldom@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.3.0.tgz#e625457f4300b5df9c2e1ecb776147ece47f3e5a"
 
-xmldsigjs@^2.1.1, xmldsigjs@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/xmldsigjs/-/xmldsigjs-2.1.2.tgz#147ba0c867c9303d619f2878bda8f1b4be5ddd9a"
-  integrity sha512-NVKIqfsXAJCImeUGHbGyAAIYt47/iGJrMbXcTm/q8iFA8G5AA2yWRjQ8ZsbBmIq7Le6xav6hxUOfox+3tBVRGQ==
+xmldsigjs@^2.1.1, xmldsigjs@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/xmldsigjs/-/xmldsigjs-2.1.3.tgz#171edc5da6767ca5b9a1d3c2ae5dd764526922ba"
+  integrity sha512-tK7W+Ps+wvTSFAVuXH4XGkx3TBj1EIpAxannGokH960/BYct6Kf3f00wTirckdlS+ZyTvQo+mTuE8z3EbeWTrg==
   dependencies:
     asn1js "^2.0.26"
-    pkijs "^2.1.90"
+    pkijs "^2.1.93"
     pvtsutils "^1.1.1"
     pvutils "^1.0.17"
-    tslib "^2.0.3"
+    tslib "^2.1.0"
     xml-core "^1.1.0"
     xpath "^0.0.27"
 
