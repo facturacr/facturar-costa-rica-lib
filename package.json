@@ -51,7 +51,7 @@
     "node-forge": "^0.10.0",
     "tsc": "^1.20150623.0",
     "xadesjs": "^2.1.1",
-    "xml-crypto": "^2.0.0",
+    "xml-crypto": "^2.1.1",
     "xmldom-alpha": "^0.1.28"
   }
 }
