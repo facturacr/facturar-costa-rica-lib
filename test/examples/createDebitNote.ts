@@ -1,10 +1,10 @@
-import { FrontEndRequest } from '../src/types/globalInterfaces'
-import creditNote from './../src/creditNote'
-import getToken from '../src/services/getToken'
-import fe from './input/frontendRequest'
+import { FrontEndRequest } from '@src/types/globalInterfaces'
+import debitNote from './@src/debitNote'
+import getToken from '@src/services/getToken'
+import requestStub from '@test/stubs/frontendRequest.stub'
 import fs from 'fs'
 
-const frontEndRequest: FrontEndRequest = fe
+const frontEndRequest: FrontEndRequest = requestStub
 const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
 const SOURCE_P12_URI = process.env.SOURCE_P12_URI
@@ -25,7 +25,7 @@ async function main(): Promise<void> {
     password: SOURCE_P12_PASSPORT,
     base64: false
   }
-  const data = await creditNote({
+  const data = await debitNote({
     token,
     frontEndRequest,
     xmlOpt

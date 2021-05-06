@@ -1,7 +1,8 @@
-import { FrontEndRequest } from '../src/types/globalInterfaces'
-import confirmXML from '../src/confirmXML'
-import { sendToCustomURL } from '../src/services/send/index'
-import getToken from '../src/services/getToken'
+import { FrontEndRequest } from '@src/types/globalInterfaces'
+import requestStub from '@test/stubs/frontendRequest.stub'
+import send from '@src/electronicBill'
+import getToken from '@src/services/getToken'
+import { sendToCustomURL } from '@src/services/send/index'
 import fs from 'fs'
 
 const IS_STG = process.env.IS_STG
@@ -11,7 +12,9 @@ console.log('process.env.IS_STG', IS_STG)
 
 const SOURCE_P12_URI = process.env.SOURCE_P12_URI
 const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
-const XML_TO_CONFIRM = process.env.XML_TO_CONFIRM
+const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
+
+const frontEndRequest: FrontEndRequest = requestStub
 
 function decodeBase64(encodedStr: string): string {
   const buff = Buffer.from(encodedStr, 'base64')
@@ -31,30 +34,20 @@ function getConfimation(token: string, data: any, ms: number): Promise<any> {
 }
 
 async function main(): Promise<void> {
-  const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
-  const xml = fs.readFileSync(XML_TO_CONFIRM, 'utf-8')
-  const token = await getToken({
+  const tokenObj = await getToken({
     client_id: 'api-stag', // eslint-disable-line
     client_secret: '', // eslint-disable-line
     grant_type: 'password', // eslint-disable-line
     username: USERNAME_TEST,
     password: PASSWORD_TEST
   })
-  const consecutivo = {
-    consecutivo: '0000000013'
-  }
-  const data = await confirmXML({
-    token: token.data.access_token,
-    consecutivo: consecutivo,
-    xmlStr: xml,
-    tipoDocKey: 'CCE',
-    pemOpt: {
-      buffer: pem,
-      password: SOURCE_P12_PASSPORT
-    }
+  const token = tokenObj.data.access_token
+  const data = await send(token, frontEndRequest, {
+    buffer: pem,
+    password: SOURCE_P12_PASSPORT
   })
   if (data) {
-    const secondResponse = await getConfimation(token.data.access_token, data, 10000)
+    const secondResponse = await getConfimation(token, data, 5000)
       .catch(err => {
         const response = err.response || {}
         console.log('response', response)
@@ -67,8 +60,6 @@ async function main(): Promise<void> {
     }
     const text = decodeBase64(XMLResponse)
     console.log('secondResponse', text)
-  } else {
-    console.log('no data', data)
   }
 }
 

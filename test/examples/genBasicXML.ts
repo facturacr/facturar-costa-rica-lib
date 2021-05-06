@@ -1,10 +1,10 @@
 import fs from 'fs'
-import genJSON from '../src/lib/genJSON'
-import { parseOptions, genClaveObj, genString } from '../src/lib/genClave'
-import fe from './input/frontendRequest'
-import { FrontEndRequest } from '../src/types/globalInterfaces'
+import genJSON from '@src/lib/genJSON'
+import { parseOptions, genClaveObj, genString } from '@src/lib/genClave'
+import requestStub from '@test/stubs/frontendRequest.stub'
+import { FrontEndRequest } from '@src/types/globalInterfaces'
 
-const frontEndRequest: FrontEndRequest = fe
+const frontEndRequest: FrontEndRequest = requestStub
 
 const SOURCE_P12_URI = process.env.SOURCE_P12_URI
 const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT

@@ -1,3 +1,8 @@
+/* references
+  https://www.hacienda.go.cr/ATV/ComprobanteElectronico/frmAnexosyEstructuras.aspx#
+  https://www.hacienda.go.cr/ATV/ComprobanteElectronico/docs/esquemas/2016/v4/ANEXOS%20Y%20ESTRUCTURAS.pdf
+*/
+
 export interface Impuesto {
   Codigo: string;
   CodigoTarifa: string;
@@ -7,6 +12,7 @@ export interface Impuesto {
 
 export interface LineaDetalle {
   NumeroLinea?: string;
+  Codigo?: string; // CAByS - https://www.bccr.fi.cr/seccion-indicadores-economicos/cat%C3%A1logo-de-bienes-y-servicios
   Cantidad?: number;
   UnidadMedida?: string;
   Detalle: string;
@@ -14,7 +20,7 @@ export interface LineaDetalle {
   MontoTotal?: number;
   SubTotal?: number;
   BaseImponible?: number;
-  Impuesto: Impuesto;
+  Impuesto?: Impuesto;
   MontoTotalLinea?: number;
 }
 
@@ -50,7 +56,7 @@ export interface Persona {
   };
   NombreComercial?: string;
   Ubicacion?: {
-    Provincia?: string;
+    Provincia?: '1' | '2' | '3' | '4' | '5' | '6' | '7';
     Canton?: string;
     Distrito?: string;
     Barrio?: string;

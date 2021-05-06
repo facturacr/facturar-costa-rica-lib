@@ -1,0 +1,49 @@
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+      - develop
+name: ci
+jobs:
+  run-unit-testing:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Check out repository code
+          uses: actions/checkout@v2
+        - name: Install modules
+          run: yarn
+        - name: Run Unit testing
+          run: yarn test:unit
+  run-on-ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10, 12, 14, 15]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node --version
+      - run: yarn
+      - run: yarn build
+      - name: coverage
+        uses: codecov/codecov-action@v1
+        with:
+          name: actions ${{ matrix.node }}
+          fail_ci_if_error: false
+  run-on-window:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: yarn
+      - run: yarn build
+      - name: coverage
+        uses: codecov/codecov-action@v1
+        with:
+          name: actions windows
+          fail_ci_if_error: false

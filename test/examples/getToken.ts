@@ -1,4 +1,4 @@
-import getToken from '../src/services/getToken'
+import getToken from '@src/services/getToken'
 
 const IS_STG = process.env.IS_STG
 const USERNAME_TEST = process.env.USERNAME_TEST

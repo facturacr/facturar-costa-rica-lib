@@ -28,10 +28,10 @@ function getBillResum(lines: LineaDetalle[]): Resumen {
       CodigoMoneda: 'CRC',
       TipoCambio: '585.69'
     },
-    TotalServGravados: sum.total,
+    TotalServGravados: 0,
     TotalServExentos: 0,
     TotalServExonerado: 0,
-    TotalMercanciasGravadas: 0,
+    TotalMercanciasGravadas: sum.total,
     TotalMercanciasExentas: 0,
     TotalGravado: sum.total,
     TotalExento: 0,
@@ -78,6 +78,7 @@ function setLinesDefaults(lines: LineaDetalle[]): LineaDetalle[] {
     const taxObj = setTaxObj(subtotal, line.Impuesto)
     return {
       NumeroLinea: (index + 1).toString(),
+      Codigo: line.Codigo,
       Cantidad: quantity,
       UnidadMedida: line.UnidadMedida || 'Sp',
       Detalle: line.Detalle,

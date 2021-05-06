@@ -2,14 +2,20 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "target": "es5",
+    "target": "es6",
     "moduleResolution": "node",
     "module": "commonjs",
     "sourceMap": true,
     "rootDir": ".",
     "outDir": "dist",
+    "baseUrl": ".",
     "lib": [
       "esnext", "dom"
-    ]
-  }
+    ],
+    "paths": {
+      "@src/*": ["src/*"],
+      "@test/*": ["test/*"]
+    }
+  },
+  "include": ["./src/**/*", "./test/**/*", "__tests__/stubs"]
 }

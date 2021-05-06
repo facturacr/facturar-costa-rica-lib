@@ -1,5 +1,7 @@
 module.exports = {
-  preset: 'ts-jest',
   testEnvironment: 'node',
-  modulePathIgnorePatterns: ['inputs']
+  transform: {
+    '^.+\\.ts$': 'ts-jest',
+  },
+  modulePathIgnorePatterns: ['inputs', 'stubs']
 };

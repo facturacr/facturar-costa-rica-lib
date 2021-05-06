@@ -1,5 +1,5 @@
 import { getClave } from '../../src/lib/genClave'
-import fe from '../inputs/frontendRequest'
+import fe from '../stubs/frontendRequest.stub'
 import { FrontEndRequest } from '../../src/types/globalInterfaces'
 
 describe('GET CLAVE', () => {
