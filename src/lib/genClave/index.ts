@@ -19,7 +19,7 @@ function getConsecutivo(opts: {
     sucursal: opts.sucursal || '001',
     terminal: opts.terminal || '00001',
     tipoDocumento: tipoDocNum.code || '01',
-    consecutivo: opts.consecutivo
+    consecutivo: String(opts.consecutivo).padStart(10, '0')
   }
 }
 

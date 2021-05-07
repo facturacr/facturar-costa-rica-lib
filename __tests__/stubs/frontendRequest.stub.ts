@@ -1,5 +1,5 @@
-import { Impuesto, LineaDetalle, Persona } from '../../src/types/facturaInterfaces'
-import { FrontEndRequest } from '../../src/types/globalInterfaces'
+import { Impuesto, LineaDetalle, Persona } from '@src/types/facturaInterfaces'
+import { FrontEndRequest } from '@src/types/globalInterfaces'
 
 const impuestoStub: Impuesto = {
   Codigo: '01',
@@ -55,7 +55,7 @@ const requestStub: FrontEndRequest = {
   terminal: '00001',
   tipoDocumento: 'FE',
   codigoPais: '506',
-  consecutivo: '0000000009',
+  consecutivo: '11', // In the examples this prop needs to be changed
   codigoSeguridad: '00000001',
   situationEC: '1',
   actividad: '4',
