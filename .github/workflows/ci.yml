@@ -6,7 +6,16 @@ on:
       - develop
 name: ci
 jobs:
-  test:
+  run-unit-testing:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Check out repository code
+          uses: actions/checkout@v2
+        - name: Install modules
+          run: yarn
+        - name: Run Unit testing
+          run: yarn test:unit
+  run-on-ubuntu:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,7 +33,7 @@ jobs:
         with:
           name: actions ${{ matrix.node }}
           fail_ci_if_error: false
-  windows:
+  run-on-window:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
