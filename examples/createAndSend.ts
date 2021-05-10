@@ -12,9 +12,16 @@ console.log('process.env.IS_STG', IS_STG)
 
 const SOURCE_P12_URI = process.env.SOURCE_P12_URI
 const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
+
+if (!SOURCE_P12_PASSPORT || !SOURCE_P12_URI) {
+  throw new Error('No environment. For running examples set .env before.')
+}
+
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
 const frontEndRequest: FrontEndRequest = requestStub
+
+console.log('requestStub', requestStub.consecutivo)
 
 function decodeBase64(encodedStr: string): string {
   const buff = Buffer.from(encodedStr, 'base64')

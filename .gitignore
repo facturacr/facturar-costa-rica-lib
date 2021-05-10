@@ -2,8 +2,8 @@ dist
 package-lock.json
 node_modules
 __tests__/inputs
-test/input
-test/output
+__tests__/input
+__tests__/output
 .idea
 .vscode
 *.log

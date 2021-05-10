@@ -14,8 +14,8 @@
     ],
     "paths": {
       "@src/*": ["src/*"],
-      "@test/*": ["test/*"]
+      "@test/*": ["__tests__/*"]
     }
   },
-  "include": ["./src/**/*", "./test/**/*", "__tests__/stubs"]
+  "include": ["./src/**/*", "./test/**/*", "__tests__/stubs", "examples"]
 }
