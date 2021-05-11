@@ -1,4 +1,4 @@
-import { FrontEndRequest, XmlOpt } from './types/globalInterfaces'
+import { ClientPayload, XmlOpt } from './types/globalInterfaces'
 import { NotaDebitoContenedor } from './types/xml/notaDeDebito'
 import { genXML } from './lib/genXML/index'
 import { send } from './services/send/index'
@@ -14,7 +14,7 @@ import {
 const VOUCHER_TYPE = 'ND'
 
 export function parseCreditNote(options: {
-  frontEndRequest: FrontEndRequest;
+  frontEndRequest: ClientPayload;
   consecutivo: string;
   clave: string;
   date: Date;
@@ -41,7 +41,7 @@ export function parseCreditNote(options: {
 }
 
 function sendMessage(options: {
-  frontEndRequest: FrontEndRequest;
+  frontEndRequest: ClientPayload;
   token: string;
   clave: string;
   date: Date;
@@ -65,7 +65,7 @@ function sendMessage(options: {
 
 export default async (options: {
   token: string;
-  frontEndRequest: FrontEndRequest;
+  frontEndRequest: ClientPayload;
   xmlOpt: XmlOpt;
 }): Promise<any> => {
   const date = new Date()

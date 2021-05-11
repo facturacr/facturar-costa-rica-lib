@@ -1,4 +1,4 @@
-import { FrontEndRequest, FinalMessagePerson } from '../types/globalInterfaces'
+import { ClientPayload, FinalMessagePerson } from '../types/globalInterfaces'
 import { Resumen, Persona } from '../types/facturaInterfaces'
 
 const DEFAULT_VALUES = {
@@ -9,7 +9,7 @@ const DEFAULT_VALUES = {
   tipoIdentificacion: '01'
 }
 
-export function getSimpleSender(frontEndRequest: FrontEndRequest): FinalMessagePerson {
+export function getSimpleSender(frontEndRequest: ClientPayload): FinalMessagePerson {
   const sender = frontEndRequest.Emisor
   return {
     tipoIdentificacion: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
@@ -17,7 +17,7 @@ export function getSimpleSender(frontEndRequest: FrontEndRequest): FinalMessageP
   }
 }
 
-export function getSimpleReceiver(frontEndRequest: FrontEndRequest): FinalMessagePerson {
+export function getSimpleReceiver(frontEndRequest: ClientPayload): FinalMessagePerson {
   const receiver = frontEndRequest.Receptor
   return {
     tipoIdentificacion: receiver.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
@@ -30,7 +30,7 @@ function calculateTaxes(billTotal: number, billTaxes: number): number {
   return billTotal * taxes
 }
 
-export function getBillResum(frontEndRequest: FrontEndRequest): Resumen {
+export function getBillResum(frontEndRequest: ClientPayload): Resumen {
   const taxes = calculateTaxes(frontEndRequest.total, frontEndRequest.impuesto)
   return {
     CodigoTipoMoneda: {
@@ -53,7 +53,7 @@ export function getBillResum(frontEndRequest: FrontEndRequest): Resumen {
   }
 }
 
-export function getSender(frontEndRequest: FrontEndRequest): Persona {
+export function getSender(frontEndRequest: ClientPayload): Persona {
   const sender = frontEndRequest.Emisor
   return {
     Nombre: sender.Nombre,
@@ -75,7 +75,7 @@ export function getSender(frontEndRequest: FrontEndRequest): Persona {
   }
 }
 
-export function getReceiver(frontEndRequest: FrontEndRequest): Persona {
+export function getReceiver(frontEndRequest: ClientPayload): Persona {
   const receiver = frontEndRequest.Receptor
   return {
     Nombre: receiver.Nombre,

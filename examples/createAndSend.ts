@@ -1,8 +1,6 @@
-import { FrontEndRequest } from '@src/types/globalInterfaces'
+import { ClientPayload } from '@src/types/globalInterfaces'
 import requestStub from '@test/stubs/frontendRequest.stub'
-import send from '@src/electronicBill'
-import getToken from '@src/services/getToken'
-import { sendToCustomURL } from '@src/services/send/index'
+import { eletronicBill, sendToCustomURL, getToken } from '@src/index'
 import fs from 'fs'
 
 const IS_STG = process.env.IS_STG
@@ -19,7 +17,7 @@ if (!SOURCE_P12_PASSPORT || !SOURCE_P12_URI) {
 
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
-const frontEndRequest: FrontEndRequest = requestStub
+const frontEndRequest: ClientPayload = requestStub
 
 console.log('requestStub', requestStub.consecutivo)
 
@@ -49,7 +47,7 @@ async function main(): Promise<void> {
     password: PASSWORD_TEST
   })
   const token = tokenObj.data.access_token
-  const data = await send(token, frontEndRequest, {
+  const data = await eletronicBill(token, frontEndRequest, {
     buffer: pem,
     password: SOURCE_P12_PASSPORT
   })

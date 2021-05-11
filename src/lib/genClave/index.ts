@@ -1,5 +1,5 @@
 import { ClaveOpts, Clave, ClaveFecha, Consecutivo } from './interfaces'
-import { FrontEndRequest, FinalMessagePerson } from '../../types/globalInterfaces'
+import { ClientPayload, FinalMessagePerson } from '../../types/globalInterfaces'
 import { tipoDocumento } from '../../data/tipoDocumento'
 
 const DEFAULT_VALUES = {
@@ -28,7 +28,7 @@ export function consecutivoStr(consecutivoObj: any): string {
   return Object.values(cons).join('')
 }
 
-function getSender(frontEndRequest: FrontEndRequest): FinalMessagePerson {
+function getSender(frontEndRequest: ClientPayload): FinalMessagePerson {
   const sender = frontEndRequest.Emisor
   return {
     tipoIdentificacion: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
@@ -107,7 +107,7 @@ export function stringToClave(claveStr: string): Clave {
   }
 }
 
-export function parseOptions(frontEndRequest: FrontEndRequest): ClaveOpts {
+export function parseOptions(frontEndRequest: ClientPayload): ClaveOpts {
   const sender = getSender(frontEndRequest)
   return {
     cedulaEmisor: sender.numeroIdentificacion,
@@ -122,7 +122,7 @@ export function parseOptions(frontEndRequest: FrontEndRequest): ClaveOpts {
   }
 }
 
-export function getClave(frontEndRequest: FrontEndRequest): string {
+export function getClave(frontEndRequest: ClientPayload): string {
   const claveOptions = parseOptions(frontEndRequest)
   return genClave(claveOptions)
 }

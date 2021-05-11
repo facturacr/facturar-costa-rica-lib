@@ -1,6 +1,6 @@
 import { Persona, LineaDetalle } from './facturaInterfaces'
 
-export interface FrontEndRequest {
+export interface ClientPayload {
   Emisor: Persona;
   Receptor: Persona;
   sucursal?: string;

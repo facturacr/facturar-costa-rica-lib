@@ -1,8 +1,8 @@
 import { getClave } from '@src/lib/genClave'
 import requestStub from '@test/stubs/frontendRequest.stub'
-import { FrontEndRequest } from '@src/types/globalInterfaces'
+import { ClientPayload } from '@src/types/globalInterfaces'
 
-const frontEndRequest: FrontEndRequest = requestStub
+const frontEndRequest: ClientPayload = requestStub
 const result = getClave(frontEndRequest)
 
 console.log('Clave', result)

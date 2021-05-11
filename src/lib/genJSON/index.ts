@@ -1,4 +1,4 @@
-import { FrontEndRequest } from '../../types/globalInterfaces'
+import { ClientPayload } from '../../types/globalInterfaces'
 import { FacturaElectronicaContenedor, Resumen, Persona, Impuesto, LineaDetalle } from '../../types/facturaInterfaces'
 import { genXML } from '../genXML'
 
@@ -44,7 +44,7 @@ function getBillResum(lines: LineaDetalle[]): Resumen {
   }
 }
 
-function getSender(frontEndRequest: FrontEndRequest): Persona {
+function getSender(frontEndRequest: ClientPayload): Persona {
   const sender = frontEndRequest.Emisor
   return {
     Nombre: sender.Nombre,
@@ -91,7 +91,7 @@ function setLinesDefaults(lines: LineaDetalle[]): LineaDetalle[] {
   })
 }
 
-function getReceiver(frontEndRequest: FrontEndRequest): Persona {
+function getReceiver(frontEndRequest: ClientPayload): Persona {
   const receiver = frontEndRequest.Receptor
   return {
     Nombre: receiver.Nombre,
@@ -104,7 +104,7 @@ function getReceiver(frontEndRequest: FrontEndRequest): Persona {
   }
 }
 
-export default async (frontEndRequest: FrontEndRequest, date: any, clave: string, consecutivo: string, options: any): Promise<any> => {
+export default async (frontEndRequest: ClientPayload, date: any, clave: string, consecutivo: string, options: any): Promise<any> => {
   const receiver = getReceiver(frontEndRequest)
   const sender = getSender(frontEndRequest)
   const lines = setLinesDefaults(frontEndRequest.LineasDetalle)
