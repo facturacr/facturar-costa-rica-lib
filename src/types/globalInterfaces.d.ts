@@ -11,6 +11,8 @@ export interface ClientPayload {
   consecutivo: string;
   situationEC: string;
   actividad: string;
+  total?: number; // deprecated
+  impuesto?: number; // deprecated
   LineasDetalle: Array<LineaDetalle>;
 }
 
