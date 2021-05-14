@@ -1,4 +1,4 @@
-import { FrontEndRequest, FinalMessagePerson } from './types/globalInterfaces'
+import { ClientPayload, FinalMessagePerson } from './types/globalInterfaces'
 import { genClaveObj, genString, parseOptions } from './lib/genClave/index'
 import genJSON from './lib/genJSON/index'
 import { send } from './services/send/index'
@@ -7,7 +7,7 @@ const DEFAULT_VALUES = {
   tipoIdentificacion: '01'
 }
 
-function getSender(frontEndRequest: FrontEndRequest): FinalMessagePerson {
+function getSender(frontEndRequest: ClientPayload): FinalMessagePerson {
   const sender = frontEndRequest.Emisor
   return {
     tipoIdentificacion: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
@@ -15,7 +15,7 @@ function getSender(frontEndRequest: FrontEndRequest): FinalMessagePerson {
   }
 }
 
-function getReceiver(frontEndRequest: FrontEndRequest): FinalMessagePerson {
+function getReceiver(frontEndRequest: ClientPayload): FinalMessagePerson {
   const receiver = frontEndRequest.Receptor
   return {
     tipoIdentificacion: receiver.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
@@ -23,7 +23,7 @@ function getReceiver(frontEndRequest: FrontEndRequest): FinalMessagePerson {
   }
 }
 
-export default async (token, frontEndRequest: FrontEndRequest, xmlOpt): Promise<any> => {
+export default async (token, frontEndRequest: ClientPayload, xmlOpt): Promise<any> => {
   const parsedOpts = parseOptions(frontEndRequest)
   const claveObj = genClaveObj(parsedOpts)
   const claveStr = genString(claveObj)

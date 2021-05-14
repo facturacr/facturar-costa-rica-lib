@@ -1,5 +1,5 @@
 import { Impuesto, LineaDetalle, Persona } from '@src/types/facturaInterfaces'
-import { FrontEndRequest } from '@src/types/globalInterfaces'
+import { ClientPayload } from '@src/types/globalInterfaces'
 
 const impuestoStub: Impuesto = {
   Codigo: '01',
@@ -48,7 +48,7 @@ const receiverStub: Persona = {
   }
 }
 
-const requestStub: FrontEndRequest = {
+const requestStub: ClientPayload = {
   Emisor: transmitterStub,
   Receptor: receiverStub,
   sucursal: '001',

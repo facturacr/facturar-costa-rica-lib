@@ -1,6 +1,6 @@
 import { Persona, LineaDetalle } from './facturaInterfaces'
 
-export interface FrontEndRequest {
+export interface ClientPayload {
   Emisor: Persona;
   Receptor: Persona;
   sucursal?: string;
@@ -11,6 +11,8 @@ export interface FrontEndRequest {
   consecutivo: string;
   situationEC: string;
   actividad: string;
+  total?: number; // deprecated
+  impuesto?: number; // deprecated
   LineasDetalle: Array<LineaDetalle>;
 }
 
