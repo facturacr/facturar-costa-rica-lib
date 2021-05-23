@@ -108,22 +108,24 @@ export default async (frontEndRequest: ClientPayload, date: any, clave: string, 
   const receiver = getReceiver(frontEndRequest)
   const sender = getSender(frontEndRequest)
   const lines = setLinesDefaults(frontEndRequest.LineasDetalle)
-  const factura: FacturaElectronicaContenedor = {
-    FacturaElectronica: {
-      Clave: clave,
-      CodigoActividad: frontEndRequest.actividad.padStart(6, '0'),
-      NumeroConsecutivo: consecutivo,
-      FechaEmision: date,
-      Emisor: sender,
-      Receptor: receiver,
-      CondicionVenta: '01',
-      MedioPago: '01',
-      DetalleServicio: {
-        LineaDetalle: lines
-      },
-      ResumenFactura: getBillResum(lines)
-    }
+  const key = frontEndRequest.facturaElectronicaType || 'FacturaElectronica'
+  const body = {
+    Clave: clave,
+    CodigoActividad: frontEndRequest.actividad.padStart(6, '0'),
+    NumeroConsecutivo: consecutivo,
+    FechaEmision: date,
+    Emisor: sender,
+    Receptor: receiver,
+    CondicionVenta: '01',
+    MedioPago: '01',
+    DetalleServicio: {
+      LineaDetalle: lines
+    },
+    ResumenFactura: getBillResum(lines)
   }
-  const XML = await genXML('FE', factura, options)
+  const factura: FacturaElectronicaContenedor = {
+    [key]: body
+  }
+  const XML = await genXML(key, factura, options)
   return XML
 }

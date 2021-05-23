@@ -7,6 +7,11 @@ const DEFAULT_VALUES = {
   tipoIdentificacion: '01'
 }
 
+const encodeXML = (xmlStr: string): string => {
+  const buffer = Buffer.from(xmlStr)
+  return buffer.toString('base64')
+}
+
 function getSender(frontEndRequest: ClientPayload): FinalMessagePerson {
   const sender = frontEndRequest.Emisor
   return {
@@ -38,11 +43,13 @@ export default async (token, frontEndRequest: ClientPayload, xmlOpt): Promise<an
     fecha: date.toISOString(),
     emisor: getSender(frontEndRequest),
     receptor: getReceiver(frontEndRequest),
-    comprobanteXml: XML
+    comprobanteXml: encodeXML(XML)
   }
-  return send(token, finalMesage).catch((err) => {
+  const response = send(token, finalMesage).catch((err) => {
     const response = err.response || {}
     const header = response.headers || {}
     console.log('x-error-cause', header['x-error-cause'])
   })
+
+  return response
 }

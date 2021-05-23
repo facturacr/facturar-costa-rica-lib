@@ -14,6 +14,7 @@ export interface ClientPayload {
   total?: number; // deprecated
   impuesto?: number; // deprecated
   LineasDetalle: Array<LineaDetalle>;
+  facturaElectronicaType?: 'FacturaElectronica' | 'FacturaElectronicaExportacion';
 }
 
 export interface ClaveOpts {
