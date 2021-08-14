@@ -11,3 +11,11 @@ __tests__/output
 
 # Mac files
 .DS_Store
+
+# Dummy keys
+coverage
+
+# Dummy keys
+__tests__/stubs/dummyKeys/certificate.pem
+__tests__/stubs/dummyKeys/csr.csr
+__tests__/stubs/dummyKeys/key.pem
