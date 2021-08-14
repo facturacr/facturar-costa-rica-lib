@@ -2,11 +2,6 @@ import { j2xParser, parse } from 'fast-xml-parser'
 import { declaration, defaultOptions, xmlExtructures } from './xmlConfig'
 import sigXML from './sigXML/index'
 
-const encodeXML = (xmlStr: string): string => {
-  const buffer = Buffer.from(xmlStr)
-  return buffer.toString('base64')
-}
-
 export const objToXML = (xmlStructure: string, obj: object): string => {
   const parser = new j2xParser(defaultOptions) // eslint-disable-line new-cap
   const mainKey = Object.keys(obj)[0]
@@ -23,8 +18,7 @@ export async function genXML(xmlStructure: string, obj: object, options?: {
   const xml = objToXML(xmlStructure, obj)
   if (!options) return xml
   const signedXML = await sigXML(xml, options.buffer, options.password)
-  if (!options.base64) return signedXML
-  return encodeXML(signedXML)
+  return signedXML
 }
 
 export const xmlToJson = (xml: string): any => {

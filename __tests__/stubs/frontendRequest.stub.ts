@@ -55,11 +55,12 @@ const requestStub: ClientPayload = {
   terminal: '00001',
   tipoDocumento: 'FE',
   codigoPais: '506',
-  consecutivo: '11', // In the examples this prop needs to be changed
+  consecutivo: '18', // In the examples this prop needs to be changed
   codigoSeguridad: '00000001',
   situationEC: '1',
   actividad: '4',
-  LineasDetalle: [lineaDetalleStub]
+  LineasDetalle: [lineaDetalleStub],
+  facturaElectronicaType: 'FacturaElectronicaExportacion'
 }
 
 export default requestStub

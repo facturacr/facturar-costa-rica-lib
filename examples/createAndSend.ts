@@ -29,7 +29,7 @@ function decodeBase64(encodedStr: string): string {
 function getConfimation(token: string, data: any, ms: number): Promise<any> {
   return new Promise((resolve, reject): any => {
     setTimeout(() => {
-      const location = data.headers.location
+      const location = data?.headers?.location
       console.log('location', location)
       sendToCustomURL(token, location)
         .then(data => resolve(data))

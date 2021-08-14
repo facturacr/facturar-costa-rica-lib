@@ -95,6 +95,23 @@ export interface FacturaElectronica {
   };
 }
 
+export interface FacturaElectronicaExportacion {
+  Clave: string;
+  CodigoActividad: string;
+  NumeroConsecutivo: string;
+  FechaEmision?: Date;
+  Emisor: Persona;
+  Receptor: Persona;
+  CondicionVenta?: string;
+  PlazoCredito?: string;
+  MedioPago?: string;
+  DetalleServicio?: DetalleServicio;
+  ResumenFactura: Resumen;
+  Otros?: {
+    OtroTexto: string;
+  };
+}
+
 export interface FacturaElectronicaContenedor {
-  FacturaElectronica: FacturaElectronica;
+  [key: 'FacturaElectronica' | 'FacturaElectronicaExportacion']: FacturaElectronica | FacturaElectronicaExportacion;
 }
