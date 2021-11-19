@@ -1,15 +1,15 @@
-import { ClientPayload, XmlOpt } from './types/globalInterfaces'
-import { NotaDebitoContenedor } from './types/xml/notaDeDebito'
-import { genXML } from './lib/genXML/index'
-import { send } from './services/send/index'
-import { genClaveObj, genString, parseOptions } from './lib/genClave/index'
+import { ClientPayload, XmlOpt } from '@src/types/globalInterfaces'
+import { NotaDebitoContenedor } from '@src/types/xml/notaDeDebito'
+import { genXML } from '@src/lib/genXML/index'
+import { send } from '@src/services/send/index'
+import { genClaveObj, genString, parseOptions } from '@src/lib/genClave/index'
 import {
   getBillResum,
   getReceiver,
   getSender,
   getSimpleReceiver,
   getSimpleSender
-} from './helpers/comprobantes'
+} from '@src/helpers/comprobantes'
 
 const VOUCHER_TYPE = 'ND'
 

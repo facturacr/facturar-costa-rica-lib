@@ -1,4 +1,4 @@
-import { Persona, DetalleServicio, Resumen } from '../facturaInterfaces'
+import { Persona, DetalleServicio, Resumen } from '@src/types/facturaInterfaces'
 
 type NotaDebitoElectronica = {
   Clave: string;

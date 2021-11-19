@@ -1,5 +1,5 @@
-import { ClientPayload, FinalMessagePerson } from '../types/globalInterfaces'
-import { Resumen, Persona } from '../types/facturaInterfaces'
+import { ClientPayload, FinalMessagePerson } from '@src/types/globalInterfaces'
+import { Resumen, Persona } from '@src/types/facturaInterfaces'
 
 const DEFAULT_VALUES = {
   key: 0,

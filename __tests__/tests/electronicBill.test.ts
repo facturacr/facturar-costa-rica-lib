@@ -20,8 +20,8 @@ describe('Get Token', () => {
       buffer: pem,
       password: '1234'
     })
-  
-    console.log('bill', bill);
+
+    console.log('bill', bill)
 
     expect(bill).toEqual('')
   })

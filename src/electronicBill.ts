@@ -1,7 +1,7 @@
-import { ClientPayload, FinalMessagePerson } from './types/globalInterfaces'
-import { genClaveObj, genString, parseOptions } from './lib/genClave/index'
-import genJSON from './lib/genJSON/index'
-import { send } from './services/send/index'
+import { ClientPayload, FinalMessagePerson } from '@src/types/globalInterfaces'
+import { genClaveObj, genString, parseOptions } from '@src/lib/genClave/index'
+import genJSON from '@src/lib/genJSON/index'
+import { send } from '@src/services/send/index'
 
 const DEFAULT_VALUES = {
   tipoIdentificacion: '01'
