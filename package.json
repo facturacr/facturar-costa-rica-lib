@@ -53,7 +53,7 @@
     "@peculiar/webcrypto": "^1.1.6",
     "axios": "^0.21.1",
     "fast-xml-parser": "^3.19.0",
-    "node-forge": "^0.10.0",
+    "node-forge": "^1.0.0",
     "xadesjs": "^2.1.2",
     "xmldom-alpha": "^0.1.28"
   }
