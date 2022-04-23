@@ -1,6 +1,6 @@
-import { ClientPayload } from '../../types/globalInterfaces'
-import { FacturaElectronicaContenedor, Resumen, Persona, Impuesto, LineaDetalle } from '../../types/facturaInterfaces'
-import { genXML } from '../genXML'
+import { ClientPayload } from '@src/types/globalInterfaces'
+import { FacturaElectronicaContenedor, Resumen, Persona, Impuesto, LineaDetalle } from '@src/types/facturaInterfaces'
+import { genXML } from '@src/lib/genXML'
 
 // Default XML Values
 const DEFAULT_VALUES = {

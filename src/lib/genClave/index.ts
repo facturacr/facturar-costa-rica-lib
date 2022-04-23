@@ -1,6 +1,6 @@
-import { ClaveOpts, Clave, ClaveFecha, Consecutivo } from './interfaces'
-import { ClientPayload, FinalMessagePerson } from '../../types/globalInterfaces'
-import { tipoDocumento } from '../../data/tipoDocumento'
+import { ClaveOpts, Clave, ClaveFecha, Consecutivo } from '@src/lib/genClave/interfaces'
+import { ClientPayload, FinalMessagePerson } from '@src/types/globalInterfaces'
+import { tipoDocumento } from '@src/data/tipoDocumento'
 
 const DEFAULT_VALUES = {
   tipoDocumento: '01',

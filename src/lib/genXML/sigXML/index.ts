@@ -1,6 +1,6 @@
 import { Application, SignedXml, Parse, OptionsXAdES } from 'xadesjs'
 import { Crypto } from '@peculiar/webcrypto'
-import { genKeysAndCert } from './genKeysAndCert'
+import { genKeysAndCert } from '@src/lib/genXML/sigXML/genKeysAndCert'
 import { XMLSerializer } from 'xmldom-alpha'
 
 function addSigToXML(xml: Document, signature: any): string {

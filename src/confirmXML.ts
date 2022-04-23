@@ -1,7 +1,7 @@
-import { consecutivoStr } from './lib/genClave'
-import { xmlToJson, genXML } from './lib/genXML/index'
-import { send } from './services/send/index'
-import { getFinalMessage, getMsjObj } from './lib/genJSON/confirmXML'
+import { consecutivoStr } from '@src/lib/genClave'
+import { xmlToJson, genXML } from '@src/lib/genXML/index'
+import { send } from '@src/services/send/index'
+import { getFinalMessage, getMsjObj } from '@src/lib/genJSON/confirmXML'
 
 function getConsecutivoStr(opts: any): string {
   return consecutivoStr({

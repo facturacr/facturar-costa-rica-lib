@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'querystring'
-import { postTokenOptions } from './interfaces'
+import { postTokenOptions } from '@src/services/getToken/interfaces'
 
 const MAIN_DOMAIN = 'https://idp.comprobanteselectronicos.go.cr'
 const RUT = (process.env.IS_STG) ? 'rut-stag' : 'rut'

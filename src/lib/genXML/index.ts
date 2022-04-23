@@ -1,6 +1,6 @@
 import { j2xParser, parse } from 'fast-xml-parser'
-import { declaration, defaultOptions, xmlExtructures } from './xmlConfig'
-import sigXML from './sigXML/index'
+import { declaration, defaultOptions, xmlExtructures } from '@src/lib/genXML/xmlConfig'
+import sigXML from '@src/lib/genXML/sigXML/index'
 
 export const objToXML = (xmlStructure: string, obj: object): string => {
   const parser = new j2xParser(defaultOptions) // eslint-disable-line new-cap

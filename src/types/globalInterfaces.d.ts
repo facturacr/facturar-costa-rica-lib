@@ -1,4 +1,4 @@
-import { Persona, LineaDetalle } from './facturaInterfaces'
+import { Persona, LineaDetalle } from '@src/types/facturaInterfaces'
 
 export interface ClientPayload {
   Emisor: Persona;

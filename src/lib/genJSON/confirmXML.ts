@@ -1,5 +1,5 @@
-import { MensajeReceptorContenedor } from '../../types/xml/mensajeReceptor'
-import { tipoDocumento } from '../../data/tipoDocumento'
+import { MensajeReceptorContenedor } from '@src/types/xml/mensajeReceptor'
+import { tipoDocumento } from '@src/data/tipoDocumento'
 
 export function getMsjObj(opts: {
     fullInvoice: any;
