@@ -3,8 +3,8 @@ import axios from 'axios'
 const MAIN_DOMAIN = 'https://api.comprobanteselectronicos.go.cr/'
 const RUT = (process.env.IS_STG) ? 'recepcion-sandbox' : 'recepcion'
 const PATH = `${RUT}/v1/recepcion/`
-
-const URL = MAIN_DOMAIN + PATH
+const SANBOX_URL = 'https://api-sandbox.comprobanteselectronicos.go.cr/recepcion/v1/recepcion'
+const URL = (process.env.IS_STG) ? SANBOX_URL : MAIN_DOMAIN + PATH
 
 export function send(token: string, postOptions: any): Record<string, any> {
   return axios({

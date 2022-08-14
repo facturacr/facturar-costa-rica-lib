@@ -19,7 +19,7 @@ const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
 const frontEndRequest: ClientPayload = requestStub
 
-console.log('requestStub', requestStub.consecutivo)
+console.log('requestStub consecutivo', requestStub.consecutivo)
 
 function decodeBase64(encodedStr: string): string {
   const buff = Buffer.from(encodedStr, 'base64')
