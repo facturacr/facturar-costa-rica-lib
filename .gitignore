@@ -7,7 +7,9 @@ __tests__/output
 .idea
 .vscode
 *.log
-.env*
+.env
+
+*.p12
 
 # Mac files
 .DS_Store

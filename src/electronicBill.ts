@@ -48,6 +48,7 @@ export default async (token, frontEndRequest: ClientPayload, xmlOpt): Promise<an
   const response = send(token, finalMesage).catch((err) => {
     const response = err.response || {}
     const header = response.headers || {}
+    console.log('response status code', err.response.status)
     console.log('x-error-cause', header['x-error-cause'])
   })
 
