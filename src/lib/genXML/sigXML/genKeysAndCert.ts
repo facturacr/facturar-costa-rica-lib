@@ -21,11 +21,7 @@ function preparePems(privatePem, publicPem, certPem): any {
 
 function fromBase64(base64Text: string): any {
   base64Text = base64Text.replace(/\n/g, '').replace(/\r/g, '').replace(/\t/g, '').replace(/\s/g, '')
-  if (typeof atob !== 'undefined') {
-    return this.FromBinary(atob(base64Text))
-  } else {
-    return new Uint8Array(Buffer.from(base64Text, 'base64')).buffer
-  }
+  return new Uint8Array(Buffer.from(base64Text, 'base64')).buffer
 }
 
 function convertFromBase64(pems): any {
