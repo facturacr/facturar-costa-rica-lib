@@ -1,18 +1,15 @@
-import getToken from '@src/services/getToken'
+import { ATV } from '@src/ATV'
 
 const IS_STG = process.env.IS_STG
 const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
 console.log('process.env.IS_STG', IS_STG)
 
-getToken({
-  client_id: 'api-stag', // eslint-disable-line @typescript-eslint/camelcase
-  client_secret: '', // eslint-disable-line @typescript-eslint/camelcase
-  grant_type: 'password', // eslint-disable-line @typescript-eslint/camelcase
+const atv = new ATV({}, 'stg')
+const tokenData = atv.getToken({
   username: USERNAME_TEST,
   password: PASSWORD_TEST
-}).then((result) => {
-  console.log('res', result.data)
-}).catch((e) => {
-  console.log('e', e.response.data)
+})
+tokenData.then((resp) => {
+  console.log('accessToken', resp.accessToken)
 })

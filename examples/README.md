@@ -20,6 +20,11 @@ Para crear una nota de credito
 yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createCreditNote.ts
 ```
 
+Para obtener un token
+```
+yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/getToken.ts
+```
+
 ## Testing
 Para probar las funcionalidades se recomienda crear un .env en donde se especifiquen datos de prueba.
 ```
