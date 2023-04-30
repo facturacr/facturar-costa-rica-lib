@@ -49,6 +49,6 @@ export class GetToken {
   }
 
   private initProps(mode: string): GetTokenInternalProps {
-    return options[mode]
+    return options[mode] || options.prod
   }
 }
