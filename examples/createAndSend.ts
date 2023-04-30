@@ -1,7 +1,8 @@
 import { ClientPayload } from '@src/types/globalInterfaces'
 import requestStub from '@test/stubs/frontendRequest.stub'
-import { eletronicBill, sendToCustomURL, getToken } from '@src/index'
+import { eletronicBill, sendToCustomURL } from '@src/index'
 import fs from 'fs'
+import { ATV } from '@src/ATV'
 
 const IS_STG = process.env.IS_STG
 const USERNAME_TEST = process.env.USERNAME_TEST
@@ -39,14 +40,12 @@ function getConfimation(token: string, data: any, ms: number): Promise<any> {
 }
 
 async function main(): Promise<void> {
-  const tokenObj = await getToken({
-    client_id: 'api-stag', // eslint-disable-line
-    client_secret: '', // eslint-disable-line
-    grant_type: 'password', // eslint-disable-line
+  const atv = new ATV({}, 'stg')
+  const tokenData = await atv.getToken({
     username: USERNAME_TEST,
     password: PASSWORD_TEST
   })
-  const token = tokenObj.data.access_token
+  const token = tokenData.accessToken
   const data = await eletronicBill(token, frontEndRequest, {
     buffer: pem,
     password: SOURCE_P12_PASSPORT

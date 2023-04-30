@@ -3,7 +3,7 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest'
   },
-  modulePathIgnorePatterns: ['inputs', 'stubs'],
+  modulePathIgnorePatterns: ['<rootDir>/dist/', 'inputs', 'stubs'],
   moduleNameMapper: {
     '^@test(.*)$': '<rootDir>/__tests__/$1',
     '^@src(.*)$': '<rootDir>/src/$1'
