@@ -30,7 +30,7 @@ function getBillResum(lines: LineaDetalle[]): Resumen {
     },
     TotalServGravados: 0,
     TotalServExentos: 0,
-    TotalServExonerado: 0,
+    // TotalServExonerado: 0,
     TotalMercanciasGravadas: sum.total,
     TotalMercanciasExentas: 0,
     TotalGravado: sum.total,

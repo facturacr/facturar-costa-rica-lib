@@ -39,7 +39,7 @@ export function getBillResum(frontEndRequest: ClientPayload): Resumen {
     },
     TotalServGravados: 0,
     TotalServExentos: 0,
-    TotalServExonerado: 0,
+    // TotalServExonerado: 0,
     TotalMercanciasGravadas: frontEndRequest.total,
     TotalMercanciasExentas: 0,
     TotalGravado: frontEndRequest.total,
