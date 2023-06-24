@@ -70,7 +70,7 @@ function setTaxObj(subtotal: number, taxObj: Impuesto): Impuesto {
   }
 }
 
-function setLinesDefaults(lines: LineaDetalle[]): LineaDetalle[] {
+export function setLinesDefaults(lines: LineaDetalle[]): LineaDetalle[] {
   return lines.map((line, index) => {
     const quantity = line.Cantidad || 1
     const total = line.PrecioUnitario * quantity

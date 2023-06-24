@@ -1,8 +1,6 @@
-import { ClientPayload } from '@src/types/globalInterfaces'
-import requestStub from '@test/stubs/frontendRequest.stub'
-import { eletronicBill, sendToCustomURL } from '@src/index'
 import fs from 'fs'
 import { ATV } from '@src/ATV'
+import { createDocumentInputStub } from '@test/stubs/createDocument.stub'
 
 const IS_STG = process.env.IS_STG
 const USERNAME_TEST = process.env.USERNAME_TEST
@@ -18,22 +16,19 @@ if (!SOURCE_P12_PASSPORT || !SOURCE_P12_URI) {
 
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
-const frontEndRequest: ClientPayload = requestStub
+console.log('requestStub consecutivo', createDocumentInputStub.consecutiveIdentifier)
 
-console.log('requestStub consecutivo', requestStub.consecutivo)
-
-function decodeBase64(encodedStr: string): string {
-  const buff = Buffer.from(encodedStr, 'base64')
-  return buff.toString('ascii')
-}
-
-function getConfimation(token: string, data: any, ms: number): Promise<any> {
+function getConfimation(atv: ATV, token: string, location: string, ms: number): Promise<any> {
   return new Promise((resolve, reject): any => {
     setTimeout(() => {
-      const location = data?.headers?.location
       console.log('location', location)
-      sendToCustomURL(token, location)
-        .then(data => resolve(data))
+      atv.sendConfirmation({
+        url: location,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'bearer ' + token
+        }
+      }).then(data => resolve(data))
         .catch(err => reject(err))
     }, ms)
   })
@@ -45,26 +40,23 @@ async function main(): Promise<void> {
     username: USERNAME_TEST,
     password: PASSWORD_TEST
   })
-  const token = tokenData.accessToken
-  const data = await eletronicBill(token, frontEndRequest, {
-    buffer: pem,
-    password: SOURCE_P12_PASSPORT
-  })
-  if (data) {
-    const secondResponse = await getConfimation(token, data, 5000)
-      .catch(err => {
-        const response = err.response || {}
-        console.log('response', response)
-      })
-    const XMLResponse = secondResponse.data['respuesta-xml']
-    if (!XMLResponse) {
-      const state = secondResponse.data['ind-estado']
-      console.log('state', state)
-      return
+  const { command, extraData } = await atv.createDocumentCommand({
+    document: createDocumentInputStub,
+    token: tokenData.accessToken,
+    signatureOptions: {
+      buffer: pem,
+      password: SOURCE_P12_PASSPORT
     }
-    const text = decodeBase64(XMLResponse)
-    console.log('secondResponse', text)
+  })
+  console.log('command', command)
+  console.log('extraData', extraData)
+  const response = await atv.sendDocument(command)
+  console.log('response', response)
+  if (!response.location) {
+    return
   }
+  const confirmationResponse = await getConfimation(atv, tokenData.accessToken, response.location, 1000)
+  console.log({ MensajeHacienda: confirmationResponse.confirmation })
 }
 
 main()

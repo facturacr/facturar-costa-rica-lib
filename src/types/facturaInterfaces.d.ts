@@ -35,7 +35,7 @@ export interface Resumen {
   };
   TotalServGravados: number;
   TotalServExentos: number;
-  TotalServExonerado: number;
+  // TotalServExonerado: number;
   TotalMercanciasGravadas?: number;
   TotalMercanciasExentas?: number;
   TotalGravado?: number;
@@ -82,7 +82,7 @@ export interface FacturaElectronica {
   Clave: string;
   CodigoActividad: string;
   NumeroConsecutivo: string;
-  FechaEmision?: Date;
+  FechaEmision?: string;
   Emisor: Persona;
   Receptor: Persona;
   CondicionVenta?: string;
@@ -99,7 +99,7 @@ export interface FacturaElectronicaExportacion {
   Clave: string;
   CodigoActividad: string;
   NumeroConsecutivo: string;
-  FechaEmision?: Date;
+  FechaEmision?: string;
   Emisor: Persona;
   Receptor: Persona;
   CondicionVenta?: string;
@@ -114,4 +114,28 @@ export interface FacturaElectronicaExportacion {
 
 export interface FacturaElectronicaContenedor {
   [key: 'FacturaElectronica' | 'FacturaElectronicaExportacion']: FacturaElectronica | FacturaElectronicaExportacion;
+}
+
+export type ConfirmationMessageRaw = {
+  MensajeHacienda: {
+    Clave: string;
+    NombreEmisor: string;
+    TipoIdentificacionEmisor: string;
+    NumeroCedulaEmisor: string;
+    TipoIdentificacionReceptor: string;
+    NumeroCedulaReceptor: string;
+    Mensaje: string;
+    DetalleMensaje: string;
+    MontoTotalImpuesto: string;
+    TotalFactura: string;
+    '@_xmlns': string;
+    'ds:Signature': {
+      '@_xmlns:ds': string;
+      '@_Id': string;
+      'ds:SignedInfo': unknown;
+      'ds:SignatureValue': unknown;
+      'ds:KeyInfo': unknown;
+      'ds:Object': unknown;
+    };
+  };
 }
