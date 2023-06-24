@@ -25,7 +25,7 @@ export class Clave {
       sucursal: this.props.branch,
       terminal: this.props.terminal,
       tipoCedula: this.props.identifierType,
-      tipoDocKey: this.props.docKeyType,
+      tipoDocKey: this.props.docKeyType
     })
     const claveStr = genString(claveObj)
     return claveStr

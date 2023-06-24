@@ -30,7 +30,7 @@ export type SendResponse = {
 type SendConfirmationInput = {
   url: string;
   headers: {
-     Authorization: string;
+    Authorization: string;
     'Content-Type': string;
   };
 }
@@ -81,6 +81,7 @@ export class ATV {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   public async sendConfirmation(input: SendConfirmationInput) {
     try {
       const response = await axios(input)
