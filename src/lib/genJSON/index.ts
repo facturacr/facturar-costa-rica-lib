@@ -30,7 +30,7 @@ function getBillResum(lines: LineaDetalle[]): Resumen {
     },
     TotalServGravados: 0,
     TotalServExentos: 0,
-    TotalServExonerado: 0,
+    // TotalServExonerado: 0,
     TotalMercanciasGravadas: sum.total,
     TotalMercanciasExentas: 0,
     TotalGravado: sum.total,
@@ -70,7 +70,7 @@ function setTaxObj(subtotal: number, taxObj: Impuesto): Impuesto {
   }
 }
 
-function setLinesDefaults(lines: LineaDetalle[]): LineaDetalle[] {
+export function setLinesDefaults(lines: LineaDetalle[]): LineaDetalle[] {
   return lines.map((line, index) => {
     const quantity = line.Cantidad || 1
     const total = line.PrecioUnitario * quantity
