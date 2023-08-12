@@ -24,7 +24,7 @@ export type SummaryProps = {
   totalVoucher: number; // TotalComprobante
 }
 
-export type DocumentProps = {
+export type BillProps = {
   clave: Clave;
   fullConsecutive: FullConsecutive;
   activityCode: string; // CodigoActividad
@@ -46,9 +46,9 @@ type OrderLineSum = {
   totalTaxes: number;
 }
 
-export class Document {
-  public readonly props: DocumentProps;
-  constructor(props: DocumentProps) {
+export class Bill {
+  public readonly props: BillProps;
+  constructor(props: BillProps) {
     this.props = props
   }
 
@@ -137,7 +137,7 @@ export class Document {
     }, { totalAmount: 0, totalTaxes: 0 })
   }
 
-  public static create(props: DocumentProps): Document {
-    return new Document(props)
+  public static create(props: BillProps): Bill {
+    return new Bill(props)
   }
 }

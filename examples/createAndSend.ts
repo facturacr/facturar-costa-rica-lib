@@ -40,7 +40,7 @@ async function main(): Promise<void> {
     username: USERNAME_TEST,
     password: PASSWORD_TEST
   })
-  const { command, extraData } = await atv.createDocumentCommand({
+  const { command, extraData } = await atv.createBillCommand({
     document: createDocumentInputStub,
     token: tokenData.accessToken,
     signatureOptions: {

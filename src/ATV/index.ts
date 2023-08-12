@@ -2,12 +2,12 @@
 import axios from 'axios'
 import { GetToken } from '../services/getToken/GetToken'
 import { GetTokenDto, GetTokenResponse } from '../services/getToken/types'
-import { CreateDocumentCommand, CreateDocumentInput } from './useCases/sendDocument/SendDocument'
-import { Command, CreateAndSendDocumentResponse } from './useCases/sendDocument/types'
+import { CreateBillCommand } from './useCases/createBill'
 import * as parser from 'fast-xml-parser'
 import qs from 'querystring'
 import { ConfirmationMessageRaw } from '@src/types/facturaInterfaces'
 import { ATVOptions, ConfirmationMessage, Mode, SendConfirmationInput, SendResponse } from './types'
+import { Command, CreateAndSendDocumentResponse, CreateBillInput } from './useCases/createBill/types'
 
 export class ATV {
   public readonly options: ATVOptions
@@ -20,9 +20,9 @@ export class ATV {
     return tokenService.execute(params)
   }
 
-  public createDocumentCommand(input: CreateDocumentInput): Promise<CreateAndSendDocumentResponse> {
-    const sendDocument = new CreateDocumentCommand(this)
-    return sendDocument.execute(input)
+  public createBillCommand(input: CreateBillInput): Promise<CreateAndSendDocumentResponse> {
+    const createBillDocument = new CreateBillCommand(this)
+    return createBillDocument.execute(input)
   }
 
   public async sendDocument(input: Command): Promise<SendResponse> {
