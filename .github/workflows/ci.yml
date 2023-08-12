@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: Check out repository code
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
         - name: Install modules
           run: yarn
         - name: Run testing
@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [12, 14, 16, 18]
+        node: [18, 20]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
@@ -35,11 +35,14 @@ jobs:
           fail_ci_if_error: false
   run-on-window:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        node: [18, 20]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: ${{ matrix.node }}
       - run: yarn
       - run: yarn build
       - name: coverage
