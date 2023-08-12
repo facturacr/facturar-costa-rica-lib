@@ -40,7 +40,7 @@ type DocumentInput = {
   orderLines: OrderInput[];
 }
 
-export type CreateDocumentInput = {
+export type CreateBillInput = {
   document: DocumentInput;
   token: string;
   signatureOptions: {
