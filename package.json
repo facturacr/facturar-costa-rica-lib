@@ -14,7 +14,8 @@
     "dev": "dotenv -- nodemon -e ts,graphql -x 'yarn lint & ts-node -r tsconfig-paths/register src/index.ts'",
     "build": "yarn lint & tsc",
     "lint": "eslint --ext .ts, --ignore-path .gitignore .",
-    "publish": "yarn build & npm publish"
+    "publish": "yarn build & npm publish",
+    "test:createAndSend": "yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSend.ts"
   },
   "repository": {
     "type": "git",
