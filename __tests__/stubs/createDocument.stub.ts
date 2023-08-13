@@ -1,12 +1,12 @@
-import { CreateBillInput } from '@src/ATV/useCases/createBill'
+import { CreateDocumentInput } from '@src/ATV/useCases/createDocument/types'
 
-const taxStub: CreateBillInput['document']['orderLines'][0]['tax'] = {
+const taxStub: CreateDocumentInput['document']['orderLines'][0]['tax'] = {
   code: '01',
   rateCode: '08',
   rate: 13
 }
 
-const orderLines: CreateBillInput['document']['orderLines'] = [{
+const orderLines: CreateDocumentInput['document']['orderLines'] = [{
   code: '7113301000000',
   quantity: 1,
   measureUnit: 'Unid',
@@ -15,7 +15,7 @@ const orderLines: CreateBillInput['document']['orderLines'] = [{
   tax: taxStub
 }]
 
-const receiverStub: CreateBillInput['document']['emitter'] = {
+const receiverStub: CreateDocumentInput['document']['emitter'] = {
   fullName: 'SRL',
   commercialName: 'CIENCIA DEL SABOR',
   identifier: {
@@ -40,7 +40,7 @@ const receiverStub: CreateBillInput['document']['emitter'] = {
   }
 }
 
-const emitterStub: CreateBillInput['document']['receiver'] = {
+const emitterStub: CreateDocumentInput['document']['receiver'] = {
   fullName: 'Nombre Receptor',
   commercialName: 'xyz',
   identifier: {
@@ -65,14 +65,14 @@ const emitterStub: CreateBillInput['document']['receiver'] = {
   }
 }
 
-export const createDocumentInputStub: CreateBillInput['document'] = {
-  consecutiveIdentifier: '1',
+export const createDocumentInputStub: CreateDocumentInput['document'] = {
+  consecutiveIdentifier: '2',
   activityCode: '4',
+  documentName: 'FacturaElectronica',
   branch: '001',
   terminal: '00001',
   ceSituation: '1',
   countryCode: '506',
-  documentType: 'FE',
   emitter: emitterStub,
   receiver: receiverStub,
   orderLines,

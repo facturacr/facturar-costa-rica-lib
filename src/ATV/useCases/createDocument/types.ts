@@ -1,4 +1,5 @@
 import { PersonProps } from '@src/ATV/core/Person'
+import { DocumentNames } from '@src/ATV/core/documentNames.types';
 import { Method } from 'axios'
 
 type PersonInput = PersonProps;
@@ -30,8 +31,8 @@ type DocumentInput = {
   receiver: PersonInput;
   branch: string; // sucursal
   terminal: string; // terminal
-  documentType: DocumentTypes; // tipoDocKey
-  documentName?: 'FacturaElectronica' | 'FacturaElectronicaExportacion';
+  // documentType: DocumentTypes; // @deprecated
+  documentName: DocumentNames;
   countryCode: string; // codigoPais
   securityCode: string; // codigoSeguridad
   activityCode: string;
@@ -40,7 +41,7 @@ type DocumentInput = {
   orderLines: OrderInput[];
 }
 
-export type CreateBillInput = {
+export type CreateDocumentInput = {
   document: DocumentInput;
   token: string;
   signatureOptions: {

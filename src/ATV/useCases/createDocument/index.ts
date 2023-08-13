@@ -1,13 +1,14 @@
 import { Person } from '@src/ATV/core/Person'
 import { OrderLine } from '@src/ATV/core/OrderLine'
 import { FullConsecutive } from '@src/ATV/core/FullConsecutive'
-import { Bill } from '@src/ATV/core/Bill'
+import { Document } from '@src/ATV/core/Document'
 import { Clave } from '@src/ATV/core/Clave'
 import { mapDocumentToAtvFormat as mapBillToAtvFormat } from '@src/ATV/mappers/billDocToAtv'
 import { genXML } from '@src/lib/genXML'
-import { CreateAndSendDocumentResponse, CreateBillInput, Command } from './types'
+import { CreateAndSendDocumentResponse, CreateDocumentInput, Command } from './types'
 import { ATV } from '@src/ATV'
-export type { CreateBillInput } from './types'
+import { DocumentType } from '@src/ATV/core/DocumentType'
+export type { CreateDocumentInput as CreateBillInput } from './types'
 
 const options: { [key: string]: { serviceUrl: string}} = {
   prod: {
@@ -18,19 +19,19 @@ const options: { [key: string]: { serviceUrl: string}} = {
   }
 }
 
-export class CreateBillCommand {
+export class CreateDocumentCommand {
   private readonly serviceUrl: string;
 
   constructor(scope: ATV) {
     this.serviceUrl = options[scope.mode].serviceUrl
   }
 
-  public async execute(dto: CreateBillInput): Promise<CreateAndSendDocumentResponse> {
+  public async execute(dto: CreateDocumentInput): Promise<CreateAndSendDocumentResponse> {
     const documentName = dto.document.documentName || 'FacturaElectronica'
-    const document = this.createBill(dto.document)
+    const document = this.createDocument(dto.document)
     const atvDocument = mapBillToAtvFormat(documentName, document)
     const xml = await genXML(documentName, atvDocument, dto.signatureOptions)
-    const command = await this.createBillCommand(document, xml, dto.token)
+    const command = await this.createDocumentCommand(document, xml, dto.token)
     return {
       command,
       extraData: {
@@ -39,7 +40,7 @@ export class CreateBillCommand {
     }
   }
 
-  private async createBillCommand(document: Bill, xml: string, token: string): Promise<Command> {
+  private async createDocumentCommand(document: Document, xml: string, token: string): Promise<Command> {
     return {
       url: this.serviceUrl,
       method: 'post',
@@ -63,13 +64,14 @@ export class CreateBillCommand {
     }
   }
 
-  private createBill(document: CreateBillInput['document']): Bill {
+  private createDocument(document: CreateDocumentInput['document']): Document {
+    const documentType = DocumentType.create(document.documentName)
     const emitter = this.createEmitter(document.emitter)
     const receiver = this.createReceiver(document.receiver)
-    const clave = this.createClave(document)
-    const fullConsective = this.createFullConsecutive(document)
+    const clave = this.createClave(document, documentType)
+    const fullConsective = this.createFullConsecutive(document, documentType)
     const orderLines = this.createOrderLines(document)
-    return Bill.create({
+    return Document.create({
       clave: clave,
       fullConsecutive: fullConsective,
       orderLines: orderLines,
@@ -82,15 +84,15 @@ export class CreateBillCommand {
     })
   }
 
-  private createEmitter(emitterInput: CreateBillInput['document']['emitter']): Person {
+  private createEmitter(emitterInput: CreateDocumentInput['document']['emitter']): Person {
     return Person.create(emitterInput)
   }
 
-  private createReceiver(receiverInput: CreateBillInput['document']['receiver']): Person {
+  private createReceiver(receiverInput: CreateDocumentInput['document']['receiver']): Person {
     return Person.create(receiverInput)
   }
 
-  private createOrderLines(dto: CreateBillInput['document']): OrderLine[] {
+  private createOrderLines(dto: CreateDocumentInput['document']): OrderLine[] {
     return dto.orderLines.map((orderLine, index) => {
       return OrderLine.create({
         detail: orderLine.detail,
@@ -105,22 +107,22 @@ export class CreateBillCommand {
     })
   }
 
-  private createFullConsecutive(dto: CreateBillInput['document']): FullConsecutive {
+  private createFullConsecutive(dto: CreateDocumentInput['document'], docType: DocumentType): FullConsecutive {
     return FullConsecutive.create({
       consecutiveIdentifier: dto.consecutiveIdentifier,
       branch: dto.branch,
       terminal: dto.terminal,
-      documentType: dto.documentType
+      documentType: docType.value
     })
   }
 
-  private createClave(dto: CreateBillInput['document']): Clave {
+  private createClave(dto: CreateDocumentInput['document'], docType: DocumentType): Clave {
     return Clave.create({
       branch: dto.branch,
       ceSituation: dto.ceSituation,
       consecutiveIdentifier: dto.consecutiveIdentifier,
       countryCode: dto.countryCode,
-      docKeyType: dto.documentType,
+      docKeyType: docType.value,
       emitterIdentifier: dto.emitter.identifier.id,
       identifierType: dto.emitter.identifier.type, // TODO add default
       securityCode: dto.securityCode,

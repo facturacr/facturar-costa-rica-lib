@@ -78,24 +78,7 @@ export interface Message {
   DetalleMensaje: string;
 }
 
-export interface FacturaElectronica {
-  Clave: string;
-  CodigoActividad: string;
-  NumeroConsecutivo: string;
-  FechaEmision?: string;
-  Emisor: Persona;
-  Receptor: Persona;
-  CondicionVenta?: string;
-  PlazoCredito?: string;
-  MedioPago?: string;
-  DetalleServicio?: DetalleServicio;
-  ResumenFactura: Resumen;
-  Otros?: {
-    OtroTexto: string;
-  };
-}
-
-export interface FacturaElectronicaExportacion {
+export interface Document {
   Clave: string;
   CodigoActividad: string;
   NumeroConsecutivo: string;
@@ -113,7 +96,7 @@ export interface FacturaElectronicaExportacion {
 }
 
 export interface FacturaElectronicaContenedor {
-  [key: 'FacturaElectronica' | 'FacturaElectronicaExportacion']: FacturaElectronica | FacturaElectronicaExportacion;
+  [key: 'FacturaElectronica' | 'FacturaElectronicaExportacion']: Document | FacturaElectronicaExportacion;
 }
 
 export type ConfirmationMessageRaw = {
