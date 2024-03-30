@@ -20,5 +20,6 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{ts,js}'
-  ]
+  ],
+  globalSetup: './jest-setup.js'
 }
