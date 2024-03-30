@@ -2,29 +2,9 @@ import { Clave } from './Clave'
 import { FullConsecutive } from './FullConsecutive'
 import { OrderLine } from './OrderLine'
 import { Person } from './Person'
+import { SummaryProps } from './Summary.type'
 
-export type SummaryProps = {
-  currency?: {
-    code: string;
-    exchangeRate: string;
-  };
-  totalTaxedServices: number; // TotalServGravados
-  totalExemptServices: number; // TotalServExentos
-  totalEncumberedServices: number; // TotalServExonerado
-  totalExemptMerchandise?: number; // TotalMercanciasGravadas
-  totalEncumberedMerchandise?: number; // TotalMercanciasExentas
-  totalEncumbered: number; // TotalGravado
-  totalTaxed?: number;
-  totalExempt: number; // TotalExento
-  totalExonerated: number; // TotalExonerado
-  totalSale: number; // TotalVenta
-  totalDiscounts?: number; // TotalDescuentos
-  totalNetSale?: number; // TotalVentaNeta
-  totalTaxes: number; // TotalImpuesto
-  totalVoucher: number; // TotalComprobante
-}
-
-export type DocumentProps = {
+export type InvoiceProps = {
   clave: Clave;
   fullConsecutive: FullConsecutive;
   activityCode: string; // CodigoActividad
@@ -47,8 +27,8 @@ type OrderLineSum = {
 }
 
 export class Document {
-  public readonly props: DocumentProps;
-  constructor(props: DocumentProps) {
+  public readonly props: InvoiceProps;
+  constructor(props: InvoiceProps) {
     this.props = props
   }
 
@@ -137,7 +117,7 @@ export class Document {
     }, { totalAmount: 0, totalTaxes: 0 })
   }
 
-  public static create(props: DocumentProps): Document {
+  public static create(props: InvoiceProps): Document {
     return new Document(props)
   }
 }
