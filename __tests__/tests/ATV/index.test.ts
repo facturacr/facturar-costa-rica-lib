@@ -9,7 +9,7 @@ const expectXml = fs.readFileSync('__tests__/stubs/commonExpectedXml.xml', 'utf-
 describe('Create Document (Invoice)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2024, 3, 1));
+        jest.setSystemTime(new Date(2024, 3, 1, 0, 0, 0, 0));
     })
 
     it('should create document and generate a correct command', async () => {
@@ -44,7 +44,7 @@ describe('Create Document (Invoice)', () => {
             token: 'fake-token',
             signatureOptions: undefined
         })
-        expect(createdDoc.command.data.comprobanteXml).toBeDefined()
+        expect(createdDoc.command.data.comprobanteXml).toMatchSnapshot()
         expect(createdDoc.extraData.xml).toEqualXML(expectXml)
     })
 })
