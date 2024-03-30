@@ -7,7 +7,7 @@ const MAIN_DOMAIN = 'https://idp.comprobanteselectronicos.go.cr'
 const options: { [key: string]: GetTokenInternalProps} = {
   prod: {
     serviceUrl: `${MAIN_DOMAIN}/auth/realms/rut/protocol/openid-connect/token`,
-    clientId: 'api'
+    clientId: 'api-prod'
   },
   stg: {
     serviceUrl: `${MAIN_DOMAIN}/auth/realms/rut-stag/protocol/openid-connect/token`,

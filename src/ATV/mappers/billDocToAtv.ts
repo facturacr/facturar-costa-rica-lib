@@ -1,5 +1,5 @@
-import { FacturaElectronica, FacturaElectronicaExportacion, FacturaElectronicaContenedor, DetalleServicio, Resumen, Persona } from '@src/types/facturaInterfaces'
-import { Document } from '../core/Document'
+import { Document, FacturaElectronicaContenedor, DetalleServicio, Resumen, Persona } from '@src/types/facturaInterfaces'
+import { Document as DomainDocument } from '../core/Document'
 import { OrderLine } from '../core/OrderLine'
 import { Person } from '../core/Person'
 
@@ -33,7 +33,7 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
   return { LineaDetalle }
 }
 
-const mapSummaryInvoice = (summaryInvoice: Document['summaryInvoice']): Resumen => {
+const mapSummaryInvoice = (summaryInvoice: DomainDocument['summaryInvoice']): Resumen => {
   return {
     CodigoTipoMoneda: {
       CodigoMoneda: summaryInvoice.currency.code,
@@ -81,9 +81,9 @@ const mapPerson = (person: Person): Persona => {
   }
 }
 
-export const mapDocumentToAtvFormat = (docName: string, document: Document): AtvFormat => {
+export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument): AtvFormat => {
   const key = docName
-  const doc: FacturaElectronica | FacturaElectronicaExportacion = {
+  const doc: Document = {
     Clave: document.clave,
     CodigoActividad: document.activityCode.padStart(6, '0'),
     NumeroConsecutivo: document.fullConsecutive,

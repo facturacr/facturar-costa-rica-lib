@@ -57,8 +57,8 @@ const MR_XML_ATTRS = { // Mensaje Receptor
 export const xmlExtructures = {
   FacturaElectronica: FE_XML_ATTRS,
   FacturaElectronicaExportacion: FEE_XML_ATTRS,
-  NC: NC_XML_ATTRS,
-  ND: ND_XML_ATTRS,
+  NotaCreditoElectronica: NC_XML_ATTRS,
+  NotaDebitoElectronica: ND_XML_ATTRS,
   CCE: MR_XML_ATTRS,
   CPCE: MR_XML_ATTRS,
   RCE: MR_XML_ATTRS

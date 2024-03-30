@@ -1,4 +1,4 @@
-import { CreateDocumentInput } from '@src/ATV/useCases/sendDocument/types'
+import { CreateDocumentInput } from '@src/ATV/useCases/createDocument/types'
 
 const taxStub: CreateDocumentInput['document']['orderLines'][0]['tax'] = {
   code: '01',
@@ -66,13 +66,13 @@ const emitterStub: CreateDocumentInput['document']['receiver'] = {
 }
 
 export const createDocumentInputStub: CreateDocumentInput['document'] = {
-  consecutiveIdentifier: '34',
+  consecutiveIdentifier: '2',
   activityCode: '4',
+  documentName: 'FacturaElectronica',
   branch: '001',
   terminal: '00001',
   ceSituation: '1',
   countryCode: '506',
-  documentType: 'FE',
   emitter: emitterStub,
   receiver: receiverStub,
   orderLines,

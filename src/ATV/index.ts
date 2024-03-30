@@ -2,49 +2,12 @@
 import axios from 'axios'
 import { GetToken } from '../services/getToken/GetToken'
 import { GetTokenDto, GetTokenResponse } from '../services/getToken/types'
-import { CreateDocumentCommand, CreateDocumentInput } from './useCases/sendDocument/SendDocument'
-import { Command, CreateAndSendDocumentResponse } from './useCases/sendDocument/types'
 import * as parser from 'fast-xml-parser'
 import qs from 'querystring'
 import { ConfirmationMessageRaw } from '@src/types/facturaInterfaces'
-
-export type Mode = 'prod' | 'stg' | 'custom';
-
-export type ATVOptions = {
-  defaultOverwrites?: {
-    tokenServiceUrl: string;
-  };
-}
-
-export type TokenServiceProps = {
-  serviceUrl: string;
-  clientId: string;
-}
-
-export type SendResponse = {
-  status: number;
-  location: string;
-  errorCause?: string | null;
-}
-
-type SendConfirmationInput = {
-  url: string;
-  headers: {
-    Authorization: string;
-    'Content-Type': string;
-  };
-}
-
-type ConfirmationMessage = {
-  clave: string;
-  message: string;
-  details: string;
-  emitterFullName: string;
-  emitterIdentifierId: string;
-  receiverIdentifierId: string;
-  taxesTotalAmount: string;
-  totalInvoiceAmount: string;
-}
+import { ATVOptions, ConfirmationMessage, Mode, SendConfirmationInput, SendResponse } from './types'
+import { Command, CreateAndSendDocumentResponse, CreateDocumentInput } from './useCases/createDocument/types'
+import { CreateDocumentCommand } from './useCases/createDocument'
 
 export class ATV {
   public readonly options: ATVOptions
@@ -58,8 +21,8 @@ export class ATV {
   }
 
   public createDocumentCommand(input: CreateDocumentInput): Promise<CreateAndSendDocumentResponse> {
-    const sendDocument = new CreateDocumentCommand(this)
-    return sendDocument.execute(input)
+    const createDocument = new CreateDocumentCommand(this)
+    return createDocument.execute(input)
   }
 
   public async sendDocument(input: Command): Promise<SendResponse> {
@@ -85,6 +48,7 @@ export class ATV {
   public async sendConfirmation(input: SendConfirmationInput) {
     try {
       const response = await axios(input)
+      console.log('response', response);
       const xmlResponse = response.data['respuesta-xml']
       if (!xmlResponse) {
         const state = response.data['ind-estado']
