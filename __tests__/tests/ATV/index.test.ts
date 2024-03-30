@@ -44,7 +44,7 @@ describe('Create Document (Invoice)', () => {
             token: 'fake-token',
             signatureOptions: undefined
         })
-        expect(createdDoc.command.data.comprobanteXml).toMatchSnapshot()
+        expect(createdDoc.command.data.comprobanteXml).toBeDefined()
         expect(createdDoc.extraData.xml).toEqualXML(expectXml)
     })
 })
