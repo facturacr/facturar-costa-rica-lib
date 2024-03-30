@@ -5,14 +5,35 @@ import { GetTokenDto, GetTokenResponse } from '../services/getToken/types'
 import * as parser from 'fast-xml-parser'
 import qs from 'querystring'
 import { ConfirmationMessageRaw } from '@src/types/facturaInterfaces'
-import { ATVOptions, ConfirmationMessage, Mode, SendConfirmationInput, SendResponse } from './types'
+import { ATVOptions, ConfirmationMessage, Mode, RequestCommand, SendResponse } from './types'
 import { Command, CreateAndSendDocumentResponse, CreateDocumentInput } from './useCases/createDocument/types'
 import { CreateDocumentCommand } from './useCases/createDocument'
 
+const config: { [key: string]: { defaultServiceUrl: string } } = {
+  prod: {
+    defaultServiceUrl: 'https://api.comprobanteselectronicos.go.cr/v1/recepcion'
+  },
+  stg: {
+    defaultServiceUrl: 'https://api-sandbox.comprobanteselectronicos.go.cr/recepcion/v1/recepcion'
+  }
+}
+
 export class ATV {
-  public readonly options: ATVOptions
+  public options: ATVOptions
+
   constructor(options?: ATVOptions, public readonly mode: Mode = 'prod') {
     this.options = options
+    this.setDefaults()
+  }
+
+  private setDefaults(): void {
+    if (!this.options?.urls?.createDocumentUrl) {
+      this.options = {
+        urls: {
+          createDocumentUrl: config[this.mode].defaultServiceUrl
+        }
+      }
+    }
   }
 
   public getToken(params: GetTokenDto): Promise<GetTokenResponse> {
@@ -44,11 +65,14 @@ export class ATV {
     }
   }
 
+  public send(input: RequestCommand) {
+    return axios(input)
+  }
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  public async sendConfirmation(input: SendConfirmationInput) {
+  public async sendConfirmation(input: RequestCommand) {
     try {
       const response = await axios(input)
-      console.log('response', response);
       const xmlResponse = response.data['respuesta-xml']
       if (!xmlResponse) {
         const state = response.data['ind-estado']

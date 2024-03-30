@@ -10,20 +10,11 @@ import { ATV } from '@src/ATV'
 import { DocumentType } from '@src/ATV/core/DocumentType'
 export type { CreateDocumentInput as CreateBillInput } from './types'
 
-const options: { [key: string]: { serviceUrl: string}} = {
-  prod: {
-    serviceUrl: 'https://api.comprobanteselectronicos.go.cr/v1/recepcion'
-  },
-  stg: {
-    serviceUrl: 'https://api-sandbox.comprobanteselectronicos.go.cr/recepcion/v1/recepcion'
-  }
-}
-
 export class CreateDocumentCommand {
   private readonly serviceUrl: string;
 
   constructor(scope: ATV) {
-    this.serviceUrl = options[scope.mode].serviceUrl
+    this.serviceUrl = scope.options.urls.createDocumentUrl
   }
 
   public async execute(dto: CreateDocumentInput): Promise<CreateAndSendDocumentResponse> {
