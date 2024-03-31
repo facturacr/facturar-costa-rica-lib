@@ -27,7 +27,7 @@ type OrderLineSum = {
 }
 
 export class Document {
-  public readonly props: InvoiceProps;
+  public readonly props: InvoiceProps
   constructor(props: InvoiceProps) {
     this.props = props
   }

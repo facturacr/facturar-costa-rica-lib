@@ -10,7 +10,7 @@ const map: {[key: string]: DocumentTypeValues} = {
 type DocumentTypeValues = 'FE' | 'ND' | 'NC' | 'TE'
 
 export class DocumentType {
-  value: DocumentTypeValues;
+  value: DocumentTypeValues
 
   constructor(value: DocumentTypeValues) {
     this.value = value

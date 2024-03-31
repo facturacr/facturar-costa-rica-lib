@@ -16,7 +16,7 @@ const options: { [key: string]: GetTokenInternalProps} = {
 }
 
 export class GetToken {
-  private readonly props: GetTokenInternalProps;
+  private readonly props: GetTokenInternalProps
   constructor(scope: ATV) {
     this.props = this.initProps(scope.mode)
   }

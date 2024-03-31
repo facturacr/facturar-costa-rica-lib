@@ -20,7 +20,7 @@ type OrderLineProps = {
 }
 
 export class OrderLine {
-  props: OrderLineProps;
+  props: OrderLineProps
 
   constructor(props: OrderLineProps) {
     this.props = props

@@ -20,7 +20,7 @@ const options: { [key: string]: { serviceUrl: string}} = {
 }
 
 export class CreateDocumentCommand {
-  private readonly serviceUrl: string;
+  private readonly serviceUrl: string
 
   constructor(scope: ATV) {
     this.serviceUrl = options[scope.mode].serviceUrl
@@ -72,13 +72,13 @@ export class CreateDocumentCommand {
     const fullConsective = this.createFullConsecutive(document, documentType)
     const orderLines = this.createOrderLines(document)
     return Document.create({
-      clave: clave,
+      clave,
       fullConsecutive: fullConsective,
-      orderLines: orderLines,
+      orderLines,
       activityCode: document.activityCode,
       issueDate: new Date(),
-      emitter: emitter,
-      receiver: receiver,
+      emitter,
+      receiver,
       conditionSale: '01',
       paymentMethod: '01'
     })

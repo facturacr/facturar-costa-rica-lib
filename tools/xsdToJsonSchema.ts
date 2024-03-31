@@ -73,7 +73,7 @@ function processElementsFromComplexType(array: Array<any>): any {
     if (propKey) {
       newObj[propKey] = {
         description: element?.annotation?.documentation,
-        simpleType: simpleType
+        simpleType
       }
     }
   }
@@ -84,7 +84,7 @@ function processComplexType(object: any): any {
   const elements = processElementsFromComplexType(object?.sequence?.element)
   const newObject = {}
   newObject[object?.attributes?.name] = {
-    elements: elements
+    elements
   }
   return newObject
 }

@@ -25,7 +25,7 @@ export type PersonProps = {
 }
 
 export class Person {
-  props: PersonProps;
+  props: PersonProps
   constructor(props: PersonProps) {
     this.props = props
   }

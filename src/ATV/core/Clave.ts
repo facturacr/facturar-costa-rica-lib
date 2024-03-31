@@ -13,7 +13,7 @@ type ClaveProps = {
 }
 
 export class Clave {
-  private props: ClaveProps;
+  private props: ClaveProps
 
   get value(): string {
     const claveObj = genClaveObj({

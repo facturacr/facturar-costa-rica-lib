@@ -43,7 +43,7 @@ async function main(): Promise<void> {
     }
     const data = await confirmXML({
       token: token.data.access_token,
-      consecutivo: consecutivo,
+      consecutivo,
       xmlStr: xml,
       tipoDocKey: 'CCE',
       pemOpt: {

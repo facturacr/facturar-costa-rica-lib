@@ -20,7 +20,7 @@ export function send(token: string, postOptions: any): Record<string, any> {
 
 export function sendToCustomURL(token: string, url: string): Record<string, any> {
   return axios({
-    url: url,
+    url,
     method: 'get',
     headers: {
       Authorization: 'bearer ' + token,

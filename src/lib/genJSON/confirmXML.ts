@@ -41,7 +41,7 @@ export function getFinalMessage(fullInvoice: any, consecutivoReceptor: string, x
       tipoIdentificacion: fullInvoice.Emisor.Identificacion.Tipo,
       numeroIdentificacion: fullInvoice.Emisor.Identificacion.Numero
     },
-    consecutivoReceptor: consecutivoReceptor,
+    consecutivoReceptor,
     comprobanteXml: xmlBase64
   }
 }

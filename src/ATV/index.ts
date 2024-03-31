@@ -1,4 +1,3 @@
-
 import axios from 'axios'
 import { GetToken } from '../services/getToken/GetToken'
 import { GetTokenDto, GetTokenResponse } from '../services/getToken/types'
@@ -48,7 +47,7 @@ export class ATV {
   public async sendConfirmation(input: SendConfirmationInput) {
     try {
       const response = await axios(input)
-      console.log('response', response);
+      console.log('response', response)
       const xmlResponse = response.data['respuesta-xml']
       if (!xmlResponse) {
         const state = response.data['ind-estado']

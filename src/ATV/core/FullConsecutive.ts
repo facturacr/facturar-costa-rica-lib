@@ -8,7 +8,7 @@ type FullConsecutiveProps = {
 }
 
 export class FullConsecutive {
-  private props: FullConsecutiveProps;
+  private props: FullConsecutiveProps
 
   get value(): string {
     return consecutivoStr({

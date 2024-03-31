@@ -1,5 +1,5 @@
 import { PersonProps } from '@src/ATV/core/Person'
-import { DocumentNames } from '@src/ATV/core/documentNames.types';
+import { DocumentNames } from '@src/ATV/core/documentNames.types'
 import { Method } from 'axios'
 
 type PersonInput = PersonProps;
