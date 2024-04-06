@@ -17,7 +17,12 @@
     "paths": {
       "@src/*": ["src/*"],
       "@test/*": ["__tests__/*"]
-    }
+    },
+    "plugins": [
+      {
+          "transform": "@zerollup/ts-transform-paths"
+      }
+    ]
   },
   "include": ["./src/**/*", "__tests__/**/*", "__tests__/stubs", "examples"],
   "exclude": ["node_modules/**/*"]
