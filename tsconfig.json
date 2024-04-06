@@ -19,9 +19,8 @@
       "@test/*": ["__tests__/*"]
     },
     "plugins": [
-      {
-          "transform": "@zerollup/ts-transform-paths"
-      }
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
     ]
   },
   "include": ["./src/**/*", "__tests__/**/*", "__tests__/stubs", "examples"],

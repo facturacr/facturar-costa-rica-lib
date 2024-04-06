@@ -1,6 +1,6 @@
 {
   "name": "@facturacr/atv-sdk",
-  "version": "0.0.17-beta",
+  "version": "0.0.18beta",
   "description": "Librería (SDK) de Javascript/NodeJS para acceder al API de Administración Tributaria Virtual (ATV) del Ministerio de Hacienda.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -13,7 +13,7 @@
     "test": "npx jest --no-coverage",
     "test:cov": "npx jest",
     "dev": "dotenv -- nodemon -e ts,graphql -x 'yarn lint & ts-node -r tsconfig-paths/register src/index.ts'",
-    "build": "tsc",
+    "build": "tspc",
     "lint": "eslint --ext .ts, --ignore-path .gitignore .",
     "test:createAndSend": "yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSend.ts"
   },
@@ -36,7 +36,6 @@
     "@types/node": "^14.14.39",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
-    "@zerollup/ts-transform-paths": "^1.7.18",
     "dotenv-cli": "^4.0.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
@@ -50,8 +49,10 @@
     "nodemon": "^2.0.19",
     "ts-jest": "^29.1",
     "ts-node": "10.9.1",
+    "ts-patch": "^3.1.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.4",
+    "typescript-transform-paths": "^3.4.7"
   },
   "dependencies": {
     "@peculiar/webcrypto": "^1.1.6",
