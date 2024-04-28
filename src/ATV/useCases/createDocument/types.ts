@@ -1,5 +1,6 @@
 import { PersonProps } from '@src/ATV/core/Person'
 import { DocumentNames } from '@src/ATV/core/documentNames.types'
+import { InvoiceDocumentContainer } from '@src/types/facturaInterfaces';
 import { Method } from 'axios'
 
 type PersonInput = PersonProps;
@@ -71,9 +72,11 @@ export type Command = {
     'Content-Type': string;
   };
 }
+
 export type CreateAndSendDocumentResponse = {
   command: Command;
   extraData: {
     xml: string;
+    document: InvoiceDocumentContainer;
   };
 }

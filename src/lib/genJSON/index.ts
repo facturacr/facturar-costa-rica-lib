@@ -1,5 +1,5 @@
 import { ClientPayload } from '@src/types/globalInterfaces'
-import { FacturaElectronicaContenedor, Resumen, Persona, Impuesto, LineaDetalle } from '@src/types/facturaInterfaces'
+import { InvoiceDocumentContainer, Resumen, Persona, Impuesto, LineaDetalle } from '@src/types/facturaInterfaces'
 import { genXML } from '@src/lib/genXML'
 
 // Default XML Values
@@ -123,7 +123,7 @@ export default async (frontEndRequest: ClientPayload, date: any, clave: string, 
     },
     ResumenFactura: getBillResum(lines)
   }
-  const factura: FacturaElectronicaContenedor = {
+  const factura: InvoiceDocumentContainer = {
     [key]: body
   }
   const XML = await genXML(key, factura, options)

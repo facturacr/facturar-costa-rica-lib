@@ -95,7 +95,7 @@ export interface Document {
   };
 }
 
-export interface FacturaElectronicaContenedor {
+export interface InvoiceDocumentContainer {
   [key: 'FacturaElectronica' | 'FacturaElectronicaExportacion']: Document | FacturaElectronicaExportacion;
 }
 
