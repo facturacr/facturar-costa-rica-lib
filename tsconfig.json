@@ -19,10 +19,8 @@
       "@test/*": ["__tests__/*"]
     },
     "plugins": [
-      { "transform": "typescript-transform-paths" },
       { "transform": "typescript-transform-paths", "afterDeclarations": true }
     ]
   },
-  "include": ["./src/**/*", "__tests__/**/*", "__tests__/stubs", "examples"],
-  "exclude": ["node_modules/**/*", "examples/**/*"]
+  "exclude": ["node_modules/**/*"]
 }

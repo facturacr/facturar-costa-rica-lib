@@ -96,7 +96,7 @@ export interface Document {
 }
 
 export interface InvoiceDocumentContainer {
-  [key: 'FacturaElectronica' | 'FacturaElectronicaExportacion']: Document | FacturaElectronicaExportacion;
+  [key: string]: Document;
 }
 
 export type ConfirmationMessageRaw = {

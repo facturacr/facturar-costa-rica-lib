@@ -29,12 +29,12 @@ export interface ClaveOpts {
   terminal: string;
 }
 
-interface FinalMessagePerson {
+export interface FinalMessagePerson {
   tipoIdentificacion: string;
   numeroIdentificacion: string;
 }
 
-interface FinalMessage {
+export interface FinalMessage {
   clave: string;
   fecha: string;
   emisor: FinalMessagePerson;
@@ -42,7 +42,7 @@ interface FinalMessage {
   comprobanteXML: string;
 }
 
-type XmlOpt = {
+export type XmlOpt = {
   buffer: string;
   password: string;
   base64: boolean;
