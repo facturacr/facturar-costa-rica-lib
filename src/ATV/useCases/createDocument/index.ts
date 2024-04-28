@@ -35,7 +35,8 @@ export class CreateDocumentCommand {
     return {
       command,
       extraData: {
-        xml
+        xml,
+        document: atvDocument
       }
     }
   }

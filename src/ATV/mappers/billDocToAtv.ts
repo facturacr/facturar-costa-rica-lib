@@ -1,9 +1,9 @@
-import { Document, FacturaElectronicaContenedor, DetalleServicio, Resumen, Persona } from '@src/types/facturaInterfaces'
+import { Document, InvoiceDocumentContainer, DetalleServicio, Resumen, Persona } from '@src/types/facturaInterfaces'
 import { Document as DomainDocument } from '../core/Document'
 import { OrderLine } from '../core/OrderLine'
 import { Person } from '../core/Person'
 
-type AtvFormat = FacturaElectronicaContenedor
+type AtvFormat = InvoiceDocumentContainer
 
 const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
   const LineaDetalle = orderLines.map<DetalleServicio['LineaDetalle'][0]>((orderLine) => {

@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { ATV } from '@src/ATV'
+import { ATV } from '../dist/src/ATV'
 import { createDocumentInputStub } from '@test/stubs/createDocument.stub'
 
 const IS_STG = process.env.IS_STG

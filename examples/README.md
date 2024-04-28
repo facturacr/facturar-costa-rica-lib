@@ -1,5 +1,9 @@
 # Ejemplos con implementaciones para pruebas
 
+```
+yarn build
+```
+
 Para probar crear y enviar factura
 ```
 yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSend.ts
