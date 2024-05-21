@@ -20,7 +20,7 @@ const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 console.log('requestStub consecutivo', createDocumentInputStub.consecutiveIdentifier)
 
 // TODO: dynamic param --identifier 1 args[x]
-createDocumentInputStub.consecutiveIdentifier = '1'
+createDocumentInputStub.consecutiveIdentifier = '4'
 
 function getConfimation(atv: ATV, token: string, location: string, ms: number): Promise<any> {
   return new Promise((resolve, reject): any => {
@@ -52,14 +52,12 @@ async function main(): Promise<void> {
       password: SOURCE_P12_PASSPORT
     }
   })
-  // console.log('command', command)
-  // console.log('extraData', extraData)
   const response = await atv.sendDocument(command)
   if (response.errorCause) {
     console.log('error response', response)
     return
   }
-  const confirmationResponse = await getConfimation(atv, tokenData.accessToken, response.location, 1000)
+  const confirmationResponse = await getConfimation(atv, tokenData.accessToken, response.location, 2000)
   console.log({ MensajeHacienda: confirmationResponse.confirmation })
 }
 

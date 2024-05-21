@@ -36,6 +36,11 @@ export class Clave {
   }
 
   public static create(props: ClaveProps): Clave {
-    return new Clave(props)
+    return new Clave({
+      ...props,
+      branch: props.branch.padStart(3, '0'),
+      terminal: props.terminal.padStart(5, '0'),
+      securityCode: props.securityCode.padStart(8, '0')
+    })
   }
 }

@@ -66,7 +66,7 @@ export function genClaveObj(opts: ClaveOpts): Clave {
     cedulaEmisor: getIssuerCard(opts.cedulaEmisor),
     consecutivo: getConsecutivo(opts),
     situacionCE: opts.situacionCE,
-    codigoSeguridad: opts.codigoSeguridad.padStart(8, '0')
+    codigoSeguridad: opts.codigoSeguridad
   }
 }
 
