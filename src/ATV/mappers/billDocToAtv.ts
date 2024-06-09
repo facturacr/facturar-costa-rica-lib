@@ -55,30 +55,35 @@ const mapSummaryInvoice = (summaryInvoice: DomainDocument['summaryInvoice']): Re
 }
 
 const mapPerson = (person: Person): Persona => {
-  return {
+  const atvPerson = {
     Nombre: person.fullName,
     Identificacion: {
       Tipo: person.identifierType,
       Numero: person.identifierId
     },
     NombreComercial: person.commercialName,
-    Ubicacion: {
-      Provincia: person.location?.province,
-      Canton: person.location?.canton.padStart(2, '0'),
-      Distrito: person.location?.district.padStart(2, '0'),
-      Barrio: person.location?.neighborhood.padStart(2, '0'),
-      OtrasSenas: person.location?.details
-    },
-    Telefono: {
-      CodigoPais: person.phone?.countryCode,
-      NumTelefono: person.phone?.number
-    },
-    Fax: {
-      CodigoPais: person.fax?.countryCode,
-      NumTelefono: person.fax?.number
-    },
-    CorreoElectronico: person.email
+    Ubicacion: undefined,
+    Telefono: undefined,
+    Fax: undefined,
+    CorreoElectronico: undefined
   }
+  atvPerson.Ubicacion = person.location ? {
+    Provincia: person.location?.province,
+    Canton: person.location?.canton?.padStart(2, '0'),
+    Distrito: person.location?.district?.padStart(2, '0'),
+    Barrio: person.location?.neighborhood?.padStart(2, '0'),
+    OtrasSenas: person.location?.details
+  } : undefined
+  atvPerson.Telefono = person.phone ? {
+    CodigoPais: person.phone?.countryCode,
+    NumTelefono: person.phone?.number
+  } : undefined
+  atvPerson.Fax = person.fax ? {
+    CodigoPais: person.fax?.countryCode,
+    NumTelefono: person.fax?.number
+  } : undefined
+  atvPerson.CorreoElectronico = person.email
+  return atvPerson;
 }
 
 export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument): AtvFormat => {
