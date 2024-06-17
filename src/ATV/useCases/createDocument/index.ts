@@ -111,8 +111,8 @@ export class CreateDocumentCommand {
   private createFullConsecutive(dto: CreateDocumentInput['document'], docType: DocumentType): FullConsecutive {
     return FullConsecutive.create({
       consecutiveIdentifier: dto.consecutiveIdentifier,
-      branch: dto.branch,
-      terminal: dto.terminal,
+      branch: dto.branch.padStart(3, '0'),
+      terminal: dto.terminal.padStart(5, '0'),
       documentType: docType.value
     })
   }
