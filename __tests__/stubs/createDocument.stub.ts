@@ -16,8 +16,33 @@ const orderLines: CreateDocumentInput['document']['orderLines'] = [{
 }]
 
 const receiverStub: CreateDocumentInput['document']['emitter'] = {
-  fullName: 'SRL',
-  commercialName: 'CIENCIA DEL SABOR',
+  fullName: 'receiver name SRL',
+  commercialName: 'receiver name',
+  identifier: {
+    type: '01',
+    id: '206930143'
+  },
+  location: {
+    province: '2',
+    canton: '06',
+    district: '04',
+    neighborhood: '06',
+    details: 'details'
+  },
+  phone: {
+    countryCode: '506',
+    number: '80808080'
+  },
+  email: 'test@test.com',
+  fax: {
+    countryCode: '506',
+    number: '80808080'
+  }
+}
+
+const emitterStub: CreateDocumentInput['document']['receiver'] = {
+  fullName: 'Emisor name',
+  commercialName: 'emisor comercial name',
   identifier: {
     type: '02',
     id: '3102759157'
@@ -27,32 +52,7 @@ const receiverStub: CreateDocumentInput['document']['emitter'] = {
     canton: '06',
     district: '04',
     neighborhood: '06',
-    details: '25 norte 500 oeste restaurante El Faro'
-  },
-  phone: {
-    countryCode: '506',
-    number: '80808080'
-  },
-  email: 'cienciadelsabor@gmail.com',
-  fax: {
-    countryCode: '506',
-    number: '80808080'
-  }
-}
-
-const emitterStub: CreateDocumentInput['document']['receiver'] = {
-  fullName: 'Nombre Receptor',
-  commercialName: 'xyz',
-  identifier: {
-    type: '01',
-    id: '206920142'
-  },
-  location: {
-    province: '1',
-    canton: '1',
-    district: '1',
-    neighborhood: '1',
-    details: 'Señas xyz'
+    details: 'details'
   },
   email: 'test@test.com',
   fax: {
