@@ -30,7 +30,6 @@ export class CreateDocumentCommand {
   public async execute(dto: CreateDocumentInput): Promise<CreateAndSendDocumentResponse> {
     const documentName = dto.document.documentName || 'FacturaElectronica' //TODO NotaDebitoElectronica
     const document = this.createDoc.createDocument(dto.document)
-    // const referenceInfo = ReferenceInformation.create({})
     const atvDocument = mapBillToAtvFormat(documentName, document)
     const xml = await genXML(documentName, atvDocument, dto.signatureOptions)
     const command = await this.createDocumentCommand(document, xml, dto.token)

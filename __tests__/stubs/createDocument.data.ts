@@ -65,6 +65,14 @@ const emitterStub: CreateDocumentInput['document']['receiver'] = {
   }
 }
 
+export const creditNoteReferenceInfoExample: CreateDocumentInput['document']['referenceInfo'] = {
+  docType: '01',
+  refNumber: '50627062400310275915700100001010000000004100000001',
+  issueDate: new Date(),
+  code: '01',
+  reason: 'Se anula documento'
+}
+
 export const createDocumentInputExample: CreateDocumentInput['document'] = {
   consecutiveIdentifier: '2',
   activityCode: '4',

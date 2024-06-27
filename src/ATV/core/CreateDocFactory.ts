@@ -6,7 +6,7 @@ import { FullConsecutive } from '@src/ATV/core/FullConsecutive'
 import { Document } from '@src/ATV/core/Document'
 import { Clave } from '@src/ATV/core/Clave'
 import { DocumentType } from '@src/ATV/core/DocumentType'
-import { ReferenceInformationProps } from './ReferenceInformation'
+import { ReferenceInformation, ReferenceInformationProps } from './ReferenceInformation'
 
 type PersonInput = PersonProps;
 
@@ -60,8 +60,6 @@ type DocumentInput = {
 export class CreateDocFactory {
   public createDocument(document: CreateDocumentInput['document']): Document {
       const documentType = DocumentType.create(document.documentName)
-      const emitter = this.createEmitter(document.emitter)
-      const receiver = this.createReceiver(document.receiver)
       const clave = this.createClave(document, documentType)
       const fullConsective = this.createFullConsecutive(document, documentType)
       const orderLines = this.createOrderLines(document)
@@ -71,19 +69,12 @@ export class CreateDocFactory {
         orderLines,
         activityCode: document.activityCode,
         issueDate: new Date(),
-        emitter,
-        receiver,
+        emitter: Person.create(document.emitter),
+        receiver: Person.create(document.receiver),
         conditionSale: '01',
-        paymentMethod: '01'
+        paymentMethod: '01',
+        referenceInformation: ReferenceInformation.create(document.referenceInfo),
       })
-    }
-  
-    private createEmitter(emitterInput: CreateDocumentInput['document']['emitter']): Person {
-      return Person.create(emitterInput)
-    }
-  
-    private createReceiver(receiverInput: CreateDocumentInput['document']['receiver']): Person {
-      return Person.create(receiverInput)
     }
   
     private createOrderLines(dto: CreateDocumentInput['document']): OrderLine[] {
