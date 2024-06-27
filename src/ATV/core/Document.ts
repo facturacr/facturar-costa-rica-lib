@@ -2,6 +2,7 @@ import { Clave } from './Clave'
 import { FullConsecutive } from './FullConsecutive'
 import { OrderLine } from './OrderLine'
 import { Person } from './Person'
+import { ReferenceInformation } from './ReferenceInformation'
 import { SummaryProps } from './Summary.type'
 
 export type InvoiceProps = {
@@ -16,6 +17,7 @@ export type InvoiceProps = {
   deadlineCredit?: string; // PlazoCredito
   paymentMethod?: string; // MedioPago
   summaryInvoice?: SummaryProps; // ResumenFactura
+  referenceInformation?: ReferenceInformation; // InformaciónReferencia
   others?: { // Otros
     OtroTexto: string;
   };
@@ -108,6 +110,10 @@ export class Document {
       totalNetSale: totalSale - summary.totalDiscounts,
       totalVoucher: summary.totalNetSale + summary.totalTaxed
     }
+  }
+
+  get referenceInformation(): ReferenceInformation | undefined {
+    return this.props.referenceInformation
   }
 
   private isAService(orderLine: OrderLine): boolean {

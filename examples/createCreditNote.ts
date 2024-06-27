@@ -1,5 +1,6 @@
 import { ClientPayload } from '@src/types/globalInterfaces'
 import creditNote from '@src/creditNote'
+import { createDocumentInputExample } from '@test/stubs/createDocument.data'
 import getToken from '@src/services/getToken'
 import requestStub from '@test/stubs/frontendRequest.stub'
 import fs from 'fs'

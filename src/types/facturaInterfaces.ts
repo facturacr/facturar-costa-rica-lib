@@ -78,6 +78,14 @@ export interface Message {
   DetalleMensaje: string;
 }
 
+export interface InformacionReferencia {
+  TipoDoc: string;
+  Numero: string;
+  FechaEmision: string;
+  Codigo: string;
+  Razon: string;
+}
+
 export interface Document {
   Clave: string;
   CodigoActividad: string;
@@ -93,6 +101,7 @@ export interface Document {
   Otros?: {
     OtroTexto: string;
   };
+  InformacionReferencia?: InformacionReferencia;
 }
 
 export interface InvoiceDocumentContainer {
