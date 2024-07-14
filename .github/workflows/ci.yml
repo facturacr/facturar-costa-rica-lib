@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: Check out repository code
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
         - name: Install modules
           run: yarn
         - name: Run testing
@@ -21,7 +21,7 @@ jobs:
       matrix:
         node: [18, 20]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
