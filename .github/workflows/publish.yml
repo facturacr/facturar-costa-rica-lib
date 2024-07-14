@@ -2,9 +2,6 @@ name: Publish Package
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   build_and_publish:
@@ -12,8 +9,6 @@ jobs:
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
-        with:
-          release-type: node
       - uses: actions/checkout@v4
         # these if statements ensure that a publication only occurs when
         # a new release is created:
@@ -23,13 +18,9 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
           # registry-url: 'https://npm.pkg.github.com'
-          scope: '@facturacr'  # Replace with your GitHub organization or username
-        if: ${{ steps.release.outputs.release_created }}
+          scope: '@facturacr' 
       - run: yarn install --frozen-lockfile
-        if: ${{ steps.release.outputs.release_created }}
       - run: yarn build
-        if: ${{ steps.release.outputs.release_created }}
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        if: ${{ steps.release.outputs.release_created }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
