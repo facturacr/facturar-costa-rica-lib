@@ -15,7 +15,7 @@ jobs:
           node-version: '20'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@facturacr'  # Replace with your GitHub organization or username
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
       - run: yarn build
       - run: npm publish
         env:
