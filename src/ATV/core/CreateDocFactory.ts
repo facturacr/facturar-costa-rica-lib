@@ -73,7 +73,7 @@ export class CreateDocFactory {
         receiver: Person.create(document.receiver),
         conditionSale: '01',
         paymentMethod: '01',
-        referenceInformation: ReferenceInformation.create(document.referenceInfo),
+        referenceInformation: document.referenceInfo ? ReferenceInformation.create(document.referenceInfo) : undefined,
       })
     }
   

@@ -4,9 +4,7 @@ import { mapDocumentToAtvFormat as mapBillToAtvFormat } from '@src/ATV/mappers/b
 import { genXML } from '@src/lib/genXML'
 import { CreateAndSendDocumentResponse, Command } from './types'
 import { ATV } from '@src/ATV'
-import { DocumentType } from '@src/ATV/core/DocumentType'
 import { CreateDocFactory, CreateDocumentInput } from '@src/ATV/core/CreateDocFactory'
-import { ReferenceInformation } from '@src/ATV/core/ReferenceInformation'
 
 const options: { [key: string]: { serviceUrl: string}} = {
   prod: {

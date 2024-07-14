@@ -113,7 +113,9 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
     ResumenFactura: mapSummaryInvoice(document.summaryInvoice),
     Otros: document.others
   }
-  doc.InformacionReferencia = document.referenceInformation ?  mapReferenceInformation(document.referenceInformation ) : undefined
+  if (document.referenceInformation) {
+    doc.InformacionReferencia = mapReferenceInformation(document.referenceInformation);
+  }
   return {
     [key]: doc
   }
