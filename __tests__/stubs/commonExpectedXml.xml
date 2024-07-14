@@ -5,18 +5,18 @@
     <NumeroConsecutivo>00100001010000000002</NumeroConsecutivo>
     <FechaEmision>2024-04-01T00:00:00.000Z</FechaEmision>
     <Emisor>
-        <Nombre>Nombre Receptor</Nombre>
+        <Nombre>Emisor name</Nombre>
         <Identificacion>
             <Tipo>01</Tipo>
             <Numero>206920142</Numero>
         </Identificacion>
-        <NombreComercial>xyz</NombreComercial>
+        <NombreComercial>emisor comercial name</NombreComercial>
         <Ubicacion>
-            <Provincia>1</Provincia>
-            <Canton>01</Canton>
-            <Distrito>01</Distrito>
-            <Barrio>01</Barrio>
-            <OtrasSenas>Señas xyz</OtrasSenas>
+            <Provincia>2</Provincia>
+            <Canton>06</Canton>
+            <Distrito>04</Distrito>
+            <Barrio>06</Barrio>
+            <OtrasSenas>details</OtrasSenas>
         </Ubicacion>
         <Telefono>
             <CodigoPais>506</CodigoPais>
@@ -29,18 +29,18 @@
         <CorreoElectronico>test@test.com</CorreoElectronico>
     </Emisor>
     <Receptor>
-        <Nombre>SRL</Nombre>
+        <Nombre>receiver name SRL</Nombre>
         <Identificacion>
-            <Tipo>02</Tipo>
-            <Numero>3102759157</Numero>
+            <Tipo>01</Tipo>
+            <Numero>206930143</Numero>
         </Identificacion>
-        <NombreComercial>CIENCIA DEL SABOR</NombreComercial>
+        <NombreComercial>receiver name</NombreComercial>
         <Ubicacion>
             <Provincia>2</Provincia>
             <Canton>06</Canton>
             <Distrito>04</Distrito>
             <Barrio>06</Barrio>
-            <OtrasSenas>25 norte 500 oeste restaurante El Faro</OtrasSenas>
+            <OtrasSenas>details</OtrasSenas>
         </Ubicacion>
         <Telefono>
             <CodigoPais>506</CodigoPais>
@@ -50,7 +50,7 @@
             <CodigoPais>506</CodigoPais>
             <NumTelefono>80808080</NumTelefono>
         </Fax>
-        <CorreoElectronico>cienciadelsabor@gmail.com</CorreoElectronico>
+        <CorreoElectronico>test@test.com</CorreoElectronico>
     </Receptor>
     <CondicionVenta>01</CondicionVenta>
     <MedioPago>01</MedioPago>

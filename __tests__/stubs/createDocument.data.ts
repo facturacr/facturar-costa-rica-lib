@@ -1,4 +1,4 @@
-import { CreateDocumentInput } from '@src/ATV/useCases/createDocument/types'
+import { CreateDocumentInput } from "@src/index"
 
 const taxStub: CreateDocumentInput['document']['orderLines'][0]['tax'] = {
   code: '01',
@@ -16,24 +16,24 @@ const orderLines: CreateDocumentInput['document']['orderLines'] = [{
 }]
 
 const receiverStub: CreateDocumentInput['document']['emitter'] = {
-  fullName: 'SRL',
-  commercialName: 'CIENCIA DEL SABOR',
+  fullName: 'receiver name SRL',
+  commercialName: 'receiver name',
   identifier: {
-    type: '02',
-    id: '3102759157'
+    type: '01',
+    id: '206930143'
   },
   location: {
     province: '2',
     canton: '06',
     district: '04',
     neighborhood: '06',
-    details: '25 norte 500 oeste restaurante El Faro'
+    details: 'details'
   },
   phone: {
     countryCode: '506',
     number: '80808080'
   },
-  email: 'cienciadelsabor@gmail.com',
+  email: 'test@test.com',
   fax: {
     countryCode: '506',
     number: '80808080'
@@ -41,18 +41,18 @@ const receiverStub: CreateDocumentInput['document']['emitter'] = {
 }
 
 const emitterStub: CreateDocumentInput['document']['receiver'] = {
-  fullName: 'Nombre Receptor',
-  commercialName: 'xyz',
+  fullName: 'Emisor name',
+  commercialName: 'emisor comercial name',
   identifier: {
     type: '01',
     id: '206920142'
   },
   location: {
-    province: '1',
-    canton: '1',
-    district: '1',
-    neighborhood: '1',
-    details: 'Señas xyz'
+    province: '2',
+    canton: '06',
+    district: '04',
+    neighborhood: '06',
+    details: 'details'
   },
   email: 'test@test.com',
   fax: {
@@ -65,7 +65,15 @@ const emitterStub: CreateDocumentInput['document']['receiver'] = {
   }
 }
 
-export const createDocumentInputStub: CreateDocumentInput['document'] = {
+export const creditNoteReferenceInfoExample: CreateDocumentInput['document']['referenceInfo'] = {
+  docType: '01',
+  refNumber: '50627062400310275915700100001010000000004100000001',
+  issueDate: new Date(),
+  code: '01',
+  reason: 'Se anula documento'
+}
+
+export const createDocumentInputExample: CreateDocumentInput['document'] = {
   consecutiveIdentifier: '2',
   activityCode: '4',
   documentName: 'FacturaElectronica',

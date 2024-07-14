@@ -1,7 +1,8 @@
-import { Document, InvoiceDocumentContainer, DetalleServicio, Resumen, Persona } from '@src/types/facturaInterfaces'
+import { Document, InvoiceDocumentContainer, DetalleServicio, Resumen, Persona, InformacionReferencia } from '@src/types/facturaInterfaces'
 import { Document as DomainDocument } from '../core/Document'
 import { OrderLine } from '../core/OrderLine'
 import { Person } from '../core/Person'
+import { ReferenceInformation } from '../core/ReferenceInformation'
 
 type AtvFormat = InvoiceDocumentContainer
 
@@ -86,6 +87,16 @@ const mapPerson = (person: Person): Persona => {
   return atvPerson;
 }
 
+const mapReferenceInformation = (referenceInfo: ReferenceInformation): InformacionReferencia => {
+  return {
+    TipoDoc: referenceInfo.docType,
+    Numero: referenceInfo.refNumber,
+    FechaEmision: referenceInfo.issueDate.toISOString(),
+    Codigo: referenceInfo.code,
+    Razon: referenceInfo.reason
+  }
+}
+
 export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument): AtvFormat => {
   const key = docName
   const doc: Document = {
@@ -101,6 +112,9 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
     DetalleServicio: mapOrderLinesToAtvFormat(document.orderLines),
     ResumenFactura: mapSummaryInvoice(document.summaryInvoice),
     Otros: document.others
+  }
+  if (document.referenceInformation) {
+    doc.InformacionReferencia = mapReferenceInformation(document.referenceInformation);
   }
   return {
     [key]: doc

@@ -2,6 +2,7 @@ import { Clave } from './Clave'
 import { FullConsecutive } from './FullConsecutive'
 import { OrderLine } from './OrderLine'
 import { Person } from './Person'
+import { ReferenceInformation } from './ReferenceInformation'
 import { SummaryProps } from './Summary.type'
 
 export type InvoiceProps = {
@@ -16,6 +17,7 @@ export type InvoiceProps = {
   deadlineCredit?: string; // PlazoCredito
   paymentMethod?: string; // MedioPago
   summaryInvoice?: SummaryProps; // ResumenFactura
+  referenceInformation?: ReferenceInformation; // InformaciónReferencia
   others?: { // Otros
     OtroTexto: string;
   };
@@ -80,19 +82,21 @@ export class Document {
     if (this.props.summaryInvoice) {
       return this.props.summaryInvoice
     }
-    const orderLineSumResult = this.sumCreditLines()
+    const orderLineSumResult = this.sumOrderLines()
+    const servicesLineSumResult = this.sumServicesLines()
+    const merchandiseLineSumResult = this.sumMerchandiseLines()
     const summary = {
       currency: {
         code: 'CRC',
         exchangeRate: '585.69'
       },
       totalExemptServices: 0,
-      totalEncumberedServices: 0,
+      totalEncumberedServices: servicesLineSumResult.totalAmount,
       totalExonerated: 0,
-      totalTaxedServices: 0,
+      totalTaxedServices: servicesLineSumResult.totalTaxes,
       totalTaxes: orderLineSumResult.totalTaxes,
       totalDiscounts: 0,
-      totalEncumberedMerchandise: orderLineSumResult.totalAmount,
+      totalEncumberedMerchandise: merchandiseLineSumResult.totalAmount,
       totalTaxed: orderLineSumResult.totalTaxes,
       totalExemptMerchandise: 0,
       totalExempt: 0,
@@ -108,7 +112,34 @@ export class Document {
     }
   }
 
-  sumCreditLines(): OrderLineSum {
+  get referenceInformation(): ReferenceInformation | undefined {
+    return this.props.referenceInformation
+  }
+
+  private isAService(orderLine: OrderLine): boolean {
+    const servicesMeasurementUnits = ['Sp', 'St', 'Spe'];
+    return servicesMeasurementUnits.includes(orderLine.measureUnit)
+  }
+
+  sumServicesLines(): OrderLineSum {
+    return this.orderLines.filter(this.isAService).reduce<OrderLineSum>((previousValue, currentValue) => {
+      return {
+        totalAmount: previousValue.totalAmount + currentValue.totalAmount,
+        totalTaxes: previousValue.totalTaxes + currentValue.tax.amount
+      }
+    }, { totalAmount: 0, totalTaxes: 0 })
+  }
+
+  sumMerchandiseLines(): OrderLineSum {
+    return this.orderLines.filter((ol) => !this.isAService(ol)).reduce<OrderLineSum>((previousValue, currentValue) => {
+      return {
+        totalAmount: previousValue.totalAmount + currentValue.totalAmount,
+        totalTaxes: previousValue.totalTaxes + currentValue.tax.amount
+      }
+    }, { totalAmount: 0, totalTaxes: 0 })
+  }
+
+  sumOrderLines(): OrderLineSum {
     return this.orderLines.reduce<OrderLineSum>((previousValue, currentValue) => {
       return {
         totalAmount: previousValue.totalAmount + currentValue.totalAmount,
