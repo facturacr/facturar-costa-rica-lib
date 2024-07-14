@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { createDocumentInputExample } from '@test/stubs/createDocument.data'
 import { ATV } from '../dist/src'
+import { PersonProps } from 'dist/src/ATV/core/Person'
 
 
 const IS_STG = process.env.IS_STG
@@ -17,10 +18,12 @@ if (!SOURCE_P12_PASSPORT || !SOURCE_P12_URI) {
 
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
-console.log('requestStub consecutivo', createDocumentInputExample.consecutiveIdentifier)
-
 // TODO: dynamic param --identifier 1 args[x]
-createDocumentInputExample.consecutiveIdentifier = '4'
+createDocumentInputExample.consecutiveIdentifier = process.env.TEST_CONSECUTIVE
+createDocumentInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string;
+createDocumentInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type'];
+
+console.log('requestStub consecutivo', createDocumentInputExample.consecutiveIdentifier)
 
 function getConfimation(atv: ATV, token: string, location: string, ms: number): Promise<any> {
   return new Promise((resolve, reject): any => {

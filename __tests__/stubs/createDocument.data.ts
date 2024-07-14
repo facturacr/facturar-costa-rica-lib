@@ -9,7 +9,7 @@ const taxStub: CreateDocumentInput['document']['orderLines'][0]['tax'] = {
 const orderLines: CreateDocumentInput['document']['orderLines'] = [{
   code: '7113301000000',
   quantity: 1,
-  measureUnit: 'Sp',
+  measureUnit: 'Unid',
   detail: 'detalle',
   unitaryPrice: 10,
   tax: taxStub
@@ -44,8 +44,8 @@ const emitterStub: CreateDocumentInput['document']['receiver'] = {
   fullName: 'Emisor name',
   commercialName: 'emisor comercial name',
   identifier: {
-    type: '02',
-    id: '3102759157'
+    type: '01',
+    id: '206920142'
   },
   location: {
     province: '2',
