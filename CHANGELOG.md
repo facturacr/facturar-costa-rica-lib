@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/facturacr/facturar-costa-rica-lib/compare/v1.0.0...v1.1.0) (2024-08-02)
+
+
+### Features
+
+* **ReceptorMessage:** Add initial support to receptor message ([5aed0e8](https://github.com/facturacr/facturar-costa-rica-lib/commit/5aed0e8c91524af7a880682cd0c27faf6163eff2))
+
 ## 1.0.0 (2024-07-14)
 
 
