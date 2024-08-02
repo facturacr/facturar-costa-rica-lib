@@ -6,7 +6,7 @@ const DEFAULT_VALUES = {
   message: 'Default msj',
   detailsMessage: 'Default details msj',
   taxes: 100,
-  tipoIdentificacion: '01'
+  tipoIdentificacion: '01' as Persona['Identificacion']['Tipo']
 }
 
 export function getSimpleSender(frontEndRequest: ClientPayload): FinalMessagePerson {

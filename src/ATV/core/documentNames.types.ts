@@ -2,4 +2,5 @@ export type DocumentNames =
   'FacturaElectronica' |
   'FacturaElectronicaExportacion' |
   'NotaCreditoElectronica' |
-  'NotaDebitoElectronica'
+  'NotaDebitoElectronica' | 
+  'MensajeReceptor'

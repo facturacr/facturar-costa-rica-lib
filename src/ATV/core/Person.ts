@@ -34,7 +34,7 @@ export class Person {
     return this.props.fullName
   }
 
-  get identifierType(): string | undefined {
+  get identifierType(): '01' | '02' | undefined {
     return this.props.identifier.type
   }
 

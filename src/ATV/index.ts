@@ -8,6 +8,7 @@ import { ATVOptions, ConfirmationMessage, Mode, SendConfirmationInput, SendRespo
 import { Command, CreateAndSendDocumentResponse } from './useCases/createDocument/types'
 import { CreateDocumentCommand } from './useCases/createDocument'
 import { CreateDocumentInput } from './core/CreateDocFactory'
+import { CreateReceptorMessageCommand, CreateReceptorMessageCommandInput } from './useCases/createReceptorMessage'
 
 export class ATV {
   public readonly options: ATVOptions
@@ -23,6 +24,11 @@ export class ATV {
   public createDocumentCommand(input: CreateDocumentInput): Promise<CreateAndSendDocumentResponse> {
     const createDocument = new CreateDocumentCommand(this)
     return createDocument.execute(input)
+  }
+
+  public createReceptorMessage(input: CreateReceptorMessageCommandInput) {
+    const useCase = new CreateReceptorMessageCommand(this)
+    return useCase.execute(input)
   }
 
   public async sendDocument(input: Command): Promise<SendResponse> {

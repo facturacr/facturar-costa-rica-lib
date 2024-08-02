@@ -1,6 +1,7 @@
 import { j2xParser, parse } from 'fast-xml-parser'
 import { declaration, defaultOptions, xmlExtructures } from '@src/lib/genXML/xmlConfig'
 import sigXML from '@src/lib/genXML/sigXML/index'
+import { XMLRawDocument } from '@src/types/facturaInterfaces'
 
 export const objToXML = (xmlStructure: string, obj: object): string => {
   const parser = new j2xParser(defaultOptions) // eslint-disable-line new-cap
@@ -21,7 +22,7 @@ export async function genXML(xmlStructure: string, obj: object, options?: {
   return signedXML
 }
 
-export const xmlToJson = (xml: string): any => {
+export const parseElectronicBillXML = (xml: string): XMLRawDocument => {
   try {
     const json = parse(xml, {
       ignoreAttributes: false,

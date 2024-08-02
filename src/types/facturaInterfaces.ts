@@ -51,7 +51,7 @@ export interface Resumen {
 export interface Persona {
   Nombre: string;
   Identificacion: {
-    Tipo?: string;
+    Tipo?: '01' | '02';
     Numero: string;
   };
   NombreComercial?: string;
@@ -104,8 +104,27 @@ export interface Document {
   InformacionReferencia?: InformacionReferencia;
 }
 
+export interface XMLRawDocument extends Document {
+
+}
+
+interface MensajeReceptor {
+  Clave: string;
+  NumeroCedulaEmisor: string;
+  FechaEmisionDoc: string;
+  Mensaje: string;
+  DetalleMensaje: string;
+  MontoTotalImpuesto: number;
+  CodigoActividad: string;
+  CondicionImpuesto: string;
+  MontoTotalDeGastoAplicable: number;
+  TotalFactura: number;
+  NumeroCedulaReceptor: string;
+  NumeroConsecutivoReceptor: string;
+}
+
 export interface InvoiceDocumentContainer {
-  [key: string]: Document;
+  [key: string]: Document | MensajeReceptor;
 }
 
 export type ConfirmationMessageRaw = {

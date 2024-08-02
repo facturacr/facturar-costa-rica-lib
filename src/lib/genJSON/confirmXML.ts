@@ -31,17 +31,17 @@ export function getMsjObj(opts: {
 export function getFinalMessage(fullInvoice: any, consecutivoReceptor: string, xmlBase64: any): any {
   const date = new Date()
   return {
-    clave: fullInvoice.Clave,
-    fecha: date.toISOString(),
-    emisor: {
+    clave: fullInvoice.Clave, // in command
+    fecha: date.toISOString(), // in command
+    emisor: { // in command
       tipoIdentificacion: fullInvoice.Receptor.Identificacion.Tipo,
       numeroIdentificacion: fullInvoice.Receptor.Identificacion.Numero
     },
-    receptor: {
+    receptor: { // in command
       tipoIdentificacion: fullInvoice.Emisor.Identificacion.Tipo,
       numeroIdentificacion: fullInvoice.Emisor.Identificacion.Numero
     },
     consecutivoReceptor,
-    comprobanteXml: xmlBase64
+    comprobanteXml: xmlBase64 // in command
   }
 }

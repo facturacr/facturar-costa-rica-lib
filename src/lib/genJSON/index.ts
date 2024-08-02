@@ -7,7 +7,7 @@ const DEFAULT_VALUES = {
   key: 0,
   message: 'Default msj',
   detailsMessage: 'Default details msj',
-  tipoIdentificacion: '01'
+  tipoIdentificacion: '01' as Persona['Identificacion']['Tipo']
 }
 
 function sumLines(lines: LineaDetalle[]): any {

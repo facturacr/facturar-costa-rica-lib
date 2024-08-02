@@ -9,6 +9,16 @@ Para probar crear y enviar factura
 yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSend.ts
 ```
 
+Para aceptar una factura
+```
+yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/atvAccept.ts
+```
+
+Para crear y enviar una nota de credito
+```
+yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createCreditNote.ts
+```
+
 Para probar genJson HeaderXML
 ```
 yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/genBasicXML.ts
@@ -17,11 +27,6 @@ yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/genBasi
 Generar la clave
 ```
 yarn ts-node -r tsconfig-paths/register--require dotenv/config examples/getClave.ts
-```
-
-Para crear una nota de credito
-```
-yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createCreditNote.ts
 ```
 
 Para obtener un token

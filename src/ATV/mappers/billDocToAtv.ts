@@ -3,6 +3,7 @@ import { Document as DomainDocument } from '../core/Document'
 import { OrderLine } from '../core/OrderLine'
 import { Person } from '../core/Person'
 import { ReferenceInformation } from '../core/ReferenceInformation'
+import { ReceptorMessageProps } from '../core/types'
 
 type AtvFormat = InvoiceDocumentContainer
 
@@ -118,5 +119,24 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
   }
   return {
     [key]: doc
+  }
+}
+
+export const mapReceptorMessageToAtvFormat = (props: ReceptorMessageProps): AtvFormat => {
+  return {
+    MensajeReceptor: {
+      Clave: props.clave,
+      NumeroCedulaEmisor: props.emitterIdentifier,
+      FechaEmisionDoc: props.documentIssueDate.toISOString(),
+      Mensaje: props.aceptationState.toString(), // 1 Aceptado | 2 Aceptado Parcialmente | 3 Rechazado
+      DetalleMensaje: props.aceptationDetailMessage,
+      MontoTotalImpuesto: props.totalTaxes,
+      CodigoActividad: props.activityCode,
+      CondicionImpuesto: props.taxCondition,
+      MontoTotalDeGastoAplicable: props.totalSale, // fullInvoice.ResumenFactura.TotalVenta, // TODO investigar casos de uso
+      TotalFactura: props.totalSale, // fullInvoice.ResumenFactura.TotalVenta,
+      NumeroCedulaReceptor: props.receptorIdentifier,
+      NumeroConsecutivoReceptor: props.receptorConcecutive
+    }
   }
 }

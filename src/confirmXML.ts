@@ -1,5 +1,5 @@
 import { consecutivoStr } from '@src/lib/genClave'
-import { xmlToJson, genXML } from '@src/lib/genXML/index'
+import { parseElectronicBillXML, genXML } from '@src/lib/genXML/index'
 import { send } from '@src/services/send/index'
 import { getFinalMessage, getMsjObj } from '@src/lib/genJSON/confirmXML'
 
@@ -21,7 +21,7 @@ export default async (opts: {
 }): Promise<any> => {
   const { token, pemOpt, tipoDocKey } = opts
   const consecutivo = getConsecutivoStr(opts)
-  const fullInvoice = xmlToJson(opts.xmlStr)
+  const fullInvoice = parseElectronicBillXML(opts.xmlStr)
   const msjObj = getMsjObj({ fullInvoice, consecutivo, tipoDocKey })
   const xmlBase64 = await genXML(tipoDocKey, msjObj, {
     buffer: pemOpt.buffer,

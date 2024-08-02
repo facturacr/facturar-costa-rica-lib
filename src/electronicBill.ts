@@ -2,9 +2,10 @@ import { ClientPayload, FinalMessagePerson } from '@src/types/globalInterfaces'
 import { genClaveObj, genString, parseOptions } from '@src/lib/genClave/index'
 import genJSON from '@src/lib/genJSON/index'
 import { send } from '@src/services/send/index'
+import { Persona } from './types/facturaInterfaces'
 
 const DEFAULT_VALUES = {
-  tipoIdentificacion: '01'
+  tipoIdentificacion: '01' as Persona['Identificacion']['Tipo']
 }
 
 const encodeXML = (xmlStr: string): string => {

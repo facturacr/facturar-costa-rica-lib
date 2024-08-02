@@ -7,6 +7,7 @@ import { Document } from '@src/ATV/core/Document'
 import { Clave } from '@src/ATV/core/Clave'
 import { DocumentType } from '@src/ATV/core/DocumentType'
 import { ReferenceInformation, ReferenceInformationProps } from './ReferenceInformation'
+import { ReceptorMessageProps } from './types'
 
 type PersonInput = PersonProps;
 
@@ -51,6 +52,7 @@ type DocumentInput = {
   export type CreateDocumentInput = {
     document: DocumentInput;
     token: string;
+    receptorMessageProps?: ReceptorMessageProps;
     signatureOptions: {
       buffer: string;
       password: string;
