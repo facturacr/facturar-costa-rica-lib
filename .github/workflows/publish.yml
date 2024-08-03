@@ -1,27 +1,29 @@
-name: Publish Package
-
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
+
+name: Publish Package 🚀
 
 jobs:
   build_and_publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          release-type: node
       - uses: actions/checkout@v4
-        # these if statements ensure that a publication only occurs when
-        # a new release is created:
+      - name: Check if version has been updated
+        id: check
+        uses: EndBug/version-check@v2
       - uses: actions/setup-node@v4
+        if: steps.check.outputs.changed == 'true'
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
           # registry-url: 'https://npm.pkg.github.com'
           scope: '@facturacr' 
       - run: yarn install --frozen-lockfile
+        if: steps.check.outputs.changed == 'true'
       - run: yarn build
+        if: steps.check.outputs.changed == 'true'
       - run: npm publish
+        if: steps.check.outputs.changed == 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
