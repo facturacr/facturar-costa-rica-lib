@@ -1,6 +1,7 @@
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 name: Publish Package 🚀
 
@@ -18,7 +19,6 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
           # registry-url: 'https://npm.pkg.github.com'
-          scope: '@facturacr' 
       - run: yarn install --frozen-lockfile
         if: steps.check.outputs.changed == 'true'
       - run: yarn build
