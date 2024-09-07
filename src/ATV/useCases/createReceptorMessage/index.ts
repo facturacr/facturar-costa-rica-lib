@@ -123,7 +123,7 @@ export class CreateReceptorMessageCommand {
                 receptorConcecutive: receptorConsecutive.value
             }
         } catch (err) {
-            throw new Error('Error parsing the document', err)
+            throw new Error(`Error parsing the document ${err}`)
         }
     }
 }
