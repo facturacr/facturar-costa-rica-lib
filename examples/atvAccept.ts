@@ -1,8 +1,9 @@
 import fs from 'fs'
 import { createDocumentInputExample } from '@test/stubs/createDocument.data'
-import { ATV, CreateDocumentInput } from '../dist/src'
+import { ATV } from '../dist/src'
 import { PersonProps } from 'dist/src/ATV/core/Person'
 import { AceptationStates } from 'dist/src/ATV/core/types'
+import { parseElectronicBillXML } from '@src/lib/genXML'
 
 
 const IS_STG = process.env.IS_STG
@@ -50,10 +51,20 @@ async function main(): Promise<void> {
     username: USERNAME_TEST,
     password: PASSWORD_TEST
   })
+  const electronillBillRaw = parseElectronicBillXML(receivedDocumentXML)
   const { command, extraData } = await atv.createReceptorMessage({
     aceptationState: AceptationStates.ACCEPTED,
     aceptationDetailMessage: 'Accepted',
-    receivedDocument: receivedDocumentXML,
+    clave: electronillBillRaw.Clave,
+    emitterIdentifier: electronillBillRaw.Emisor.Identificacion.Numero,
+    emitterIdentifierType: electronillBillRaw.Emisor.Identificacion.Tipo,
+    receptorIdentifier: electronillBillRaw.Receptor.Identificacion.Numero,
+    receptorIdentifierType: electronillBillRaw.Receptor.Identificacion.Tipo,
+    documentIssueDate: new Date(electronillBillRaw.FechaEmision),
+    activityCode: electronillBillRaw.CodigoActividad,
+    taxCondition: electronillBillRaw.CondicionVenta,
+    totalTaxes: electronillBillRaw.ResumenFactura.TotalImpuesto,
+    totalSale:  electronillBillRaw.ResumenFactura.TotalVenta,
     branch: '01',
     terminal: '01',
     consecutive: '01',

@@ -6,7 +6,16 @@ import { ATV } from "@src/ATV";
 import { ReceptorConsecutive } from "@src/ATV/core/ReceptorConsecutive";
 
 export type CreateReceptorMessageCommandInput = {
-    receivedDocument: string;
+    clave: string;
+    emitterIdentifier: string;
+    emitterIdentifierType: string;
+    receptorIdentifier: string;
+    receptorIdentifierType: string;
+    documentIssueDate: Date;
+    activityCode: string;
+    taxCondition: string;
+    totalTaxes: number;
+    totalSale: number;
     aceptationState: AceptationStates;
     aceptationDetailMessage: string;
     branch: string;
@@ -92,7 +101,6 @@ export class CreateReceptorMessageCommand {
 
     private processDocument(input: CreateReceptorMessageCommandInput): ReceptorMessageProps {
         try {
-            const electronillBillRaw = parseElectronicBillXML(input.receivedDocument)
             const receptorConsecutive = ReceptorConsecutive.create({
               branch: input.branch,
               terminal: input.terminal,
@@ -100,16 +108,16 @@ export class CreateReceptorMessageCommand {
               consecutive: input.consecutive,
             })
             return {
-                clave: electronillBillRaw.Clave,
-                emitterIdentifier: electronillBillRaw.Emisor.Identificacion.Numero,
-                emitterIdentifierType: electronillBillRaw.Emisor.Identificacion.Tipo,
-                receptorIdentifier: electronillBillRaw.Receptor.Identificacion.Numero,
-                receptorIdentifierType: electronillBillRaw.Receptor.Identificacion.Tipo,
-                documentIssueDate: new Date(electronillBillRaw.FechaEmision),
-                activityCode: electronillBillRaw.CodigoActividad,
-                taxCondition: electronillBillRaw.CondicionVenta,
-                totalTaxes: electronillBillRaw.ResumenFactura.TotalImpuesto,
-                totalSale:  electronillBillRaw.ResumenFactura.TotalVenta,
+                clave: input.clave,
+                emitterIdentifier: input.emitterIdentifier,
+                emitterIdentifierType: input.emitterIdentifier,
+                receptorIdentifier: input.receptorIdentifier,
+                receptorIdentifierType: input.receptorIdentifierType,
+                documentIssueDate: input.documentIssueDate,
+                activityCode: input.activityCode,
+                taxCondition: input.taxCondition,
+                totalTaxes: input.totalTaxes,
+                totalSale:  input.totalSale,
                 aceptationState: input.aceptationState,
                 aceptationDetailMessage: input.aceptationDetailMessage,
                 receptorConcecutive: receptorConsecutive.value
