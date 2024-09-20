@@ -1,7 +1,7 @@
 dist
 package-lock.json
 node_modules
-__tests__/inputs
+__tests__/inputs/*.xml
 __tests__/input
 __tests__/output
 .idea

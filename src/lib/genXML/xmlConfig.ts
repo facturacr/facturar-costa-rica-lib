@@ -59,6 +59,7 @@ export const xmlExtructures = {
   FacturaElectronicaExportacion: FEE_XML_ATTRS,
   NotaCreditoElectronica: NC_XML_ATTRS,
   NotaDebitoElectronica: ND_XML_ATTRS,
+  MensajeReceptor: MR_XML_ATTRS,
   CCE: MR_XML_ATTRS,
   CPCE: MR_XML_ATTRS,
   RCE: MR_XML_ATTRS
