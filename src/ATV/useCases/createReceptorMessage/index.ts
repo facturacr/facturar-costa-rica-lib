@@ -110,7 +110,7 @@ export class CreateReceptorMessageCommand {
             return {
                 clave: input.clave,
                 emitterIdentifier: input.emitterIdentifier,
-                emitterIdentifierType: input.emitterIdentifier,
+                emitterIdentifierType: input.emitterIdentifierType,
                 receptorIdentifier: input.receptorIdentifier,
                 receptorIdentifierType: input.receptorIdentifierType,
                 documentIssueDate: input.documentIssueDate,
