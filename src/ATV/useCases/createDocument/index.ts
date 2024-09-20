@@ -8,7 +8,7 @@ import { CreateDocFactory, CreateDocumentInput } from '@src/ATV/core/CreateDocFa
 
 const options: { [key: string]: { serviceUrl: string}} = {
   prod: {
-    serviceUrl: 'https://api.comprobanteselectronicos.go.cr/v1/recepcion'
+    serviceUrl: 'https://api.comprobanteselectronicos.go.cr/recepcion/v1/recepcion'
   },
   stg: {
     serviceUrl: 'https://api-sandbox.comprobanteselectronicos.go.cr/recepcion/v1/recepcion'
