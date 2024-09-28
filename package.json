@@ -1,6 +1,6 @@
 {
   "name": "@facturacr/atv-sdk",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Librería (SDK) de Javascript/NodeJS para acceder al API de Administración Tributaria Virtual (ATV) del Ministerio de Hacienda.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",

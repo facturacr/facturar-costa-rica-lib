@@ -35,24 +35,28 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
   return { LineaDetalle }
 }
 
+const parseAtvMoneyFormat = (amount: number) => {
+  return parseFloat(amount.toFixed(5))
+}
+
 const mapSummaryInvoice = (summaryInvoice: DomainDocument['summaryInvoice']): Resumen => {
   return {
     CodigoTipoMoneda: {
       CodigoMoneda: summaryInvoice.currency.code,
       TipoCambio: summaryInvoice.currency.exchangeRate
     },
-    TotalServGravados: summaryInvoice.totalEncumberedServices,
-    TotalServExentos: summaryInvoice.totalExemptServices,
-    TotalMercanciasGravadas: summaryInvoice.totalEncumberedMerchandise,
-    TotalMercanciasExentas: summaryInvoice.totalExemptMerchandise,
-    TotalGravado: summaryInvoice.totalEncumbered,
-    TotalExento: summaryInvoice.totalExempt,
-    TotalExonerado: summaryInvoice.totalExonerated,
-    TotalVenta: summaryInvoice.totalSale,
-    TotalDescuentos: summaryInvoice.totalDiscounts,
-    TotalVentaNeta: summaryInvoice.totalNetSale,
-    TotalImpuesto: summaryInvoice.totalTaxes,
-    TotalComprobante: summaryInvoice.totalVoucher
+    TotalServGravados: parseAtvMoneyFormat(summaryInvoice.totalEncumberedServices),
+    TotalServExentos: parseAtvMoneyFormat(summaryInvoice.totalExemptServices),
+    TotalMercanciasGravadas: parseAtvMoneyFormat(summaryInvoice.totalEncumberedMerchandise),
+    TotalMercanciasExentas: parseAtvMoneyFormat(summaryInvoice.totalExemptMerchandise),
+    TotalGravado: parseAtvMoneyFormat(summaryInvoice.totalEncumbered),
+    TotalExento: parseAtvMoneyFormat(summaryInvoice.totalExempt),
+    TotalExonerado: parseAtvMoneyFormat(summaryInvoice.totalExonerated),
+    TotalVenta: parseAtvMoneyFormat(summaryInvoice.totalSale),
+    TotalDescuentos: parseAtvMoneyFormat(summaryInvoice.totalDiscounts),
+    TotalVentaNeta: parseAtvMoneyFormat(summaryInvoice.totalNetSale),
+    TotalImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes),
+    TotalComprobante: parseAtvMoneyFormat(summaryInvoice.totalVoucher)
   }
 }
 

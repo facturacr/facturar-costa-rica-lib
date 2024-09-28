@@ -27,31 +27,31 @@ const COMMON_STRUCTURE = {
 const FE_XML_ATTRS = { // Factura Electronica
   xmlns: FE_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  'xsi:schemaLocation': `${FE_XML_SCHEMA_NS} ${FE_XML_SCHEMA_XSI}`
+  // 'xsi:schemaLocation': `${FE_XML_SCHEMA_NS} ${FE_XML_SCHEMA_XSI}`
 }
 
 const FEE_XML_ATTRS = { // Factura Electronica Exportación
   xmlns: FE_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  'xsi:schemaLocation': `${FEE_XML_SCHEMA_NS} ${FEE_XML_SCHEMA_XSI}`
+  // 'xsi:schemaLocation': `${FEE_XML_SCHEMA_NS} ${FEE_XML_SCHEMA_XSI}`
 }
 
 const NC_XML_ATTRS = { // Nota Credito Electronica
   xmlns: NC_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  'xsi:schemaLocation': `${NC_XML_SCHEMA_NS} ${NC_XML_SCHEMA_XSI}`
+  // 'xsi:schemaLocation': `${NC_XML_SCHEMA_NS} ${NC_XML_SCHEMA_XSI}`
 }
 
 const ND_XML_ATTRS = { // Nota Credito Electronica
   xmlns: NC_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  'xsi:schemaLocation': `${ND_XML_SCHEMA_NS} ${ND_XML_SCHEMA_XSI}`
+  // 'xsi:schemaLocation': `${ND_XML_SCHEMA_NS} ${ND_XML_SCHEMA_XSI}`
 }
 
 const MR_XML_ATTRS = { // Mensaje Receptor
   xmlns: MR_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  'xsi:schemaLocation': `${MR_XML_SCHEMA_NS}`
+  // 'xsi:schemaLocation': `${MR_XML_SCHEMA_NS}`
 }
 
 export const xmlExtructures = {
