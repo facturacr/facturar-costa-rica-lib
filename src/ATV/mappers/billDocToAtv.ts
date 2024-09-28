@@ -7,6 +7,10 @@ import { ReceptorMessageProps } from '../core/types'
 
 type AtvFormat = InvoiceDocumentContainer
 
+const parseAtvMoneyFormat = (amount: number) => {
+  return parseFloat(amount.toFixed(5))
+}
+
 const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
   const LineaDetalle = orderLines.map<DetalleServicio['LineaDetalle'][0]>((orderLine) => {
     return {
@@ -26,17 +30,13 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
         Codigo: orderLine.tax.code,
         CodigoTarifa: orderLine.tax.rateCode,
         Tarifa: orderLine.tax.rate,
-        Monto: orderLine.tax.amount
+        Monto: parseAtvMoneyFormat(orderLine.tax.amount)
       },
       // ImpuestoNeto
       MontoTotalLinea: orderLine.totalOrderLineAmount
     }
   })
   return { LineaDetalle }
-}
-
-const parseAtvMoneyFormat = (amount: number) => {
-  return parseFloat(amount.toFixed(5))
 }
 
 const mapSummaryInvoice = (summaryInvoice: DomainDocument['summaryInvoice']): Resumen => {
