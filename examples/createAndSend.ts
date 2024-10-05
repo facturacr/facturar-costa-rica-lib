@@ -7,7 +7,6 @@ import { PersonProps } from 'dist/src/ATV/core/Person'
 const IS_STG = process.env.IS_STG
 const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
-console.log('process.env.IS_STG', IS_STG)
 
 const SOURCE_P12_URI = process.env.SOURCE_P12_URI
 const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
@@ -18,8 +17,11 @@ if (!SOURCE_P12_PASSPORT || !SOURCE_P12_URI) {
 
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
+const paramConsecutive = process.argv[2]
+console.log('paramConsecutive', paramConsecutive)
+
 // TODO: dynamic param --identifier 1 args[x]
-createDocumentInputExample.consecutiveIdentifier = process.env.TEST_CONSECUTIVE
+createDocumentInputExample.consecutiveIdentifier = paramConsecutive || process.env.TEST_CONSECUTIVE 
 createDocumentInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string;
 createDocumentInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type'];
 

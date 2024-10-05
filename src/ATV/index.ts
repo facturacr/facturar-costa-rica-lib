@@ -55,27 +55,26 @@ export class ATV {
     try {
       const response = await axios(input)
       const xmlResponse = response.data['respuesta-xml']
+      const headerResultState = response.data['ind-estado']
       if (!xmlResponse) {
-        const state = response.data['ind-estado']
-        return {
-          status: response.status,
-          state,
-          errorCause: null
-        }
+        throw new Error('NO_XML_IN_RESPONSE')
       }
       const xmlString = this.decodeBase64(xmlResponse)
 
       return {
         status: response.status,
+        headerResultState,
         confirmation: this.parseConfirmationMessage(xmlString),
         xml: xmlString,
-        errorCause: null
+        rawResponse: response,
+        errorCause: null,
       }
     } catch (error) {
       const response = error.response || {}
       return {
         status: response.status || 500,
-        errorCause: response.statusText
+        errorCause: response.statusText || error.message,
+        rawResponse: response,
       }
     }
   }
