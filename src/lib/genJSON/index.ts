@@ -117,7 +117,7 @@ export default async (frontEndRequest: ClientPayload, date: any, clave: string, 
     Emisor: sender,
     Receptor: receiver,
     CondicionVenta: '01',
-    MedioPago: '01',
+    MedioPago: '03',
     DetalleServicio: {
       LineaDetalle: lines
     },
