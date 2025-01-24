@@ -36,7 +36,7 @@ describe('Create Document (Invoice)', () => {
     expect(createdDoc.extraData.xml).toBeDefined()
   })
 
-  it('should create document and generate a correct command', async () => {
+  it('should create document and generate a correct xml', async () => {
     const atv = new ATV({}, 'stg')
     // @ts-ignore just for testing
     const createdDoc = await atv.createDocumentCommand({
