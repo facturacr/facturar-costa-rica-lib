@@ -53,7 +53,7 @@
         <CorreoElectronico>test@test.com</CorreoElectronico>
     </Receptor>
     <CondicionVenta>01</CondicionVenta>
-    <MedioPago>04</MedioPago>
+    <MedioPago>03</MedioPago>
     <DetalleServicio>
         <LineaDetalle>
             <NumeroLinea>1</NumeroLinea>
