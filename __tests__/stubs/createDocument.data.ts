@@ -85,4 +85,6 @@ export const createDocumentInputExample: CreateDocumentInput['document'] = {
   receiver: receiverStub,
   orderLines,
   securityCode: '1' // '00000001'
+  ,
+  paymentMethod: '04'
 }
