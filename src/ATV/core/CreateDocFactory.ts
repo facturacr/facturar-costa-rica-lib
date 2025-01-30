@@ -45,6 +45,8 @@ type DocumentInput = {
     ceSituation: string; // situacionCE
     orderLines: OrderInput[];
     referenceInfo?: ReferenceInfoInput;
+    conditionSale:string
+    paymentMethod:string;
   }
 
   type ReferenceInfoInput = ReferenceInformationProps;
@@ -73,8 +75,8 @@ export class CreateDocFactory {
         issueDate: new Date(),
         emitter: Person.create(document.emitter),
         receiver: Person.create(document.receiver),
-        conditionSale: '01',
-        paymentMethod: '04',
+        conditionSale: document.conditionSale,
+        paymentMethod: document.paymentMethod,
         referenceInformation: document.referenceInfo ? ReferenceInformation.create(document.referenceInfo) : undefined,
       })
     }

@@ -36,7 +36,7 @@ describe('Create Document (Invoice)', () => {
     expect(createdDoc.extraData.xml).toBeDefined()
   })
 
-  it('should create document and generate a correct command', async () => {
+  it('should create document and match to snapshot', async () => {
     const atv = new ATV({}, 'stg')
     // @ts-ignore just for testing
     const createdDoc = await atv.createDocumentCommand({
@@ -45,6 +45,15 @@ describe('Create Document (Invoice)', () => {
       signatureOptions: undefined
     })
     expect(createdDoc.command.data.comprobanteXml).toMatchSnapshot()
+  })
+  it('should create document and generate a correct xml', async () => {
+    const atv = new ATV({}, 'stg')
+    // @ts-ignore just for testing
+    const createdDoc = await atv.createDocumentCommand({
+      document: createDocumentInputExample,
+      token: 'fake-token',
+      signatureOptions: undefined
+    })
     expect(createdDoc.extraData.xml).toEqualXML(expectXml)
   })
 })

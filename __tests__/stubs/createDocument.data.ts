@@ -77,12 +77,14 @@ export const createDocumentInputExample: CreateDocumentInput['document'] = {
   consecutiveIdentifier: '2',
   activityCode: '4',
   documentName: 'FacturaElectronica',
-  branch: '1', //'001'
-  terminal: '1', //'00001'
+  branch: '1', // '001'
+  terminal: '1', // '00001'
   ceSituation: '1',
   countryCode: '506',
   emitter: emitterStub,
   receiver: receiverStub,
   orderLines,
-  securityCode: '1' // '00000001'
+  securityCode: '1', // '00000001'
+  paymentMethod: '03',
+  conditionSale: '01'
 }
