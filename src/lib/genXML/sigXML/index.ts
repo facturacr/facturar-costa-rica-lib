@@ -2,6 +2,7 @@ import { Application, SignedXml, Parse, OptionsXAdES } from 'xadesjs'
 import { Crypto } from '@peculiar/webcrypto'
 import { genKeysAndCert } from '@src/lib/genXML/sigXML/genKeysAndCert'
 import { XMLSerializer } from 'xmldom-alpha'
+import { ATV_VERSION } from '../xmlConfig'
 
 function addSigToXML(xml: Document, signature: any): string {
   xml.documentElement.appendChild(signature.GetXml())
@@ -37,7 +38,7 @@ function getOptions(publicKey: CryptoKey, x509: any, referenceId: string): Optio
       hash: 'SHA-1',
       identifier: {
         qualifier: 'OIDAsURI',
-        value: 'https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronica'
+        value: `https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v${ATV_VERSION}/facturaElectronica`
       }
     },
     x509: [x509],

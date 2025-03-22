@@ -1,16 +1,10 @@
-const FE_XML_SCHEMA_NS = 'https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronica'
-const FE_XML_SCHEMA_XSI = 'https://www.hacienda.go.cr/ATV/ComprobanteElectronico/docs/esquemas/2016/v4.3/FacturaElectronica_V4.3.xsd'
+export const ATV_VERSION = '4.3';
 
-const FEE_XML_SCHEMA_NS = 'https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronicaExportacion'
-const FEE_XML_SCHEMA_XSI = 'https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronicaExportacion.xsd'
+const FE_XML_SCHEMA_NS = `https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v${ATV_VERSION}/facturaElectronica`
 
-const MR_XML_SCHEMA_NS = 'https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/mensajeReceptor'
+const MR_XML_SCHEMA_NS = `https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v${ATV_VERSION}/mensajeReceptor`
 
-const NC_XML_SCHEMA_NS = 'https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/notaCreditoElectronica'
-const NC_XML_SCHEMA_XSI = 'https://www.hacienda.go.cr/ATV/ComprobanteElectronico/docs/esquemas/2016/v4.3/NotaCreditoElectronica_V4.3.xsd'
-
-const ND_XML_SCHEMA_NS = 'https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/notaDebitoElectronica'
-const ND_XML_SCHEMA_XSI = 'https://www.hacienda.go.cr/ATV/ComprobanteElectronico/docs/esquemas/2016/v4.3/NotaDebitoElectronica_V4.3.xsd'
+const NC_XML_SCHEMA_NS = `https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v${ATV_VERSION}/notaCreditoElectronica`
 
 export const declaration = '<?xml version="1.0" encoding="utf-8"?>'
 
@@ -27,31 +21,26 @@ const COMMON_STRUCTURE = {
 const FE_XML_ATTRS = { // Factura Electronica
   xmlns: FE_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  // 'xsi:schemaLocation': `${FE_XML_SCHEMA_NS} ${FE_XML_SCHEMA_XSI}`
 }
 
 const FEE_XML_ATTRS = { // Factura Electronica Exportación
   xmlns: FE_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  // 'xsi:schemaLocation': `${FEE_XML_SCHEMA_NS} ${FEE_XML_SCHEMA_XSI}`
 }
 
 const NC_XML_ATTRS = { // Nota Credito Electronica
   xmlns: NC_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  // 'xsi:schemaLocation': `${NC_XML_SCHEMA_NS} ${NC_XML_SCHEMA_XSI}`
 }
 
 const ND_XML_ATTRS = { // Nota Credito Electronica
   xmlns: NC_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  // 'xsi:schemaLocation': `${ND_XML_SCHEMA_NS} ${ND_XML_SCHEMA_XSI}`
 }
 
 const MR_XML_ATTRS = { // Mensaje Receptor
   xmlns: MR_XML_SCHEMA_NS,
   ...COMMON_STRUCTURE,
-  // 'xsi:schemaLocation': `${MR_XML_SCHEMA_NS}`
 }
 
 export const xmlExtructures = {
