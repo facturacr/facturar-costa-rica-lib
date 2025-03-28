@@ -61,7 +61,7 @@ function getSender(frontEndRequest: ClientPayload): Persona {
 }
 
 function setTaxObj(subtotal: number, taxObj: Impuesto): Impuesto {
-  const tax = taxObj.Tarifa || 13
+  const tax = typeof taxObj.Tarifa === 'number' ? taxObj.Tarifa : 13
   return {
     Codigo: taxObj.Codigo,
     CodigoTarifa: taxObj.CodigoTarifa,
