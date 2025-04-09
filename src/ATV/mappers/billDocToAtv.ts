@@ -106,7 +106,9 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
   const key = docName
   const doc: Document = {
     Clave: document.clave,
-    CodigoActividad: document.activityCode.padStart(6, '0'),
+    ProveedorSistemas: document.providerId,
+    CodigoActividadEmisor: document.emitter.activityCode.padStart(6, '0'),
+    CodigoActividadReceptor: document.receiver.activityCode.padStart(6, '0'),
     NumeroConsecutivo: document.fullConsecutive,
     FechaEmision: document.issueDate.toISOString(),
     Emisor: mapPerson(document.emitter),
