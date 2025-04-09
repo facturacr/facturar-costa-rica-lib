@@ -18,6 +18,7 @@ export type PersonProps = {
     id: string;
   };
   commercialName: string;
+  activityCode: string;
   location?: LocationProps;
   phone?: PhoneProps;
   fax?: PhoneProps;
@@ -44,6 +45,10 @@ export class Person {
 
   get commercialName(): string {
     return this.props.commercialName
+  }
+
+  get activityCode(): string {
+    return this.props.activityCode
   }
 
   get location(): LocationProps | undefined {

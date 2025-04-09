@@ -7,8 +7,8 @@ import { SummaryProps } from './Summary.type'
 
 export type InvoiceProps = {
   clave: Clave;
+  providerId: string; // ProveedorSistemas
   fullConsecutive: FullConsecutive;
-  activityCode: string; // CodigoActividad
   issueDate: Date; // FechaEmision
   emitter: Person; // Emisor
   receiver: Person; // Receptor
@@ -42,8 +42,12 @@ export class Document {
     return this.props.fullConsecutive.value
   }
 
+  get providerId(): string {
+    return this.props.providerId
+  }
+
   get activityCode(): string {
-    return this.props.activityCode
+    return this.props.emitter.activityCode
   }
 
   get issueDate(): Date {

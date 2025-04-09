@@ -88,7 +88,9 @@ export interface InformacionReferencia {
 
 export interface Document {
   Clave: string;
-  CodigoActividad: string;
+  ProveedorSistemas?: string;
+  CodigoActividadEmisor: string;
+  CodigoActividadReceptor: string;
   NumeroConsecutivo: string;
   FechaEmision?: string;
   Emisor: Persona;
