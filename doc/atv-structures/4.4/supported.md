@@ -5,3 +5,4 @@
 - Se eliminó fax.
 - Se ajustó el minimo del "Barrio" (padStart 6).
 - Se ajustó "MedioPago" a objeto con "TipoMedioPago" y se mueve a ResumenFactura.
+- Se cambió el nombre de "Codigo" a "CodigoCABYS" en DetalleServicio.

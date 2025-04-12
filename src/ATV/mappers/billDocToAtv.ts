@@ -15,7 +15,7 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
   const LineaDetalle = orderLines.map<DetalleServicio['LineaDetalle'][0]>((orderLine) => {
     return {
       NumeroLinea: orderLine.lineNumber,
-      Codigo: orderLine.code,
+      CodigoCABYS: orderLine.code,
       // CodigoComercial
       Cantidad: orderLine.quantity,
       UnidadMedida: orderLine.measureUnit,
