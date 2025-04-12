@@ -5,7 +5,6 @@
 
 export interface Impuesto {
   Codigo: string;
-  CodigoTarifa: string;
   Tarifa: number;
   Monto?: number;
 }

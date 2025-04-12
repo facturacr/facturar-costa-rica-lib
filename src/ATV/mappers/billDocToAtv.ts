@@ -25,10 +25,9 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
       MontoTotal: orderLine.totalAmount,
       // Descuento
       SubTotal: orderLine.subTotal,
-      // BaseImponible
+      BaseImponible: orderLine.subTotal,
       Impuesto: {
         Codigo: orderLine.tax.code,
-        CodigoTarifa: orderLine.tax.rateCode,
         Tarifa: orderLine.tax.rate,
         Monto: parseAtvMoneyFormat(orderLine.tax.amount)
       },
