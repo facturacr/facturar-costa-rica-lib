@@ -70,7 +70,6 @@ const mapPerson = (person: Person): Persona => {
     NombreComercial: person.commercialName,
     Ubicacion: undefined,
     Telefono: undefined,
-    Fax: undefined,
     CorreoElectronico: undefined
   }
   atvPerson.Ubicacion = person.location ? {
@@ -84,12 +83,9 @@ const mapPerson = (person: Person): Persona => {
     CodigoPais: person.phone?.countryCode,
     NumTelefono: person.phone?.number
   } : undefined
-  atvPerson.Fax = person.fax ? {
-    CodigoPais: person.fax?.countryCode,
-    NumTelefono: person.fax?.number
-  } : undefined
   atvPerson.CorreoElectronico = person.email
-  return atvPerson;
+
+  return atvPerson
 }
 
 const mapReferenceInformation = (referenceInfo: ReferenceInformation): InformacionReferencia => {
