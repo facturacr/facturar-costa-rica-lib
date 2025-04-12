@@ -45,6 +45,9 @@ export interface Resumen {
   TotalDescuentos?: number;
   TotalVentaNeta?: number;
   TotalImpuesto: number;
+  MedioPago?: {
+    TipoMedioPago: string;
+  };
   TotalComprobante: number;
 }
 
@@ -97,7 +100,7 @@ export interface AtvDocument {
   Receptor: Persona;
   CondicionVenta?: string;
   PlazoCredito?: string;
-  MedioPago?: string;
+
   DetalleServicio?: DetalleServicio;
   ResumenFactura: Resumen;
   Otros?: {

@@ -39,7 +39,8 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
   return { LineaDetalle }
 }
 
-const mapSummaryInvoice = (summaryInvoice: DomainDocument['summaryInvoice']): Resumen => {
+const mapSummaryInvoice = (document: DomainDocument): Resumen => {
+  const summaryInvoice = document.summaryInvoice
   return {
     CodigoTipoMoneda: {
       CodigoMoneda: summaryInvoice.currency.code,
@@ -56,6 +57,9 @@ const mapSummaryInvoice = (summaryInvoice: DomainDocument['summaryInvoice']): Re
     TotalDescuentos: parseAtvMoneyFormat(summaryInvoice.totalDiscounts),
     TotalVentaNeta: parseAtvMoneyFormat(summaryInvoice.totalNetSale),
     TotalImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes),
+    MedioPago: {
+      TipoMedioPago: document.paymentMethod
+    },
     TotalComprobante: parseAtvMoneyFormat(summaryInvoice.totalVoucher)
   }
 }
@@ -111,9 +115,8 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
     Receptor: mapPerson(document.receiver),
     CondicionVenta: document.conditionSale,
     PlazoCredito: document.deadlineCredit,
-    MedioPago: document.paymentMethod,
     DetalleServicio: mapOrderLinesToAtvFormat(document.orderLines),
-    ResumenFactura: mapSummaryInvoice(document.summaryInvoice),
+    ResumenFactura: mapSummaryInvoice(document),
     Otros: document.others
   }
   if (document.referenceInformation) {

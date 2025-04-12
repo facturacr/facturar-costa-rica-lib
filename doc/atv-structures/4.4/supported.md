@@ -1,4 +1,7 @@
+## Breaking changes de la librería
 - Se agregó soporte para actividad economica para receptor y emisor.
 - Se agregó soporte para proveedor de servicios.
-- Se eliminó fax en generación de documento ATV.
-- Se ajustó el minimo del "Barrio" (padStart 6) en generación de documento ATV.
+## Ajustes mapeo generación documento ATV
+- Se eliminó fax.
+- Se ajustó el minimo del "Barrio" (padStart 6).
+- Se ajustó "MedioPago" a objeto con "TipoMedioPago" y se mueve a ResumenFactura.
