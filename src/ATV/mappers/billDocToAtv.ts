@@ -31,7 +31,8 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
         Tarifa: orderLine.tax.rate,
         Monto: parseAtvMoneyFormat(orderLine.tax.amount)
       },
-      // ImpuestoNeto
+      ImpuestoAsumidoEmisorFabrica: 0,
+      ImpuestoNeto: parseAtvMoneyFormat(orderLine.tax.amount),
       MontoTotalLinea: parseAtvMoneyFormat(orderLine.totalOrderLineAmount)
     }
   })

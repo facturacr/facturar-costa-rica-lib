@@ -20,6 +20,7 @@ export interface LineaDetalle {
   SubTotal?: number;
   BaseImponible?: number;
   Impuesto?: Impuesto;
+  ImpuestoAsumidoEmisorFabrica: number;
   MontoTotalLinea?: number;
 }
 
