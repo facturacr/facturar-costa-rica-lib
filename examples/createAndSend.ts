@@ -57,7 +57,7 @@ async function main(): Promise<void> {
       password: SOURCE_P12_PASSPORT
     }
   })
-  // console.log('extraData', extraData)
+  console.log('extraData', extraData)
   const response = await atv.sendDocument(command)
   if (response.errorCause) {
     console.log('error response', response)

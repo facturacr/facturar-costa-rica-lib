@@ -77,7 +77,7 @@ const mapPerson = (person: Person): Persona => {
     Provincia: person.location?.province,
     Canton: person.location?.canton?.padStart(2, '0'),
     Distrito: person.location?.district?.padStart(2, '0'),
-    Barrio: person.location?.neighborhood?.padStart(2, '0'),
+    Barrio: person.location?.neighborhood?.padStart(5, '0'),
     OtrasSenas: person.location?.details
   } : undefined
   atvPerson.Telefono = person.phone ? {
