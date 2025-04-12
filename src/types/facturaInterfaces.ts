@@ -86,9 +86,9 @@ export interface InformacionReferencia {
   Razon: string;
 }
 
-export interface Document {
+export interface AtvDocument {
   Clave: string;
-  ProveedorSistemas?: string;
+  ProveedorSistemas: string;
   CodigoActividadEmisor: string;
   CodigoActividadReceptor: string;
   NumeroConsecutivo: string;
@@ -106,7 +106,7 @@ export interface Document {
   InformacionReferencia?: InformacionReferencia;
 }
 
-export interface XMLRawDocument extends Document {
+export interface XMLRawDocument extends AtvDocument {
 
 }
 
@@ -126,7 +126,7 @@ interface MensajeReceptor {
 }
 
 export interface InvoiceDocumentContainer {
-  [key: string]: Document | MensajeReceptor;
+  [key: string]: AtvDocument | MensajeReceptor;
 }
 
 export type ConfirmationMessageRaw = {

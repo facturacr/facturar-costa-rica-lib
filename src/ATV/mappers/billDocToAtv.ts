@@ -1,4 +1,4 @@
-import { Document, InvoiceDocumentContainer, DetalleServicio, Resumen, Persona, InformacionReferencia } from '@src/types/facturaInterfaces'
+import { AtvDocument, InvoiceDocumentContainer, DetalleServicio, Resumen, Persona, InformacionReferencia } from '@src/types/facturaInterfaces'
 import { Document as DomainDocument } from '../core/Document'
 import { OrderLine } from '../core/OrderLine'
 import { Person } from '../core/Person'
@@ -104,7 +104,7 @@ const mapReferenceInformation = (referenceInfo: ReferenceInformation): Informaci
 
 export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument): AtvFormat => {
   const key = docName
-  const doc: Document = {
+  const doc: AtvDocument = {
     Clave: document.clave,
     ProveedorSistemas: document.providerId,
     CodigoActividadEmisor: document.emitter.activityCode.padStart(6, '0'),
