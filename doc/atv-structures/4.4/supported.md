@@ -1,0 +1,4 @@
+- Se agregó soporte para actividad economica para receptor y emisor.
+- Se agregó soporte para proveedor de servicios.
+- Se eliminó fax en generación de documento ATV.
+- Se ajustó el minimo del "Barrio" (padStart 6) en generación de documento ATV.
