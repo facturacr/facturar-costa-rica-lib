@@ -103,7 +103,7 @@ const mapReferenceInformation = (referenceInfo: ReferenceInformation): Informaci
 }
 
 export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument): AtvFormat => {
-  const key = docName
+  const key = docName;
   const doc: AtvDocument = {
     Clave: document.clave,
     ProveedorSistemas: document.providerId,
