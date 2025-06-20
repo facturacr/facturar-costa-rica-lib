@@ -1,4 +1,4 @@
-import { CreateDocumentInput } from "@src/index"
+import { CreateDocumentInput } from '@src/index'
 
 const taxStub: CreateDocumentInput['document']['orderLines'][0]['tax'] = {
   code: '01',
@@ -18,6 +18,7 @@ const orderLines: CreateDocumentInput['document']['orderLines'] = [{
 const receiverStub: CreateDocumentInput['document']['emitter'] = {
   fullName: 'receiver name SRL',
   commercialName: 'receiver name',
+  activityCode: '4',
   identifier: {
     type: '01',
     id: '206930143'
@@ -43,6 +44,7 @@ const receiverStub: CreateDocumentInput['document']['emitter'] = {
 const emitterStub: CreateDocumentInput['document']['receiver'] = {
   fullName: 'Emisor name',
   commercialName: 'emisor comercial name',
+  activityCode: '4',
   identifier: {
     type: '01',
     id: '206920142'
@@ -76,6 +78,7 @@ export const creditNoteReferenceInfoExample: CreateDocumentInput['document']['re
 export const createDocumentInputExample: CreateDocumentInput['document'] = {
   consecutiveIdentifier: '2',
   activityCode: '4',
+  providerId: emitterStub.identifier.id,
   documentName: 'FacturaElectronica',
   branch: '1', // '001'
   terminal: '1', // '00001'

@@ -5,7 +5,6 @@
 
 export interface Impuesto {
   Codigo: string;
-  CodigoTarifa: string;
   Tarifa: number;
   Monto?: number;
 }
@@ -21,6 +20,7 @@ export interface LineaDetalle {
   SubTotal?: number;
   BaseImponible?: number;
   Impuesto?: Impuesto;
+  ImpuestoAsumidoEmisorFabrica: number;
   MontoTotalLinea?: number;
 }
 
@@ -45,6 +45,9 @@ export interface Resumen {
   TotalDescuentos?: number;
   TotalVentaNeta?: number;
   TotalImpuesto: number;
+  MedioPago?: {
+    TipoMedioPago: string;
+  };
   TotalComprobante: number;
 }
 
@@ -86,16 +89,18 @@ export interface InformacionReferencia {
   Razon: string;
 }
 
-export interface Document {
+export interface AtvDocument {
   Clave: string;
-  CodigoActividad: string;
+  ProveedorSistemas: string;
+  CodigoActividadEmisor: string;
+  CodigoActividadReceptor: string;
   NumeroConsecutivo: string;
   FechaEmision?: string;
   Emisor: Persona;
   Receptor: Persona;
   CondicionVenta?: string;
   PlazoCredito?: string;
-  MedioPago?: string;
+
   DetalleServicio?: DetalleServicio;
   ResumenFactura: Resumen;
   Otros?: {
@@ -104,7 +109,7 @@ export interface Document {
   InformacionReferencia?: InformacionReferencia;
 }
 
-export interface XMLRawDocument extends Document {
+export interface XMLRawDocument extends AtvDocument {
 
 }
 
@@ -124,7 +129,7 @@ interface MensajeReceptor {
 }
 
 export interface InvoiceDocumentContainer {
-  [key: string]: Document | MensajeReceptor;
+  [key: string]: AtvDocument | MensajeReceptor;
 }
 
 export type ConfirmationMessageRaw = {

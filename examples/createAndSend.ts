@@ -21,9 +21,9 @@ const paramConsecutive = process.argv[2]
 console.log('paramConsecutive', paramConsecutive)
 
 // TODO: dynamic param --identifier 1 args[x]
-createDocumentInputExample.consecutiveIdentifier = paramConsecutive || process.env.TEST_CONSECUTIVE 
-createDocumentInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string;
-createDocumentInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type'];
+createDocumentInputExample.consecutiveIdentifier = paramConsecutive || process.env.TEST_CONSECUTIVE
+createDocumentInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string
+createDocumentInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type']
 
 console.log('requestStub consecutivo', createDocumentInputExample.consecutiveIdentifier)
 
@@ -57,6 +57,7 @@ async function main(): Promise<void> {
       password: SOURCE_P12_PASSPORT
     }
   })
+  console.log('extraData', extraData)
   const response = await atv.sendDocument(command)
   if (response.errorCause) {
     console.log('error response', response)

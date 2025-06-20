@@ -1,5 +1,10 @@
 # Ejemplos con implementaciones para pruebas
 
+Configurar .env file basado en .env.example
+```
+cp .env.example .env
+```
+
 ```
 yarn build
 ```
@@ -39,7 +44,7 @@ Para probar las funcionalidades se recomienda crear un .env en donde se especifi
 ```
 USERNAME_TEST= ## Provided be ATV System
 PASSWORD_TEST= ## Provided be ATV System
-IS_STG=1 
+IS_STG=1
 SOURCE_P12_URI= ## Provided be ATV System
 SOURCE_P12_PASSPORT= ## Provided be ATV System
 SOURCE_URI_XML_OUTPUT= ## Custom OS PATH
