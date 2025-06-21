@@ -75,11 +75,28 @@ export const creditNoteReferenceInfoExample: CreateDocumentInput['document']['re
   reason: 'Se anula documento'
 }
 
-export const createDocumentInputExample: CreateDocumentInput['document'] = {
+export const FEInputExample: CreateDocumentInput['document'] = {
   consecutiveIdentifier: '2',
   activityCode: '4',
   providerId: emitterStub.identifier.id,
   documentName: 'FacturaElectronica',
+  branch: '1', // '001'
+  terminal: '1', // '00001'
+  ceSituation: '1',
+  countryCode: '506',
+  emitter: emitterStub,
+  receiver: receiverStub,
+  orderLines,
+  securityCode: '1', // '00000001'
+  paymentMethod: '03',
+  conditionSale: '01'
+}
+
+export const TEInputExample: CreateDocumentInput['document'] = {
+  consecutiveIdentifier: '2',
+  activityCode: '4',
+  providerId: emitterStub.identifier.id,
+  documentName: 'TiqueteElectronico',
   branch: '1', // '001'
   terminal: '1', // '00001'
   ceSituation: '1',

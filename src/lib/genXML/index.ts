@@ -1,5 +1,5 @@
 import { j2xParser, parse } from 'fast-xml-parser'
-import { declaration, defaultOptions, xmlExtructures } from '@src/lib/genXML/xmlConfig'
+import { declaration, defaultOptions, xmlExtructures } from '@src/xmlSchemaHeaderMap'
 import sigXML from '@src/lib/genXML/sigXML/index'
 import { XMLRawDocument } from '@src/types/facturaInterfaces'
 
