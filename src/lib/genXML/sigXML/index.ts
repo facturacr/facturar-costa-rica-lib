@@ -2,7 +2,7 @@ import { Application, SignedXml, Parse, OptionsXAdES } from 'xadesjs'
 import { Crypto } from '@peculiar/webcrypto'
 import { genKeysAndCert } from '@src/lib/genXML/sigXML/genKeysAndCert'
 import { XMLSerializer } from 'xmldom-alpha'
-import { ATV_VERSION } from '../xmlConfig'
+import { ATV_VERSION } from '@src/xmlSchemaHeaderMap'
 
 function addSigToXML(xml: Document, signature: any): string {
   xml.documentElement.appendChild(signature.GetXml())

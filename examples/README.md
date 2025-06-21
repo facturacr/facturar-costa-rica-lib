@@ -11,7 +11,7 @@ yarn build
 
 Para probar crear y enviar factura
 ```
-yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSend.ts 1
+yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSendFE.ts 1
 ```
 
 Para aceptar una factura
