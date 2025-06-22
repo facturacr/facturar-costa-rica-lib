@@ -1,0 +1,544 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FacturaElectronica",
+  "type": "object",
+  "properties": {
+    "Clave": { "type": "string", "pattern": "^\\d{50}$" },
+    "ProveedorSistemas": { "type": "string", "maxLength": 20 },
+    "CodigoActividadEmisor": {
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 6
+    },
+    "CodigoActividadReceptor": {
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 6
+    },
+    "NumeroConsecutivo": { "type": "string", "pattern": "^\\d{20}$" },
+    "FechaEmision": { "type": "string", "format": "date-time" },
+    "Emisor": { "$ref": "#/$defs/EmisorType" },
+    "Receptor": { "$ref": "#/$defs/ReceptorType" },
+    "CondicionVenta": {
+      "type": "string",
+      "enum": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "10",
+        "12",
+        "13",
+        "14",
+        "15",
+        "99"
+      ]
+    },
+    "CondicionVentaOtros": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100
+    },
+    "PlazoCredito": { "type": "integer", "maximum": 99999 },
+    "DetalleServicio": { "$ref": "#/$defs/DetalleServicioType" },
+    "OtrosCargos": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/OtrosCargosType" },
+      "maxItems": 15
+    },
+    "ResumenFactura": { "$ref": "#/$defs/ResumenFacturaType" },
+    "InformacionReferencia": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/InformacionReferenciaType" },
+      "maxItems": 10
+    },
+    "Otros": { "$ref": "#/$defs/OtrosType" },
+    "ds:Signature": { "type": "object" }
+  },
+  "required": [
+    "Clave",
+    "ProveedorSistemas",
+    "CodigoActividadEmisor",
+    "NumeroConsecutivo",
+    "FechaEmision",
+    "Emisor",
+    "Receptor",
+    "CondicionVenta",
+    "ResumenFactura",
+    "ds:Signature"
+  ],
+  "$defs": {
+    "EmisorType": {
+      "type": "object",
+      "properties": {
+        "Nombre": { "type": "string", "minLength": 5, "maxLength": 100 },
+        "Identificacion": { "$ref": "#/$defs/IdentificacionType" },
+        "Registrofiscal8707": { "type": "string", "maxLength": 12 },
+        "NombreComercial": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "Ubicacion": { "$ref": "#/$defs/UbicacionType" },
+        "Telefono": { "$ref": "#/$defs/TelefonoType" },
+        "CorreoElectronico": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 160 },
+          "minItems": 1,
+          "maxItems": 4
+        }
+      },
+      "required": ["Nombre", "Identificacion", "Ubicacion", "CorreoElectronico"]
+    },
+    "ReceptorType": {
+      "type": "object",
+      "properties": {
+        "Nombre": { "type": "string", "minLength": 3, "maxLength": 100 },
+        "Identificacion": { "$ref": "#/$defs/IdentificacionType" },
+        "NombreComercial": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "Ubicacion": { "$ref": "#/$defs/UbicacionType" },
+        "OtrasSenasExtranjero": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 300
+        },
+        "Telefono": { "$ref": "#/$defs/TelefonoType" },
+        "CorreoElectronico": { "type": "string", "maxLength": 160 }
+      },
+      "required": ["Nombre", "Identificacion"]
+    },
+    "IdentificacionType": {
+      "type": "object",
+      "properties": {
+        "Tipo": {
+          "type": "string",
+          "enum": ["01", "02", "03", "04", "05", "06"]
+        },
+        "Numero": { "type": "string", "maxLength": 20 }
+      },
+      "required": ["Tipo", "Numero"]
+    },
+    "UbicacionType": {
+      "type": "object",
+      "properties": {
+        "Provincia": { "type": "integer", "minimum": 1, "maximum": 9 },
+        "Canton": { "type": "integer", "minimum": 1, "maximum": 99 },
+        "Distrito": { "type": "integer", "minimum": 1, "maximum": 99 },
+        "Barrio": { "type": "string", "minLength": 5, "maxLength": 50 },
+        "OtrasSenas": { "type": "string", "minLength": 5, "maxLength": 250 }
+      },
+      "required": ["Provincia", "Canton", "Distrito", "OtrasSenas"]
+    },
+    "TelefonoType": {
+      "type": "object",
+      "properties": {
+        "CodigoPais": { "type": "integer", "minimum": 0, "maximum": 999 },
+        "NumTelefono": {
+          "type": "integer",
+          "minimum": 10000000,
+          "maximum": 99999999999999999999
+        }
+      },
+      "required": ["CodigoPais", "NumTelefono"]
+    },
+    "DetalleServicioType": {
+      "type": "object",
+      "properties": {
+        "LineaDetalle": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/LineaDetalleType" },
+          "maxItems": 1000
+        }
+      }
+    },
+    "LineaDetalleType": {
+      "type": "object",
+      "properties": {
+        "NumeroLinea": { "type": "integer", "minimum": 1, "maximum": 1000 },
+        "CodigoCABYS": { "type": "string", "minLength": 13, "maxLength": 13 },
+        "CodigoComercial": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/CodigoType" },
+          "maxItems": 5
+        },
+        "Cantidad": { "type": "number", "multipleOf": 0.001 },
+        "UnidadMedida": { "type": "string" },
+        "TipoTransaccion": { "type": "string", "maxLength": 2 },
+        "UnidadMedidaComercial": { "type": "string", "maxLength": 20 },
+        "Detalle": { "type": "string", "minLength": 3, "maxLength": 200 },
+        "NumeroVINoSerie": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 17 },
+          "maxItems": 1000
+        },
+        "RegistroMedicamento": { "type": "string", "maxLength": 100 },
+        "FormaFarmaceutica": { "type": "string", "maxLength": 3 },
+        "DetalleSurtido": { "$ref": "#/$defs/DetalleSurtidoType" },
+        "PrecioUnitario": { "type": "number" },
+        "MontoTotal": { "type": "number" },
+        "Descuento": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/DescuentoType" },
+          "maxItems": 5
+        },
+        "SubTotal": { "type": "number" },
+        "IVACobradoFabrica": { "type": "string", "enum": ["01", "02"] },
+        "BaseImponible": { "type": "number" },
+        "Impuesto": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ImpuestoType" },
+          "maxItems": 1000
+        },
+        "ImpuestoAsumidoEmisorFabrica": { "type": "number" },
+        "ImpuestoNeto": { "type": "number" },
+        "MontoTotalLinea": { "type": "number" }
+      },
+      "required": [
+        "NumeroLinea",
+        "CodigoCABYS",
+        "Cantidad",
+        "UnidadMedida",
+        "Detalle",
+        "PrecioUnitario",
+        "MontoTotal",
+        "SubTotal",
+        "BaseImponible",
+        "MontoTotalLinea"
+      ]
+    },
+    "CodigoType": {
+      "type": "object",
+      "properties": {
+        "Tipo": {
+          "type": "string",
+          "enum": ["01", "02", "03", "04", "99"]
+        },
+        "Codigo": { "type": "string", "maxLength": 20 }
+      },
+      "required": ["Tipo", "Codigo"]
+    },
+    "DescuentoType": {
+      "type": "object",
+      "properties": {
+        "MontoDescuento": { "type": "number" },
+        "CodigoDescuento": {
+          "type": "string",
+          "enum": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "99"]
+        },
+        "CodigoDescuentoOTRO": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "NaturalezaDescuento": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        }
+      },
+      "required": ["MontoDescuento", "CodigoDescuento"]
+    },
+    "ImpuestoType": {
+      "type": "object",
+      "properties": {
+        "Codigo": {
+          "type": "string",
+          "enum": ["01", "02", "03", "04", "05", "06", "07", "08", "12", "99"]
+        },
+        "CodigoImpuestoOTRO": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "CodigoTarifaIVA": { "type": "string" },
+        "Tarifa": { "type": "number" },
+        "FactorCalculoIVA": { "type": "number" },
+        "DatosImpuestoEspecifico": {
+          "$ref": "#/$defs/DatosImpuestoEspecificoType"
+        },
+        "Monto": { "type": "number" },
+        "Exoneracion": { "$ref": "#/$defs/ExoneracionType" }
+      },
+      "required": ["Codigo", "Monto"]
+    },
+    "DatosImpuestoEspecificoType": {
+      "type": "object",
+      "properties": {
+        "CantidadUnidadMedida": { "type": "number" },
+        "Porcentaje": { "type": "number" },
+        "Proporcion": { "type": "number" },
+        "VolumenUnidadConsumo": { "type": "number" },
+        "ImpuestoUnidad": { "type": "number" }
+      }
+    },
+    "ExoneracionType": {
+      "type": "object",
+      "properties": {
+        "TipoDocumentoEX1": { "type": "string" },
+        "TipoDocumentoOTRO": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "NumeroDocumento": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40
+        },
+        "Articulo": { "type": "integer" },
+        "Inciso": { "type": "integer" },
+        "NombreInstitucion": { "type": "string" },
+        "NombreInstitucionOtros": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 160
+        },
+        "FechaEmisionEX": { "type": "string", "format": "date-time" },
+        "TarifaExonerada": { "type": "number" },
+        "MontoExoneracion": { "type": "number" }
+      },
+      "required": [
+        "TipoDocumentoEX1",
+        "NumeroDocumento",
+        "NombreInstitucion",
+        "FechaEmisionEX",
+        "TarifaExonerada",
+        "MontoExoneracion"
+      ]
+    },
+    "DetalleSurtidoType": {
+      "type": "object",
+      "properties": {
+        "LineaDetalleSurtido": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/LineaDetalleSurtidoType" },
+          "maxItems": 20
+        }
+      }
+    },
+    "LineaDetalleSurtidoType": {
+      "type": "object",
+      "properties": {
+        "CodigoCABYSSurtido": {
+          "type": "string",
+          "minLength": 13,
+          "maxLength": 13
+        },
+        "CodigoComercialSurtido": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/CodigoComercialSurtidoType" },
+          "maxItems": 5
+        },
+        "CantidadSurtido": { "type": "number" },
+        "UnidadMedidaSurtido": { "type": "string", "maxLength": 15 },
+        "UnidadMedidaComercialSurtido": { "type": "string", "maxLength": 20 },
+        "DetalleSurtido": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "PrecioUnitarioSurtido": { "type": "number" },
+        "MontoTotalSurtido": { "type": "number" },
+        "DescuentoSurtido": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/DescuentoSurtidoType" },
+          "maxItems": 5
+        },
+        "SubTotalSurtido": { "type": "number" },
+        "IVACobradoFabricaSurtido": { "type": "string", "enum": ["01", "02"] },
+        "BaseImponibleSurtido": { "type": "number" },
+        "ImpuestoSurtido": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ImpuestoSurtidoType" },
+          "maxItems": 1000
+        },
+        "MontoImpuestoSurtido": { "type": "number" }
+      }
+    },
+    "CodigoComercialSurtidoType": {
+      "type": "object",
+      "properties": {
+        "TipoSurtido": {
+          "type": "string",
+          "enum": ["01", "02", "03", "04", "99"]
+        },
+        "CodigoSurtido": { "type": "string", "minLength": 1, "maxLength": 20 }
+      }
+    },
+    "DescuentoSurtidoType": {
+      "type": "object",
+      "properties": {
+        "MontoDescuentoSurtido": { "type": "number" },
+        "CodigoDescuentoSurtido": { "type": "string" },
+        "DescuentoSurtidoOtros": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        }
+      }
+    },
+    "ImpuestoSurtidoType": {
+      "type": "object",
+      "properties": {
+        "CodigoImpuestoSurtido": { "type": "string" },
+        "CodigoImpuestoOTROSurtido": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "CodigoTarifaIVASurtido": { "type": "string" },
+        "TarifaSurtido": { "type": "number" },
+        "DatosImpuestoEspecificoSurtido": {
+          "$ref": "#/$defs/DatosImpuestoEspecificoType"
+        },
+        "MontoImpuestoSurtido": { "type": "number" }
+      }
+    },
+    "OtrosCargosType": {
+      "type": "object",
+      "properties": {
+        "TipoDocumentoOC": { "type": "string" },
+        "TipoDocumentoOTROS": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "IdentificacionTercero": { "$ref": "#/$defs/IdentificacionType" },
+        "NombreTercero": { "type": "string", "minLength": 5, "maxLength": 100 },
+        "Detalle": { "type": "string", "maxLength": 160 },
+        "PorcentajeOC": { "type": "number" },
+        "MontoCargo": { "type": "number" }
+      },
+      "required": ["TipoDocumentoOC", "Detalle", "MontoCargo"]
+    },
+    "ResumenFacturaType": {
+      "type": "object",
+      "properties": {
+        "CodigoTipoMoneda": { "$ref": "#/$defs/CodigoMonedaType" },
+        "TotalServGravados": { "type": "number" },
+        "TotalServExentos": { "type": "number" },
+        "TotalServExonerado": { "type": "number" },
+        "TotalServNoSujeto": { "type": "number" },
+        "TotalMercanciasGravadas": { "type": "number" },
+        "TotalMercanciasExentas": { "type": "number" },
+        "TotalMercExonerada": { "type": "number" },
+        "TotalMercNoSujeta": { "type": "number" },
+        "TotalGravado": { "type": "number" },
+        "TotalExento": { "type": "number" },
+        "TotalExonerado": { "type": "number" },
+        "TotalNoSujeto": { "type": "number" },
+        "TotalVenta": { "type": "number" },
+        "TotalDescuentos": { "type": "number" },
+        "TotalVentaNeta": { "type": "number" },
+        "TotalDesgloseImpuesto": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/TotalDesgloseImpuestoType" },
+          "maxItems": 1000
+        },
+        "TotalImpuesto": { "type": "number" },
+        "TotalImpAsumEmisorFabrica": { "type": "number" },
+        "TotalIVADevuelto": { "type": "number" },
+        "TotalOtrosCargos": { "type": "number" },
+        "MedioPago": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/MedioPagoType" },
+          "maxItems": 4
+        },
+        "TotalComprobante": { "type": "number" }
+      },
+      "required": [
+        "CodigoTipoMoneda",
+        "TotalVenta",
+        "TotalVentaNeta",
+        "TotalComprobante"
+      ]
+    },
+    "CodigoMonedaType": {
+      "type": "object",
+      "properties": {
+        "CodigoMoneda": { "type": "string" },
+        "TipoCambio": { "type": "number" }
+      },
+      "required": ["CodigoMoneda", "TipoCambio"]
+    },
+    "TotalDesgloseImpuestoType": {
+      "type": "object",
+      "properties": {
+        "Codigo": { "type": "string" },
+        "CodigoTarifaIVA": { "type": "string" },
+        "TotalMontoImpuesto": { "type": "number" }
+      }
+    },
+    "MedioPagoType": {
+      "type": "object",
+      "properties": {
+        "TipoMedioPago": {
+          "type": "string",
+          "enum": ["01", "02", "03", "04", "05", "06", "07", "99"]
+        },
+        "MedioPagoOtros": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 100
+        },
+        "TotalMedioPago": { "type": "number" }
+      }
+    },
+    "InformacionReferenciaType": {
+      "type": "object",
+      "properties": {
+        "TipoDocIR": { "type": "string" },
+        "TipoDocRefOTRO": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "Numero": { "type": "string", "maxLength": 50 },
+        "FechaEmisionIR": { "type": "string", "format": "date-time" },
+        "Codigo": { "type": "string" },
+        "CodigoReferenciaOTRO": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "Razon": { "type": "string", "maxLength": 180 }
+      },
+      "required": ["TipoDocIR", "FechaEmisionIR"]
+    },
+    "OtrosType": {
+      "type": "object",
+      "properties": {
+        "OtroTexto": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/OtroTextoType" }
+        },
+        "OtroContenido": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/OtroContenidoType" }
+        }
+      }
+    },
+    "OtroTextoType": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "string", "maxLength": 500 },
+        "codigo": { "type": "string" }
+      }
+    },
+    "OtroContenidoType": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "string", "maxLength": 500 },
+        "codigo": { "type": "string" }
+      }
+    }
+  }
+}

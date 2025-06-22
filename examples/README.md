@@ -9,9 +9,14 @@ cp .env.example .env
 yarn build
 ```
 
-Para probar crear y enviar factura
+Para probar crear y enviar factura electronica
 ```
 yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSendFE.ts 1
+```
+
+Para probar crear y enviar tiquete electronico
+```
+yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSendTE.ts 1
 ```
 
 Para aceptar una factura

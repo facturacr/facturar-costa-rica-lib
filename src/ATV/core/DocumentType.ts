@@ -1,13 +1,20 @@
-import { DocumentNames } from './documentNames.types'
+export type DocumentNames =
+  'FacturaElectronica' | 
+  'TiqueteElectronico' |
+  'FacturaElectronicaExportacion' |
+  'NotaCreditoElectronica' |
+  'NotaDebitoElectronica' | 
+  'MensajeReceptor'
 
 const map: {[key: string]: DocumentTypeValues} = {
   FacturaElectronica: 'FE',
   FacturaElectronicaExportacion: 'FE',
+  TiqueteElectronico: 'TE',
   NotaCreditoElectronica: 'NC',
   NotaDebitoElectronica: 'NC'
 }
 
-type DocumentTypeValues = 'FE' | 'ND' | 'NC' | 'TE'
+export type DocumentTypeValues = 'FE' | 'ND' | 'NC' | 'TE'
 
 export class DocumentType {
   value: DocumentTypeValues

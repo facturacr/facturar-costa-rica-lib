@@ -102,7 +102,6 @@ export const TEInputExample: CreateDocumentInput['document'] = {
   ceSituation: '1',
   countryCode: '506',
   emitter: emitterStub,
-  receiver: receiverStub,
   orderLines,
   securityCode: '1', // '00000001'
   paymentMethod: '03',
