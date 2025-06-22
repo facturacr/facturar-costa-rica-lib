@@ -5,7 +5,6 @@ import { PersonProps } from 'dist/src/ATV/core/Person'
 import { AceptationStates } from 'dist/src/ATV/core/types'
 import { parseElectronicBillXML } from '@src/lib/genXML'
 
-
 const IS_STG = process.env.IS_STG
 const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
@@ -24,8 +23,8 @@ const receivedDocumentXML = fs.readFileSync(XML_TO_CONFIRM, 'utf-8')
 
 // TODO: dynamic param --identifier 1 args[x]
 FEInputExample.consecutiveIdentifier = process.env.TEST_CONSECUTIVE
-FEInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string;
-FEInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type'];
+FEInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string
+FEInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type']
 
 console.log('requestStub consecutivo', FEInputExample.consecutiveIdentifier)
 
@@ -64,7 +63,7 @@ async function main(): Promise<void> {
     activityCode: electronillBillRaw.CodigoActividad,
     taxCondition: electronillBillRaw.CondicionVenta,
     totalTaxes: electronillBillRaw.ResumenFactura.TotalImpuesto,
-    totalSale:  electronillBillRaw.ResumenFactura.TotalVenta,
+    totalSale: electronillBillRaw.ResumenFactura.TotalVenta,
     branch: '01',
     terminal: '01',
     consecutive: '01',
@@ -74,7 +73,7 @@ async function main(): Promise<void> {
       password: SOURCE_P12_PASSPORT
     }
   })
-  console.log('extraData', extraData);
+  console.log('extraData', extraData)
   const response = await atv.sendDocument(command)
   if (response.errorCause) {
     console.log('error response', response)

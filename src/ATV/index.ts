@@ -67,14 +67,14 @@ export class ATV {
         confirmation: this.parseConfirmationMessage(xmlString),
         xml: xmlString,
         rawResponse: response,
-        errorCause: null,
+        errorCause: null
       }
     } catch (error) {
       const response = error.response || {}
       return {
         status: response.status || 500,
         errorCause: response.statusText || error.message,
-        rawResponse: response,
+        rawResponse: response
       }
     }
   }

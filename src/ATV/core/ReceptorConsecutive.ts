@@ -6,22 +6,22 @@ type ReceptorConsecutiveProps = {
 }
 
 export class ReceptorConsecutive {
-    private props: ReceptorConsecutiveProps
+  private props: ReceptorConsecutiveProps
 
-    constructor(props: ReceptorConsecutiveProps) {
-        this.props = props
-    }
+  constructor(props: ReceptorConsecutiveProps) {
+    this.props = props
+  }
 
-    get value(): string {
-        return Object.values(this.props).join('')
-    }
+  get value(): string {
+    return Object.values(this.props).join('')
+  }
 
-    public static create(props: ReceptorConsecutiveProps): ReceptorConsecutive {
-        return new ReceptorConsecutive({
-          branch: props.branch.padStart(3, '0'),
-          terminal: props.terminal.padStart(5, '0'),
-          documentType: props.documentType,
-          consecutive: props.consecutive.padStart(10, '0')
-        })
-      }
+  public static create(props: ReceptorConsecutiveProps): ReceptorConsecutive {
+    return new ReceptorConsecutive({
+      branch: props.branch.padStart(3, '0'),
+      terminal: props.terminal.padStart(5, '0'),
+      documentType: props.documentType,
+      consecutive: props.consecutive.padStart(10, '0')
+    })
+  }
 }

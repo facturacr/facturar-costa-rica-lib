@@ -3,7 +3,7 @@ export enum AceptationStates {
     PARTIALLY_ACCEPTED = 2,
     DECLINED = 3
 }
-  
+
 export type ReceptorMessageProps = {
     clave: string;
     emitterIdentifier: string;
@@ -16,7 +16,6 @@ export type ReceptorMessageProps = {
     aceptationDetailMessage: string;
     receptorConcecutive: string;
     taxCondition: string;
-    totalTaxes: number; 
-    totalSale:  number;
+    totalTaxes: number;
+    totalSale: number;
 }
-  

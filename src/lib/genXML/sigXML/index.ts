@@ -62,11 +62,11 @@ export default async function signXML(xmlStr: string, p12: string, p12Password: 
   }
   const crypto = new Crypto()
   const referenceId = generateId(crypto)
-  //@ts-expect-error
+  // @ts-expect-error
   Application.setEngine('OpenSSL', crypto)
   const xadesXml = new SignedXml()
   const algorithm = getAlgorithm()
-  //@ts-expect-error
+  // @ts-expect-error
   const result = genKeysAndCert(crypto, {
     algorithm,
     keyStr: p12,

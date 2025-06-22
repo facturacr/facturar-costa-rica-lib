@@ -121,7 +121,7 @@ export class Document {
   }
 
   private isAService(orderLine: OrderLine): boolean {
-    const servicesMeasurementUnits = ['Sp', 'St', 'Spe'];
+    const servicesMeasurementUnits = ['Sp', 'St', 'Spe']
     return servicesMeasurementUnits.includes(orderLine.measureUnit)
   }
 

@@ -33,3 +33,21 @@ jobs:
         with:
           name: actions ${{ matrix.node }}
           fail_ci_if_error: false
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 20
+      - run: yarn
+      - run: yarn typecheck
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 20
+      - run: yarn
+      - run: yarn lint

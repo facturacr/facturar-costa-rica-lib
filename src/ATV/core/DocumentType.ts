@@ -1,9 +1,9 @@
 export type DocumentNames =
-  'FacturaElectronica' | 
+  'FacturaElectronica' |
   'TiqueteElectronico' |
   'FacturaElectronicaExportacion' |
   'NotaCreditoElectronica' |
-  'NotaDebitoElectronica' | 
+  'NotaDebitoElectronica' |
   'MensajeReceptor'
 
 const map: {[key: string]: DocumentTypeValues} = {

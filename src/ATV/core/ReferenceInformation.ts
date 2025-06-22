@@ -14,28 +14,28 @@ export class ReferenceInformation {
   }
 
   get docType(): string {
-    return this.props.docType;
+    return this.props.docType
   }
 
   get refNumber(): string {
-    return this.props.refNumber;
+    return this.props.refNumber
   }
 
   get issueDate(): Date {
-    return this.props.issueDate;
+    return this.props.issueDate
   }
 
   get code(): string {
-    return this.props.code;
+    return this.props.code
   }
 
   get reason(): string {
-    return this.props.reason;
+    return this.props.reason
   }
 
   public static create(props: ReferenceInformationProps): ReferenceInformation {
     return new ReferenceInformation({
-      ...props,
+      ...props
     })
   }
 }

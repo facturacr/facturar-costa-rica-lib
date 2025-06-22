@@ -18,7 +18,7 @@ const options: { [key: string]: { serviceUrl: string}} = {
 export class CreateDocumentCommand {
   private readonly serviceUrl: string
 
-  private readonly createDoc: CreateDocFactory;
+  private readonly createDoc: CreateDocFactory
 
   constructor(scope: ATV) {
     this.serviceUrl = options[scope.mode].serviceUrl
@@ -26,7 +26,7 @@ export class CreateDocumentCommand {
   }
 
   public async execute(dto: CreateDocumentInput): Promise<CreateAndSendDocumentResponse> {
-    const documentName = dto.document.documentName || 'FacturaElectronica' //TODO NotaDebitoElectronica
+    const documentName = dto.document.documentName || 'FacturaElectronica' // TODO NotaDebitoElectronica
     const document = this.createDoc.createDocument(dto.document)
     const atvDocument = mapBillToAtvFormat(documentName, document)
     const xml = await genXML(documentName, atvDocument, dto.signatureOptions)
@@ -63,8 +63,6 @@ export class CreateDocumentCommand {
       }
     }
   }
-
-  
 
   private encodeXML(xmlStr: string): string {
     const buffer = Buffer.from(xmlStr)

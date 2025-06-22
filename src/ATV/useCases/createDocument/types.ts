@@ -1,6 +1,4 @@
-
-
-import { InvoiceDocumentContainer } from '@src/types/facturaInterfaces';
+import { InvoiceDocumentContainer } from '@src/types/facturaInterfaces'
 import { Method } from 'axios'
 
 export type DocumentTypes = 'FE'

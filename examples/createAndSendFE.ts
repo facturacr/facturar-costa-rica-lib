@@ -3,7 +3,6 @@ import { FEInputExample } from '@test/stubs/createDocument.data'
 import { ATV } from '../dist/src'
 import { PersonProps } from 'dist/src/ATV/core/Person'
 
-
 const IS_STG = process.env.IS_STG
 const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST

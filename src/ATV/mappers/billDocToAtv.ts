@@ -76,17 +76,21 @@ const mapPerson = (person: Person): Persona => {
     Telefono: undefined,
     CorreoElectronico: undefined
   }
-  atvPerson.Ubicacion = person.location ? {
-    Provincia: person.location?.province,
-    Canton: person.location?.canton?.padStart(2, '0'),
-    Distrito: person.location?.district?.padStart(2, '0'),
-    Barrio: person.location?.neighborhood?.padStart(5, '0'),
-    OtrasSenas: person.location?.details
-  } : undefined
-  atvPerson.Telefono = person.phone ? {
-    CodigoPais: person.phone?.countryCode,
-    NumTelefono: person.phone?.number
-  } : undefined
+  atvPerson.Ubicacion = person.location
+    ? {
+        Provincia: person.location?.province,
+        Canton: person.location?.canton?.padStart(2, '0'),
+        Distrito: person.location?.district?.padStart(2, '0'),
+        Barrio: person.location?.neighborhood?.padStart(5, '0'),
+        OtrasSenas: person.location?.details
+      }
+    : undefined
+  atvPerson.Telefono = person.phone
+    ? {
+        CodigoPais: person.phone?.countryCode,
+        NumTelefono: person.phone?.number
+      }
+    : undefined
   atvPerson.CorreoElectronico = person.email
 
   return atvPerson
@@ -103,7 +107,7 @@ const mapReferenceInformation = (referenceInfo: ReferenceInformation): Informaci
 }
 
 export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument): AtvFormat => {
-  const key = docName;
+  const key = docName
   const doc: AtvDocument = {
     Clave: document.clave,
     ProveedorSistemas: document.providerId,
@@ -120,7 +124,7 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
     Otros: document.others
   }
   if (document.referenceInformation) {
-    doc.InformacionReferencia = mapReferenceInformation(document.referenceInformation);
+    doc.InformacionReferencia = mapReferenceInformation(document.referenceInformation)
   }
   return {
     [key]: doc
