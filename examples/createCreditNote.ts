@@ -47,7 +47,8 @@ async function main(): Promise<void> {
     document: {
       ...FEInputExample,
       documentName: 'NotaCreditoElectronica',
-      referenceInfo: creditNoteReferenceInfoExample
+      referenceInfo: creditNoteReferenceInfoExample,
+      receiver: FEInputExample.receiver // Ensure receiver is always present
     },
     token: tokenData.accessToken,
     signatureOptions: {
