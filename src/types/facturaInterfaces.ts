@@ -93,14 +93,13 @@ export interface AtvDocument {
   Clave: string;
   ProveedorSistemas: string;
   CodigoActividadEmisor: string;
-  CodigoActividadReceptor: string;
+  CodigoActividadReceptor?: string; // TODO check supported docs
   NumeroConsecutivo: string;
   FechaEmision?: string;
   Emisor: Persona;
-  Receptor: Persona;
+  Receptor?: Persona;
   CondicionVenta?: string;
   PlazoCredito?: string;
-
   DetalleServicio?: DetalleServicio;
   ResumenFactura: Resumen;
   Otros?: {

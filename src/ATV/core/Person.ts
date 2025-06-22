@@ -14,7 +14,7 @@ export type PhoneProps = {
 export type PersonProps = {
   fullName: string;
   identifier: {
-    type: '01' | '02';
+    type: '01' | '02' | undefined;
     id: string;
   };
   commercialName: string;
@@ -35,7 +35,7 @@ export class Person {
     return this.props.fullName
   }
 
-  get identifierType(): '01' | '02' | undefined {
+  get identifierType(): PersonProps['identifier']['type'] {
     return this.props.identifier.type
   }
 

@@ -14,8 +14,8 @@ describe('Create Receptor Message', () => {
       aceptationDetailMessage: 'Accepted',
       clave: electronillBillRaw.Clave,
       emitterIdentifier: electronillBillRaw.Emisor.Identificacion.Numero,
-      // @ts-expect-error for testing purposes
       emitterIdentifierType: electronillBillRaw.Emisor.Identificacion.Tipo,
+      // @ts-expect-error for testing purposes
       receptorIdentifier: electronillBillRaw.Receptor.Identificacion.Numero,
       // @ts-expect-error for testing purposes
       receptorIdentifierType: electronillBillRaw.Receptor.Identificacion.Tipo,
@@ -39,6 +39,7 @@ describe('Create Receptor Message', () => {
       clave: '50601042400020692014200100001010000000002100000001',
       fecha: '2024-04-01T00:00:00.000Z',
       emisor: { tipoIdentificacion: electronillBillRaw.Emisor.Identificacion.Tipo, numeroIdentificacion: electronillBillRaw.Emisor.Identificacion.Numero },
+      // @ts-expect-error for testing purposes
       receptor: { tipoIdentificacion: electronillBillRaw.Receptor.Identificacion.Tipo, numeroIdentificacion: electronillBillRaw.Receptor.Identificacion.Numero }
     })
   })

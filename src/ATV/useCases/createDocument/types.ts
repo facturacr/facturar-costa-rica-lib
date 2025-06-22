@@ -1,3 +1,4 @@
+import { PersonProps } from '@src/ATV/core/Person'
 import { InvoiceDocumentContainer } from '@src/types/facturaInterfaces'
 import { Method } from 'axios'
 
@@ -7,11 +8,11 @@ type CommandData = {
   clave: string;
   fecha: string;
   emisor: {
-    tipoIdentificacion: string;
+    tipoIdentificacion: PersonProps['identifier']['type'];
     numeroIdentificacion: string;
   };
-  receptor: {
-    tipoIdentificacion: string;
+  receptor?: {
+    tipoIdentificacion: PersonProps['identifier']['type'];
     numeroIdentificacion: string;
   };
   comprobanteXml: string;

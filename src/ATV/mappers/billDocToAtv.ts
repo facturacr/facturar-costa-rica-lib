@@ -124,13 +124,15 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
     Clave: document.clave,
     ProveedorSistemas: document.providerId,
     CodigoActividadEmisor: document.emitter.activityCode.padStart(6, '0'),
-    // @ts-expect-error pending-to-fix
-    CodigoActividadReceptor: document.receiver.activityCode.padStart(6, '0'),
+    ...(document.receiver && { // TODO add && document.name === 'FacturaElectronica'
+      CodigoActividadReceptor: document.receiver.activityCode.padStart(6, '0')
+    }),
     NumeroConsecutivo: document.fullConsecutive,
     FechaEmision: document.issueDate.toISOString(),
     Emisor: mapPerson(document.emitter),
-    // @ts-expect-error pending-to-fix
-    Receptor: mapPerson(document.receiver),
+    ...(document.receiver && {
+      Receptor: mapPerson(document.receiver)
+    }),
     CondicionVenta: document.conditionSale,
     PlazoCredito: document.deadlineCredit,
     DetalleServicio: mapOrderLinesToAtvFormat(document.orderLines),

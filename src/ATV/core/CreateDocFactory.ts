@@ -122,7 +122,7 @@ export class CreateDocFactory {
       countryCode: dto.countryCode,
       docKeyType: docType.value,
       emitterIdentifier: dto.emitter.identifier.id,
-      identifierType: dto.emitter.identifier.type, // TODO add default
+      identifierType: dto.emitter.identifier.type || '01',
       securityCode: dto.securityCode,
       terminal: dto.terminal
     })
