@@ -1,12 +1,22 @@
 # Ejemplos con implementaciones para pruebas
 
+Configurar .env file basado en .env.example
+```
+cp .env.example .env
+```
+
 ```
 yarn build
 ```
 
-Para probar crear y enviar factura
+Para probar crear y enviar factura electronica
 ```
-yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSend.ts
+yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSendFE.ts 1
+```
+
+Para probar crear y enviar tiquete electronico
+```
+yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSendTE.ts 1
 ```
 
 Para aceptar una factura
@@ -39,7 +49,7 @@ Para probar las funcionalidades se recomienda crear un .env en donde se especifi
 ```
 USERNAME_TEST= ## Provided be ATV System
 PASSWORD_TEST= ## Provided be ATV System
-IS_STG=1 
+IS_STG=1
 SOURCE_P12_URI= ## Provided be ATV System
 SOURCE_P12_PASSPORT= ## Provided be ATV System
 SOURCE_URI_XML_OUTPUT= ## Custom OS PATH
