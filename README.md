@@ -17,5 +17,5 @@ yarn build
 ```
 
 Para probar localmente leer:
-- [Testing](/examples/testing.md).
+- [Testing](/doc/testing.md).
 - [Ejemplos](/examples/README.md).
