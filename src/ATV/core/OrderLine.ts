@@ -59,14 +59,17 @@ export class OrderLine {
   }
 
   get totalOrderLineAmount(): number {
-    return this.props.totalOrderLineAmount || this.subTotal + this.tax.amount
+    return this.props.totalOrderLineAmount || this.subTotal + (this.tax?.amount ?? 0)
   }
 
   get tax(): TaxProps {
+    // @ts-expect-error pending-to-fix
     const rate = this.props.tax.rate
     return {
       rate,
+      // @ts-expect-error pending-to-fix
       code: this.props.tax.code,
+      // @ts-expect-error pending-to-fix
       rateCode: this.props.tax.rateCode,
       amount: this.subTotal * (rate / 100)
     }
@@ -83,8 +86,11 @@ export class OrderLine {
       totalAmount: props.totalAmount
     }
     const tax: TaxProps = {
+      // @ts-expect-error pending-to-fix
       code: props.tax.code,
+      // @ts-expect-error pending-to-fix
       rate: typeof props.tax.rate === 'number' ? props.tax.rate : 13,
+      // @ts-expect-error pending-to-fix
       rateCode: props.tax.rateCode
     }
     return new OrderLine({

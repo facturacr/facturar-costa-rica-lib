@@ -19,9 +19,11 @@ if (!SOURCE_P12_PASSPORT || !SOURCE_P12_URI) {
 }
 
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
+// @ts-expect-error migration - for example purposes
 const receivedDocumentXML = fs.readFileSync(XML_TO_CONFIRM, 'utf-8')
 
 // TODO: dynamic param --identifier 1 args[x]
+// @ts-expect-error migration - for example purposes
 FEInputExample.consecutiveIdentifier = process.env.TEST_CONSECUTIVE
 FEInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string
 FEInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type']
@@ -47,7 +49,9 @@ function getConfimation(atv: ATV, token: string, location: string, ms: number): 
 async function main(): Promise<void> {
   const atv = new ATV({}, 'stg')
   const tokenData = await atv.getToken({
+    // @ts-expect-error migration - for example purposes
     username: USERNAME_TEST,
+    // @ts-expect-error migration - for example purposes
     password: PASSWORD_TEST
   })
   const electronillBillRaw = parseElectronicBillXML(receivedDocumentXML)
@@ -56,11 +60,15 @@ async function main(): Promise<void> {
     aceptationDetailMessage: 'Accepted',
     clave: electronillBillRaw.Clave,
     emitterIdentifier: electronillBillRaw.Emisor.Identificacion.Numero,
+    // @ts-expect-error migration - for example purposes
     emitterIdentifierType: electronillBillRaw.Emisor.Identificacion.Tipo,
     receptorIdentifier: electronillBillRaw.Receptor.Identificacion.Numero,
+    // @ts-expect-error migration - for example purposes
     receptorIdentifierType: electronillBillRaw.Receptor.Identificacion.Tipo,
+    // @ts-expect-error migration - for example purposes
     documentIssueDate: new Date(electronillBillRaw.FechaEmision),
     activityCode: electronillBillRaw.CodigoActividadEmisor,
+    // @ts-expect-error migration - for example purposes
     taxCondition: electronillBillRaw.CondicionVenta,
     totalTaxes: electronillBillRaw.ResumenFactura.TotalImpuesto,
     totalSale: electronillBillRaw.ResumenFactura.TotalVenta,
@@ -70,6 +78,7 @@ async function main(): Promise<void> {
     token: tokenData.accessToken,
     signatureOptions: {
       buffer: pem,
+      // @ts-expect-error migration - for example purposes
       password: SOURCE_P12_PASSPORT
     }
   })
@@ -79,6 +88,7 @@ async function main(): Promise<void> {
     console.log('error response', response)
     return
   }
+  // @ts-expect-error pending-to-fix migration
   const confirmationResponse = await getConfimation(atv, tokenData.accessToken, response.location, 2000)
   console.log({ MensajeHacienda: confirmationResponse.confirmation })
 }

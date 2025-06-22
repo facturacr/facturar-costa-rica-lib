@@ -14,11 +14,15 @@ describe('Create Receptor Message', () => {
       aceptationDetailMessage: 'Accepted',
       clave: electronillBillRaw.Clave,
       emitterIdentifier: electronillBillRaw.Emisor.Identificacion.Numero,
+      // @ts-expect-error for testing purposes
       emitterIdentifierType: electronillBillRaw.Emisor.Identificacion.Tipo,
       receptorIdentifier: electronillBillRaw.Receptor.Identificacion.Numero,
+      // @ts-expect-error for testing purposes
       receptorIdentifierType: electronillBillRaw.Receptor.Identificacion.Tipo,
+      // @ts-expect-error for testing purposes
       documentIssueDate: new Date(electronillBillRaw.FechaEmision),
       activityCode: electronillBillRaw.CodigoActividadEmisor,
+      // @ts-expect-error for testing purposes
       taxCondition: electronillBillRaw.CondicionVenta,
       totalTaxes: electronillBillRaw.ResumenFactura.TotalImpuesto,
       totalSale: electronillBillRaw.ResumenFactura.TotalVenta,

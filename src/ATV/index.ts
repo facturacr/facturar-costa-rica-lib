@@ -11,7 +11,7 @@ import { CreateDocumentInput } from './core/CreateDocFactory'
 import { CreateReceptorMessageCommand, CreateReceptorMessageCommandInput } from './useCases/createReceptorMessage'
 
 export class ATV {
-  public readonly options: ATVOptions
+  public readonly options: ATVOptions | undefined
   constructor(options?: ATVOptions, public readonly mode: Mode = 'prod') {
     this.options = options
   }

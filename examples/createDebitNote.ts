@@ -9,6 +9,7 @@ const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
 const SOURCE_P12_URI = process.env.SOURCE_P12_URI
 const SOURCE_P12_PASSPORT = process.env.SOURCE_P12_PASSPORT
+// @ts-expect-error migration - for example purposes
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 
 async function main(): Promise<void> {
@@ -28,6 +29,7 @@ async function main(): Promise<void> {
   const data = await debitNote({
     token,
     frontEndRequest,
+    // @ts-expect-error migration - for example purposes
     xmlOpt
   })
   console.log(typeof data)
