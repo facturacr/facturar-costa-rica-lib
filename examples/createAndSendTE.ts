@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { createDocumentInputExample } from '@test/stubs/createDocument.data'
+import { TEInputExample } from '@test/stubs/createDocument.data'
 import { ATV } from '../dist/src'
 import { PersonProps } from 'dist/src/ATV/core/Person'
 
@@ -21,11 +21,11 @@ const paramConsecutive = process.argv[2]
 console.log('paramConsecutive', paramConsecutive)
 
 // TODO: dynamic param --identifier 1 args[x]
-createDocumentInputExample.consecutiveIdentifier = paramConsecutive || process.env.TEST_CONSECUTIVE 
-createDocumentInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string;
-createDocumentInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type'];
+TEInputExample.consecutiveIdentifier = paramConsecutive || process.env.TEST_CONSECUTIVE
+TEInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string
+TEInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type']
 
-console.log('requestStub consecutivo', createDocumentInputExample.consecutiveIdentifier)
+console.log('requestStub consecutivo', TEInputExample.consecutiveIdentifier)
 
 function getConfimation(atv: ATV, token: string, location: string, ms: number): Promise<any> {
   return new Promise((resolve, reject): any => {
@@ -50,13 +50,14 @@ async function main(): Promise<void> {
     password: PASSWORD_TEST
   })
   const { command, extraData } = await atv.createDocumentCommand({
-    document: createDocumentInputExample,
+    document: TEInputExample,
     token: tokenData.accessToken,
     signatureOptions: {
       buffer: pem,
       password: SOURCE_P12_PASSPORT
     }
   })
+  console.log('extraData', extraData)
   const response = await atv.sendDocument(command)
   if (response.errorCause) {
     console.log('error response', response)

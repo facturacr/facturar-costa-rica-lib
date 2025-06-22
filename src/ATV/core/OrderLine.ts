@@ -84,7 +84,7 @@ export class OrderLine {
     }
     const tax: TaxProps = {
       code: props.tax.code,
-      rate: props.tax.rate || 13,
+      rate: typeof props.tax.rate === 'number' ? props.tax.rate : 13,
       rateCode: props.tax.rateCode
     }
     return new OrderLine({

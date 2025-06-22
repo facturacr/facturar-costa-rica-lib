@@ -18,7 +18,7 @@ describe('Create Receptor Message', () => {
             receptorIdentifier: electronillBillRaw.Receptor.Identificacion.Numero,
             receptorIdentifierType: electronillBillRaw.Receptor.Identificacion.Tipo,
             documentIssueDate: new Date(electronillBillRaw.FechaEmision),
-            activityCode: electronillBillRaw.CodigoActividad,
+            activityCode: electronillBillRaw.CodigoActividadEmisor,
             taxCondition: electronillBillRaw.CondicionVenta,
             totalTaxes: electronillBillRaw.ResumenFactura.TotalImpuesto,
             totalSale:  electronillBillRaw.ResumenFactura.TotalVenta,

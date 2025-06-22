@@ -3,7 +3,6 @@ import { ClientPayload } from '@src/types/globalInterfaces'
 
 const impuestoStub: Impuesto = {
   Codigo: '01',
-  CodigoTarifa: '08',
   Tarifa: 13
 }
 

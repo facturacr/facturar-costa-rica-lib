@@ -1,4 +1,4 @@
-import { Document, InvoiceDocumentContainer, DetalleServicio, Resumen, Persona, InformacionReferencia } from '@src/types/facturaInterfaces'
+import { AtvDocument, InvoiceDocumentContainer, DetalleServicio, Resumen, Persona, InformacionReferencia } from '@src/types/facturaInterfaces'
 import { Document as DomainDocument } from '../core/Document'
 import { OrderLine } from '../core/OrderLine'
 import { Person } from '../core/Person'
@@ -15,7 +15,7 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
   const LineaDetalle = orderLines.map<DetalleServicio['LineaDetalle'][0]>((orderLine) => {
     return {
       NumeroLinea: orderLine.lineNumber,
-      Codigo: orderLine.code,
+      CodigoCABYS: orderLine.code,
       // CodigoComercial
       Cantidad: orderLine.quantity,
       UnidadMedida: orderLine.measureUnit,
@@ -25,21 +25,22 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
       MontoTotal: orderLine.totalAmount,
       // Descuento
       SubTotal: orderLine.subTotal,
-      // BaseImponible
+      BaseImponible: orderLine.subTotal,
       Impuesto: {
         Codigo: orderLine.tax.code,
-        CodigoTarifa: orderLine.tax.rateCode,
         Tarifa: orderLine.tax.rate,
         Monto: parseAtvMoneyFormat(orderLine.tax.amount)
       },
-      // ImpuestoNeto
+      ImpuestoAsumidoEmisorFabrica: 0,
+      ImpuestoNeto: parseAtvMoneyFormat(orderLine.tax.amount),
       MontoTotalLinea: parseAtvMoneyFormat(orderLine.totalOrderLineAmount)
     }
   })
   return { LineaDetalle }
 }
 
-const mapSummaryInvoice = (summaryInvoice: DomainDocument['summaryInvoice']): Resumen => {
+const mapSummaryInvoice = (document: DomainDocument): Resumen => {
+  const summaryInvoice = document.summaryInvoice
   return {
     CodigoTipoMoneda: {
       CodigoMoneda: summaryInvoice.currency.code,
@@ -56,6 +57,9 @@ const mapSummaryInvoice = (summaryInvoice: DomainDocument['summaryInvoice']): Re
     TotalDescuentos: parseAtvMoneyFormat(summaryInvoice.totalDiscounts),
     TotalVentaNeta: parseAtvMoneyFormat(summaryInvoice.totalNetSale),
     TotalImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes),
+    MedioPago: {
+      TipoMedioPago: document.paymentMethod
+    },
     TotalComprobante: parseAtvMoneyFormat(summaryInvoice.totalVoucher)
   }
 }
@@ -70,26 +74,22 @@ const mapPerson = (person: Person): Persona => {
     NombreComercial: person.commercialName,
     Ubicacion: undefined,
     Telefono: undefined,
-    Fax: undefined,
     CorreoElectronico: undefined
   }
   atvPerson.Ubicacion = person.location ? {
     Provincia: person.location?.province,
     Canton: person.location?.canton?.padStart(2, '0'),
     Distrito: person.location?.district?.padStart(2, '0'),
-    Barrio: person.location?.neighborhood?.padStart(2, '0'),
+    Barrio: person.location?.neighborhood?.padStart(5, '0'),
     OtrasSenas: person.location?.details
   } : undefined
   atvPerson.Telefono = person.phone ? {
     CodigoPais: person.phone?.countryCode,
     NumTelefono: person.phone?.number
   } : undefined
-  atvPerson.Fax = person.fax ? {
-    CodigoPais: person.fax?.countryCode,
-    NumTelefono: person.fax?.number
-  } : undefined
   atvPerson.CorreoElectronico = person.email
-  return atvPerson;
+
+  return atvPerson
 }
 
 const mapReferenceInformation = (referenceInfo: ReferenceInformation): InformacionReferencia => {
@@ -103,19 +103,20 @@ const mapReferenceInformation = (referenceInfo: ReferenceInformation): Informaci
 }
 
 export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument): AtvFormat => {
-  const key = docName
-  const doc: Document = {
+  const key = docName;
+  const doc: AtvDocument = {
     Clave: document.clave,
-    CodigoActividad: document.activityCode.padStart(6, '0'),
+    ProveedorSistemas: document.providerId,
+    CodigoActividadEmisor: document.emitter.activityCode.padStart(6, '0'),
+    CodigoActividadReceptor: document.receiver.activityCode.padStart(6, '0'),
     NumeroConsecutivo: document.fullConsecutive,
     FechaEmision: document.issueDate.toISOString(),
     Emisor: mapPerson(document.emitter),
     Receptor: mapPerson(document.receiver),
     CondicionVenta: document.conditionSale,
     PlazoCredito: document.deadlineCredit,
-    MedioPago: document.paymentMethod,
     DetalleServicio: mapOrderLinesToAtvFormat(document.orderLines),
-    ResumenFactura: mapSummaryInvoice(document.summaryInvoice),
+    ResumenFactura: mapSummaryInvoice(document),
     Otros: document.others
   }
   if (document.referenceInformation) {

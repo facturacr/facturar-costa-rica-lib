@@ -1,8 +1,9 @@
 import { consecutivoStr } from '@src/lib/genClave'
+import { DocumentTypeValues } from './DocumentType';
 
 type FullConsecutiveProps = {
   consecutiveIdentifier: string;
-  documentType?: string;
+  documentType: DocumentTypeValues;
   branch?: string;
   terminal?: string;
 }
