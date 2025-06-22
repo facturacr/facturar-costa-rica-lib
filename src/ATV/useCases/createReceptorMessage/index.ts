@@ -1,6 +1,6 @@
 import { AceptationStates, ReceptorMessageProps } from '@src/ATV/core/types'
 import { mapReceptorMessageToAtvFormat } from '@src/ATV/mappers/billDocToAtv'
-import { genXML, parseElectronicBillXML } from '@src/lib/genXML'
+import { genXML } from '@src/lib/genXML'
 import { Command } from '../createDocument/types'
 import { ATV } from '@src/ATV'
 import { ReceptorConsecutive } from '@src/ATV/core/ReceptorConsecutive'

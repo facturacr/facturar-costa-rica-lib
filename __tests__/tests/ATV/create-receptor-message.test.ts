@@ -9,7 +9,7 @@ describe('Create Receptor Message', () => {
   it('should create document and generate a correct command', async () => {
     const atv = new ATV({}, 'stg')
     const electronillBillRaw = parseElectronicBillXML(expectXml)
-    const { command, extraData } = await atv.createReceptorMessage({
+    const { command } = await atv.createReceptorMessage({
       aceptationState: AceptationStates.ACCEPTED,
       aceptationDetailMessage: 'Accepted',
       clave: electronillBillRaw.Clave,

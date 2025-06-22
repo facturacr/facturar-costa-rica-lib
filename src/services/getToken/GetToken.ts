@@ -23,11 +23,8 @@ export class GetToken {
 
   public async execute({ username, password }: GetTokenDto): Promise<GetTokenResponse> {
     const fetchResponse = await axios.post<GetTokenRawResponse>(this.props.serviceUrl, qs.stringify({
-      // eslint-disable-next-line @typescript-eslint/camelcase
       client_id: this.props.clientId,
-      // eslint-disable-next-line @typescript-eslint/camelcase
       grant_type: 'password',
-      // eslint-disable-next-line @typescript-eslint/camelcase
       client_secret: '',
       username,
       password

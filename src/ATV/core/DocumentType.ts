@@ -6,6 +6,8 @@ export type DocumentNames =
   'NotaDebitoElectronica' |
   'MensajeReceptor'
 
+export type DocumentTypeValues = 'FE' | 'ND' | 'NC' | 'TE'
+
 const map: {[key: string]: DocumentTypeValues} = {
   FacturaElectronica: 'FE',
   FacturaElectronicaExportacion: 'FE',
@@ -13,8 +15,6 @@ const map: {[key: string]: DocumentTypeValues} = {
   NotaCreditoElectronica: 'NC',
   NotaDebitoElectronica: 'NC'
 }
-
-export type DocumentTypeValues = 'FE' | 'ND' | 'NC' | 'TE'
 
 export class DocumentType {
   value: DocumentTypeValues
