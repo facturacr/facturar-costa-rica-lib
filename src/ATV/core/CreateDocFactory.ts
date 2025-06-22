@@ -1,10 +1,9 @@
 import { Person, PersonProps } from '@src/ATV/core/Person'
-import { DocumentNames } from '@src/ATV/core/documentNames.types'
 import { OrderLine } from '@src/ATV/core/OrderLine'
 import { FullConsecutive } from '@src/ATV/core/FullConsecutive'
 import { Document } from '@src/ATV/core/Document'
 import { Clave } from '@src/ATV/core/Clave'
-import { DocumentType } from '@src/ATV/core/DocumentType'
+import { DocumentNames, DocumentType } from '@src/ATV/core/DocumentType'
 import { ReferenceInformation, ReferenceInformationProps } from './ReferenceInformation'
 import { ReceptorMessageProps } from './types'
 
@@ -32,24 +31,34 @@ type OrderInput = {
   totalOrderLineAmount?: number;
 }
 
-type DocumentInput = {
-    emitter: PersonInput;
-    receiver: PersonInput;
-    branch: string; // sucursal
-    terminal: string; // terminal
-    // documentType: DocumentTypes; // @deprecated
-    documentName: DocumentNames;
-    providerId: string;
-    countryCode: string; // codigoPais
-    securityCode: string; // codigoSeguridad
-    activityCode: string;
-    consecutiveIdentifier: string; // consecutivo
-    ceSituation: string; // situacionCE
-    orderLines: OrderInput[];
-    referenceInfo?: ReferenceInfoInput;
-    conditionSale: string
-    paymentMethod: string;
-  }
+type DocumentInputBase = {
+  emitter: PersonInput;
+  branch: string;
+  terminal: string;
+  documentName: DocumentNames;
+  providerId: string;
+  countryCode: string;
+  securityCode: string;
+  activityCode: string;
+  consecutiveIdentifier: string;
+  ceSituation: string;
+  orderLines: OrderInput[];
+  referenceInfo?: ReferenceInfoInput;
+  conditionSale: string;
+  paymentMethod: string;
+};
+
+type DocumentInputTiquete = DocumentInputBase & {
+  documentName: 'TiqueteElectronico';
+  receiver?: PersonInput; // optional
+};
+
+type DocumentInputOther = DocumentInputBase & {
+  documentName: Exclude<DocumentNames, 'TiqueteElectronico'>;
+  receiver: PersonInput; // required
+};
+
+type DocumentInput = DocumentInputTiquete | DocumentInputOther;
 
 export type CreateDocumentInput = {
   document: DocumentInput;

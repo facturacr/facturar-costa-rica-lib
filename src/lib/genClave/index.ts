@@ -8,12 +8,14 @@ const DEFAULT_VALUES = {
   codigoPais: '506'
 }
 
-function getConsecutivo(opts: {
+type ConsecutivoInput = {
   tipoDocKey?: string;
   sucursal?: string;
   terminal?: string;
   consecutivo: string;
-}): Consecutivo {
+}
+
+function getConsecutivo(opts: ConsecutivoInput): Consecutivo {
   const tipoDocNum = tipoDocumento[opts.tipoDocKey]
   return {
     sucursal: opts.sucursal || '001',
@@ -23,7 +25,7 @@ function getConsecutivo(opts: {
   }
 }
 
-export function consecutivoStr(consecutivoObj: any): string {
+export function consecutivoStr(consecutivoObj: ConsecutivoInput): string {
   const cons = getConsecutivo(consecutivoObj)
   return Object.values(cons).join('')
 }
