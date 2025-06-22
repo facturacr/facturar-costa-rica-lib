@@ -12,6 +12,7 @@
   "scripts": {
     "test": "npx jest --no-coverage",
     "test:cov": "npx jest",
+    "type:check": "tsc --noEmit",
     "dev": "dotenv -- nodemon -e ts,graphql -x 'yarn lint & ts-node -r tsconfig-paths/register src/index.ts'",
     "build": "rm -r dist; tspc -p tsconfig-prod.json",
     "lint": "eslint --ext .ts, --ignore-path .gitignore .",
@@ -56,7 +57,7 @@
   },
   "dependencies": {
     "@peculiar/webcrypto": "^1.1.6",
-    "axios": "^0.28.0",
+    "axios": "^0.30.0",
     "fast-xml-parser": "^3.19.0",
     "node-forge": "^1.3.0",
     "xadesjs": "^2.1.2",
