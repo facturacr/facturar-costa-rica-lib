@@ -1,5 +1,5 @@
 
-> 🛑 **Librería aún no es estable.** 🛑
+> 🛑 **Librería beta** 🛑
 
 # Librería Javascript - API de Administración Tributaria Virtual (ATV) del Ministerio de Hacienda.
 
@@ -10,5 +10,12 @@ Este proyecto tiene como fin facilitar la creación de la factura electrónica d
 Buscando colaboración
 
 -------
+## Comandos iniciales
 
-Para probar localmente leer [enlace](/examples/README.md).
+```
+yarn build
+```
+
+Para probar localmente leer:
+- [Testing](/examples/testing.md).
+- [Ejemplos](/examples/README.md).
