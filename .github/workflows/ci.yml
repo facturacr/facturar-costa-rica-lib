@@ -41,7 +41,8 @@ jobs:
         with:
           node-version: 20
       - run: yarn
-      - run: yarn typecheck
+      - run: yarn build
+      - run: yarn type:check
   lint:
     runs-on: ubuntu-latest
     steps:
