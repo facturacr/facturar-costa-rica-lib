@@ -18,6 +18,7 @@ async function main(): Promise<any> {
     username: USERNAME_TEST,
     password: PASSWORD_TEST
   })
+  // @ts-expect-error migration - for example purposes
   const secondResponse = await sendToCustomURL(token.data.access_token, location).catch((err) => {
     const response = err.response || {}
     const header = response.headers || {}

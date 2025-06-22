@@ -41,6 +41,7 @@ describe('Create Document (Invoice)', () => {
     const createdDoc = await atv.createDocumentCommand({
       document: FEInputExample,
       token: 'fake-token',
+      // @ts-expect-error only for testing
       signatureOptions: undefined
     })
     expect(createdDoc.command.data.comprobanteXml).toMatchSnapshot()
@@ -50,6 +51,7 @@ describe('Create Document (Invoice)', () => {
     const createdDoc = await atv.createDocumentCommand({
       document: FEInputExample,
       token: 'fake-token',
+      // @ts-expect-error only for testing
       signatureOptions: undefined
     })
     expect(createdDoc.extraData.xml).toEqualXML(expectXml)

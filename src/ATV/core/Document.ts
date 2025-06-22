@@ -11,7 +11,7 @@ export type InvoiceProps = {
   fullConsecutive: FullConsecutive;
   issueDate: Date; // FechaEmision
   emitter: Person; // Emisor
-  receiver: Person; // Receptor
+  receiver?: Person; // Receptor
   orderLines: OrderLine[];
   conditionSale?: string; // CondicionVenta
   deadlineCredit?: string; // PlazoCredito
@@ -129,7 +129,7 @@ export class Document {
     return this.orderLines.filter(this.isAService).reduce<OrderLineSum>((previousValue, currentValue) => {
       return {
         totalAmount: previousValue.totalAmount + currentValue.totalAmount,
-        totalTaxes: previousValue.totalTaxes + currentValue.tax.amount
+        totalTaxes: previousValue.totalTaxes + (currentValue.tax?.amount ?? 0)
       }
     }, { totalAmount: 0, totalTaxes: 0 })
   }
@@ -138,7 +138,7 @@ export class Document {
     return this.orderLines.filter((ol) => !this.isAService(ol)).reduce<OrderLineSum>((previousValue, currentValue) => {
       return {
         totalAmount: previousValue.totalAmount + currentValue.totalAmount,
-        totalTaxes: previousValue.totalTaxes + currentValue.tax.amount
+        totalTaxes: previousValue.totalTaxes + (currentValue.tax?.amount ?? 0)
       }
     }, { totalAmount: 0, totalTaxes: 0 })
   }
@@ -147,7 +147,7 @@ export class Document {
     return this.orderLines.reduce<OrderLineSum>((previousValue, currentValue) => {
       return {
         totalAmount: previousValue.totalAmount + currentValue.totalAmount,
-        totalTaxes: previousValue.totalTaxes + currentValue.tax.amount
+        totalTaxes: previousValue.totalTaxes + (currentValue.tax?.amount ?? 0)
       }
     }, { totalAmount: 0, totalTaxes: 0 })
   }

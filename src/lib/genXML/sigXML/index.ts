@@ -58,6 +58,7 @@ function getAlgorithm(): any {
 export default async function signXML(xmlStr: string, p12: string, p12Password: string): Promise<string> {
   if (!p12 || !p12Password) {
     console.log('p12 options undefined')
+    // @ts-expect-error pending-to-fix
     return
   }
   const crypto = new Crypto()

@@ -8,7 +8,9 @@ console.log('password', PASSWORD_TEST)
 const mode = IS_STG ? 'stg' : undefined
 const atv = new ATV({}, mode)
 const tokenData = atv.getToken({
+  // @ts-expect-error migration - for example purposes
   username: USERNAME_TEST,
+  // @ts-expect-error migration - for example purposes
   password: PASSWORD_TEST
 })
 tokenData.then((resp) => {

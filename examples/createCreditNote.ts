@@ -40,7 +40,9 @@ function getConfimation(atv: ATV, token: string, location: string, ms: number): 
 async function main(): Promise<void> {
   const atv = new ATV({}, 'stg')
   const tokenData = await atv.getToken({
+    // @ts-expect-error migration - for example purposes
     username: USERNAME_TEST,
+    // @ts-expect-error migration - for example purposes
     password: PASSWORD_TEST
   })
   const { command, extraData } = await atv.createDocumentCommand({
@@ -53,6 +55,7 @@ async function main(): Promise<void> {
     token: tokenData.accessToken,
     signatureOptions: {
       buffer: pem,
+      // @ts-expect-error migration - for example purposes
       password: SOURCE_P12_PASSPORT
     }
   })
@@ -62,6 +65,7 @@ async function main(): Promise<void> {
     console.log('error response', response)
     return
   }
+  // @ts-expect-error pending-to-fix migration
   const confirmationResponse = await getConfimation(atv, tokenData.accessToken, response.location, 2000)
   console.log({ MensajeHacienda: confirmationResponse.confirmation })
 }

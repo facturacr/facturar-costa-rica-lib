@@ -12,6 +12,7 @@ const DEFAULT_VALUES = {
 export function getSimpleSender(frontEndRequest: ClientPayload): FinalMessagePerson {
   const sender = frontEndRequest.Emisor
   return {
+    // @ts-expect-error pending-to-fix
     tipoIdentificacion: sender.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
     numeroIdentificacion: sender.Identificacion.Numero
   }
@@ -20,6 +21,7 @@ export function getSimpleSender(frontEndRequest: ClientPayload): FinalMessagePer
 export function getSimpleReceiver(frontEndRequest: ClientPayload): FinalMessagePerson {
   const receiver = frontEndRequest.Receptor
   return {
+    // @ts-expect-error pending-to-fix
     tipoIdentificacion: receiver.Identificacion.Tipo || DEFAULT_VALUES.tipoIdentificacion,
     numeroIdentificacion: receiver.Identificacion.Numero
   }
@@ -31,6 +33,7 @@ function calculateTaxes(billTotal: number, billTaxes: number): number {
 }
 
 export function getBillResum(frontEndRequest: ClientPayload): Resumen {
+  // @ts-expect-error pending-to-fix
   const taxes = calculateTaxes(frontEndRequest.total, frontEndRequest.impuesto)
   return {
     CodigoTipoMoneda: {
@@ -45,10 +48,12 @@ export function getBillResum(frontEndRequest: ClientPayload): Resumen {
     TotalGravado: frontEndRequest.total,
     TotalExento: 0,
     TotalExonerado: 0,
+    // @ts-expect-error pending-to-fix
     TotalVenta: frontEndRequest.total,
     TotalDescuentos: 0,
     TotalVentaNeta: frontEndRequest.total,
     TotalImpuesto: taxes,
+    // @ts-expect-error pending-to-fix
     TotalComprobante: frontEndRequest.total + taxes
   }
 }
@@ -64,11 +69,15 @@ export function getSender(frontEndRequest: ClientPayload): Persona {
     NombreComercial: sender.Nombre,
     Ubicacion: sender.Ubicacion,
     Telefono: {
+      // @ts-expect-error pending-to-fix
       CodigoPais: sender.Telefono.CodigoPais,
+      // @ts-expect-error pending-to-fix
       NumTelefono: sender.Telefono.NumTelefono
     },
     Fax: {
+      // @ts-expect-error pending-to-fix
       CodigoPais: sender.Telefono.CodigoPais,
+      // @ts-expect-error pending-to-fix
       NumTelefono: sender.Telefono.NumTelefono
     },
     CorreoElectronico: sender.CorreoElectronico

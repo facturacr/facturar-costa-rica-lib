@@ -29,9 +29,11 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
       Impuesto: {
         Codigo: orderLine.tax.code,
         Tarifa: orderLine.tax.rate,
+        // @ts-expect-error pending-to-fix
         Monto: parseAtvMoneyFormat(orderLine.tax.amount)
       },
       ImpuestoAsumidoEmisorFabrica: 0,
+      // @ts-expect-error pending-to-fix
       ImpuestoNeto: parseAtvMoneyFormat(orderLine.tax.amount),
       MontoTotalLinea: parseAtvMoneyFormat(orderLine.totalOrderLineAmount)
     }
@@ -43,21 +45,28 @@ const mapSummaryInvoice = (document: DomainDocument): Resumen => {
   const summaryInvoice = document.summaryInvoice
   return {
     CodigoTipoMoneda: {
+      // @ts-expect-error pending-to-fix
       CodigoMoneda: summaryInvoice.currency.code,
+      // @ts-expect-error pending-to-fix
       TipoCambio: summaryInvoice.currency.exchangeRate
     },
     TotalServGravados: parseAtvMoneyFormat(summaryInvoice.totalEncumberedServices),
     TotalServExentos: parseAtvMoneyFormat(summaryInvoice.totalExemptServices),
+    // @ts-expect-error pending-to-fix
     TotalMercanciasGravadas: parseAtvMoneyFormat(summaryInvoice.totalEncumberedMerchandise),
+    // @ts-expect-error pending-to-fix
     TotalMercanciasExentas: parseAtvMoneyFormat(summaryInvoice.totalExemptMerchandise),
     TotalGravado: parseAtvMoneyFormat(summaryInvoice.totalEncumbered),
     TotalExento: parseAtvMoneyFormat(summaryInvoice.totalExempt),
     TotalExonerado: parseAtvMoneyFormat(summaryInvoice.totalExonerated),
     TotalVenta: parseAtvMoneyFormat(summaryInvoice.totalSale),
+    // @ts-expect-error pending-to-fix
     TotalDescuentos: parseAtvMoneyFormat(summaryInvoice.totalDiscounts),
+    // @ts-expect-error pending-to-fix
     TotalVentaNeta: parseAtvMoneyFormat(summaryInvoice.totalNetSale),
     TotalImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes),
     MedioPago: {
+      // @ts-expect-error pending-to-fix
       TipoMedioPago: document.paymentMethod
     },
     TotalComprobante: parseAtvMoneyFormat(summaryInvoice.totalVoucher)
@@ -76,6 +85,7 @@ const mapPerson = (person: Person): Persona => {
     Telefono: undefined,
     CorreoElectronico: undefined
   }
+  // @ts-expect-error pending-to-fix
   atvPerson.Ubicacion = person.location
     ? {
         Provincia: person.location?.province,
@@ -85,12 +95,14 @@ const mapPerson = (person: Person): Persona => {
         OtrasSenas: person.location?.details
       }
     : undefined
+  // @ts-expect-error pending-to-fix
   atvPerson.Telefono = person.phone
     ? {
         CodigoPais: person.phone?.countryCode,
         NumTelefono: person.phone?.number
       }
     : undefined
+  // @ts-expect-error pending-to-fix
   atvPerson.CorreoElectronico = person.email
 
   return atvPerson
@@ -112,10 +124,12 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
     Clave: document.clave,
     ProveedorSistemas: document.providerId,
     CodigoActividadEmisor: document.emitter.activityCode.padStart(6, '0'),
+    // @ts-expect-error pending-to-fix
     CodigoActividadReceptor: document.receiver.activityCode.padStart(6, '0'),
     NumeroConsecutivo: document.fullConsecutive,
     FechaEmision: document.issueDate.toISOString(),
     Emisor: mapPerson(document.emitter),
+    // @ts-expect-error pending-to-fix
     Receptor: mapPerson(document.receiver),
     CondicionVenta: document.conditionSale,
     PlazoCredito: document.deadlineCredit,
