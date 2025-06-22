@@ -38,7 +38,6 @@ describe('Create Document (Invoice)', () => {
 
   it('should create document and match to snapshot', async () => {
     const atv = new ATV({}, 'stg')
-    // @ts-ignore just for testing
     const createdDoc = await atv.createDocumentCommand({
       document: FEInputExample,
       token: 'fake-token',
@@ -48,7 +47,6 @@ describe('Create Document (Invoice)', () => {
   })
   it('should create document and generate a correct xml', async () => {
     const atv = new ATV({}, 'stg')
-    // @ts-ignore just for testing
     const createdDoc = await atv.createDocumentCommand({
       document: FEInputExample,
       token: 'fake-token',
