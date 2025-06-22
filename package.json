@@ -12,6 +12,7 @@
   "scripts": {
     "test": "npx jest --no-coverage",
     "test:cov": "npx jest",
+    "type:check": "tsc --noEmit",
     "dev": "dotenv -- nodemon -e ts,graphql -x 'yarn lint & ts-node -r tsconfig-paths/register src/index.ts'",
     "build": "rm -r dist; tspc -p tsconfig-prod.json",
     "lint": "eslint --ext .ts, --ignore-path .gitignore .",

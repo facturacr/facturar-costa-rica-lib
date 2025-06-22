@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2017 rel. 3 (x64) (http://www.altova.com) by Gerardo Arroyo (Flecha Roja Technologies S.A.) -->
-<xs:schema xmlns="https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronica" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.3/facturaElectronica" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.3" vc:minVersion="1.1">
-	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2008/REC-xmldsig-core-20080610/xmldsig-core-schema.xsd"/>
+<xs:schema xmlns="https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/facturaElectronica" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/facturaElectronica" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.4" vc:minVersion="1.1">
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="../../xmldsig-core-schema.xsd"/>
 	<xs:element name="FacturaElectronica">
 		<xs:annotation>
 			<xs:documentation>Elemento Raiz de la Facturacion Electrónica</xs:documentation>
@@ -10,12 +9,36 @@
 			<xs:sequence>
 				<xs:element name="Clave" type="ClaveType">
 					<xs:annotation>
-						<xs:documentation>Corresponde a la clave del comprobante. Es un campo de 50 posiciones y se tiene que utilizar para la consulta del código QR. Ver nota 1 y 4.1</xs:documentation>
+						<xs:documentation>Corresponde a la clave del comprobante. Es un campo fijo de cincuenta posiciones y se tiene que utilizar para
+la consulta del código QR</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="CodigoActividad">
+				<xs:element name="ProveedorSistemas">
 					<xs:annotation>
-						<xs:documentation>Se debe indicar el código de la actividad económica a la cual corresponde el comprobante electrónico</xs:documentation>
+						<xs:documentation>Se debe indicar el número de cedula de identificación del proveedor de sistemas que esté utilizando para la emisión de comprobantes
+electrónicos</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="20"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="CodigoActividadEmisor">
+					<xs:annotation>
+						<xs:documentation>Se debe de indicar el código de la actividad económica inscrita a la cual corresponde el comprobante que se está generando</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="6"/>
+							<xs:minLength value="6"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="CodigoActividadReceptor" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Se debe de indicar el código de la actividad económica inscrita del receptor a la cual corresponden los bienes o servicios que se le están
+facturando al receptor en caso de ser requerido para un crédito o un gasto deducible.</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
@@ -42,7 +65,7 @@
 				</xs:element>
 				<xs:element name="CondicionVenta">
 					<xs:annotation>
-						<xs:documentation>Condiciones de la venta: 01 Contado, 02 Crédito, 03 Consignación, 04 Apartado, 05 Arrendamiento con opción de compra, 06 Arrendamiento en función financiera, 07 Cobro a favor de un tercero, 08 servicxios prestados al estado a credito, 09 pago del servicio prestado al estado, 99 Otros</xs:documentation>
+						<xs:documentation>Condiciones de la venta: 01 Contado, 02 Crédito, 03 Consignación, 04 Apartado, 05 Arrendamiento con opción de compra, 06 Arrendamiento en función financiera, 07 Cobro a favor de un tercero, 08 servicxios prestados al estado a credito, 09 pago del servicio prestado al estado,10 venta a crédito hasta 90 dias,11 pago de venta a crédito en IVA hasta 90 dias, 99 Otros</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
@@ -86,9 +109,29 @@
 									<xs:documentation>Servicios prestados al Estado a crédito </xs:documentation>
 								</xs:annotation>
 							</xs:enumeration>
-							<xs:enumeration value="09">
+							<xs:enumeration value="10">
 								<xs:annotation>
-									<xs:documentation>Pago del servicios prestado al Estado </xs:documentation>
+									<xs:documentation>Venta a crédito en IVA hasta 90 días (Artículo 27, LIVA) </xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="12">
+								<xs:annotation>
+									<xs:documentation>Venta Mercancía No Nacionalizada</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="13">
+								<xs:annotation>
+									<xs:documentation>Venta Bienes Usados No Contribuyente</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="14">
+								<xs:annotation>
+									<xs:documentation>Arrendamiento Operativo</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="15">
+								<xs:annotation>
+									<xs:documentation>Arrendamiento Financiero</xs:documentation>
 								</xs:annotation>
 							</xs:enumeration>
 							<xs:enumeration value="99">
@@ -96,6 +139,18 @@
 									<xs:documentation>Otros</xs:documentation>
 								</xs:annotation>
 							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="CondicionVentaOtros" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Será obligatorio en caso de utilizar el código 99 de "Otros" de la nota
+5. Se debe describir puntualmente la condición de la venta utilizada.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="5"/>
+							<xs:maxLength value="100"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
@@ -104,53 +159,15 @@
 						<xs:documentation>Plazo del crédito, es obligatorio cuando la venta del producto o prestación del servicio sea a crédito</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
-						<xs:restriction base="xs:string">
-							<xs:maxLength value="10"/>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:element>
-				<xs:element name="MedioPago" maxOccurs="4">
-					<xs:annotation>
-						<xs:documentation>Corresponde al medio de pago empleado: 01 Efectivo, 02 Tarjeta, 03 Cheque, 04 Transferencia - depósito bancario, 05 - Recaudado por terceros, 99 Otros</xs:documentation>
-					</xs:annotation>
-					<xs:simpleType>
-						<xs:restriction base="xs:string">
-							<xs:enumeration value="01">
-								<xs:annotation>
-									<xs:documentation>Efectivo</xs:documentation>
-								</xs:annotation>
-							</xs:enumeration>
-							<xs:enumeration value="02">
-								<xs:annotation>
-									<xs:documentation> Tarjeta</xs:documentation>
-								</xs:annotation>
-							</xs:enumeration>
-							<xs:enumeration value="03">
-								<xs:annotation>
-									<xs:documentation>Cheque</xs:documentation>
-								</xs:annotation>
-							</xs:enumeration>
-							<xs:enumeration value="04">
-								<xs:annotation>
-									<xs:documentation>Transferencia - depósito bancario</xs:documentation>
-								</xs:annotation>
-							</xs:enumeration>
-							<xs:enumeration value="05">
-								<xs:annotation>
-									<xs:documentation>Recaudado por terceros</xs:documentation>
-								</xs:annotation>
-							</xs:enumeration>
-							<xs:enumeration value="99">
-								<xs:annotation>
-									<xs:documentation>Otros</xs:documentation>
-								</xs:annotation>
-							</xs:enumeration>
+						<xs:restriction base="xs:integer">
+							<xs:totalDigits value="5"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
 				<xs:element name="DetalleServicio" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>Detalle de la mercancia o servicio prestado.</xs:documentation>
+						<xs:documentation>Detalle del Servicio,
+Mercancía u otro</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
@@ -160,12 +177,18 @@
 								</xs:annotation>
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="NumeroLinea" type="xs:positiveInteger">
+										<xs:element name="NumeroLinea">
 											<xs:annotation>
 												<xs:documentation>Número de línea del detalle</xs:documentation>
 											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:positiveInteger">
+													<xs:minInclusive value="1"/>
+													<xs:maxInclusive value="1000"/>
+												</xs:restriction>
+											</xs:simpleType>
 										</xs:element>
-										<xs:element name="Codigo">
+										<xs:element name="CodigoCABYS">
 											<xs:annotation>
 												<xs:documentation>Código de Producto/servicio </xs:documentation>
 											</xs:annotation>
@@ -193,6 +216,17 @@
 												<xs:documentation>Unidad de medida </xs:documentation>
 											</xs:annotation>
 										</xs:element>
+										<xs:element name="TipoTransaccion" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Este campo se utilizará para identificar el tipo de transacción
+que se realizará.</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="TipoTransaccionType">
+													<xs:maxLength value="2"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
 										<xs:element name="UnidadMedidaComercial" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>Unidad de medida comercial</xs:documentation>
@@ -210,8 +244,344 @@
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
 													<xs:maxLength value="200"/>
+													<xs:minLength value="3"/>
 												</xs:restriction>
 											</xs:simpleType>
+										</xs:element>
+										<xs:element name="NumeroVINoSerie" minOccurs="0" maxOccurs="1000">
+											<xs:annotation>
+												<xs:documentation>Número de VIN o Serie
+del medio de transporte</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="17"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="RegistroMedicamento" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Se refiere al respectivo número de registro del Ministerio de Salud</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="100"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="FormaFarmaceutica" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Código de la presentación del medicamento.</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="3"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="DetalleSurtido" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Tipo complejo que representa cada línea del detalle de los componentes de un surtido, paquete o combinación de productos. Se debe utilizar exclusivamente cuando en la línea de detalle se está facturando un paquete, surtido o combo, entendido como la combinación de más de dos productos con diferentes códigos de producto/servicio.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="LineaDetalleSurtido" maxOccurs="20">
+														<xs:annotation>
+															<xs:documentation>Tipo complejo que representa cada línea del detalle del surtido</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="CodigoCABYSSurtido">
+																	<xs:annotation>
+																		<xs:documentation>Código de Producto
+/Servicio componente de Surtido</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="13"/>
+																			<xs:minLength value="13"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="CodigoComercialSurtido" minOccurs="0" maxOccurs="5">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="TipoSurtido">
+																				<xs:simpleType>
+																					<xs:restriction base="xs:string">
+																						<xs:length value="2"/>
+																						<xs:enumeration value="01">
+																							<xs:annotation>
+																								<xs:documentation>Código del producto del vendedor</xs:documentation>
+																							</xs:annotation>
+																						</xs:enumeration>
+																						<xs:enumeration value="02">
+																							<xs:annotation>
+																								<xs:documentation>Código del producto del comprador</xs:documentation>
+																							</xs:annotation>
+																						</xs:enumeration>
+																						<xs:enumeration value="03">
+																							<xs:annotation>
+																								<xs:documentation>código del producto asignado por la industria</xs:documentation>
+																							</xs:annotation>
+																						</xs:enumeration>
+																						<xs:enumeration value="04">
+																							<xs:annotation>
+																								<xs:documentation>código de uso interno</xs:documentation>
+																							</xs:annotation>
+																						</xs:enumeration>
+																						<xs:enumeration value="99">
+																							<xs:annotation>
+																								<xs:documentation>Otros</xs:documentation>
+																							</xs:annotation>
+																						</xs:enumeration>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:element>
+																			<xs:element name="CodigoSurtido">
+																				<xs:simpleType>
+																					<xs:restriction base="xs:string">
+																						<xs:maxLength value="20"/>
+																						<xs:minLength value="1"/>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="CantidadSurtido">
+																	<xs:annotation>
+																		<xs:documentation>Es un número decimal compuesto por 13 enteros y 3 decimales.</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:decimal">
+																			<xs:totalDigits value="16"/>
+																			<xs:fractionDigits value="3"/>
+																			<xs:minInclusive value="0"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="UnidadMedidaSurtido">
+																	<xs:simpleType>
+																		<xs:restriction base="UnidadMedidaType">
+																			<xs:maxLength value="15"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="UnidadMedidaComercialSurtido" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Nodo utilizado para indicar una unidad de medida que nace del propio giro comercial del establecimiento, no es una cantidad estandarizada de una determinada magnitud física, definida y adoptada por convención o por ley ejemplo: "1
+Tarima"</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="20"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="DetalleSurtido">
+																	<xs:annotation>
+																		<xs:documentation>Detalle de la mercancía transferida o servicio prestado incluido en el surtido</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="200"/>
+																			<xs:minLength value="3"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="PrecioUnitarioSurtido">
+																	<xs:simpleType>
+																		<xs:restriction base="DecimalDineroType">
+																			<xs:minInclusive value="0"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="MontoTotalSurtido" type="DecimalDineroType">
+																	<xs:annotation>
+																		<xs:documentation>Se obtiene de la multiplicación del campo "Cantidad componente de surtido" por el campo "Precio unitario componente de surtido".</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="DescuentoSurtido" minOccurs="0" maxOccurs="5">
+																	<xs:annotation>
+																		<xs:documentation>Se puede incluir un máximo de 5 repeticiones de
+descuentos, cada descuento adicional se calcula sobre la base menos el descuento anterior.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="MontoDescuentoSurtido" type="DecimalDineroType">
+																				<xs:annotation>
+																					<xs:documentation>Validación: Se deberá incluir un valor igual o menor al del
+"Monto total componente surtido"</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="CodigoDescuentoSurtido" type="CodigoDescuentoType">
+																				<xs:annotation>
+																					<xs:documentation>Este campo será de condición obligatoria, cuando se incluya información en el campo "Monto de descuentos concedidos al componente de surtido</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="DescuentoSurtidoOtros" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Este campo será de condición obligatoria, cuando se utilice el código 99 de la Nota 20
+Validación: En caso de utilizarse el código 99, se verificará que este campo se encuentre en el comprobante, caso contrario se rechazará. Además, deberá contener mínimo 3 caracteres y un máximo de 80</xs:documentation>
+																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="xs:string">
+																						<xs:maxLength value="80"/>
+																						<xs:minLength value="3"/>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="SubTotalSurtido" type="DecimalDineroType">
+																	<xs:annotation>
+																		<xs:documentation>Se obtiene de la resta del campo "Monto total componente surtido" menos "Monto de descuentos concedidos al componente de surtido"</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="IVACobradoFabricaSurtido" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>En este campo se indicará si el Impuesto al Valor Agregado fue cobrado a nivel de fábrica, por lo que deberá ser utilizado únicamente por los obligados tributarios a realizar el pago de esta forma.
+Se convierte en obligatorio cuando el IVA se cobra o se cobró a nivel de fábrica.
+Al hacer uso del presente campo el producto se entenderá exento para el código 02, por lo cual no deberá llenar el subnodo de impuestos para el cálculo del IVA.
+ ▪Para el código 01 el emisor puede separar los impuestos
+que está cobrando en la fábrica.</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="2"/>
+																			<xs:minLength value="2"/>
+																			<xs:enumeration value="01">
+																				<xs:annotation>
+																					<xs:documentation>Venta de bienes con IVA según el sistema especial de determinación de IVA a nivel de fábrica (Se utiliza cuando se está cobrando el IVA a nivel de fábrica</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="02">
+																				<xs:annotation>
+																					<xs:documentation>Ventas exentas según el sistema especial de determinación de IVA a nivel de fábrica, mayorista y aduanas (se utiliza cuando el producto se encuentra exento ya que el bien soporto el cobro de impuestos a nivel de fábrica).
+</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="BaseImponibleSurtido" type="DecimalDineroType">
+																	<xs:annotation>
+																		<xs:documentation>Este campo será de condición obligatoria, cuando el producto este gravado con algún impuesto. Se obtiene de la suma entre el campo "Subtotal componente del surtido", más el impuesto selectivo de consumo (02), el Impuesto específico de Bebidas Alcohólicas (04) y el Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador (05), cuando corresponda. Este campo se podrá editar cuando se seleccione en el campo "IVA cobrado a nivel de fábrica" el Código 01 o en el campo de "Código del impuesto" el código 07. Validación: En caso de utilizarse el código 01, en el campo de IVA cobrado a nivel de fábrica, se verificará que este campo se encuentre en el comprobante, caso contrario se rechazará. Además, se deberá incluir un valor mayor a "cero".</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ImpuestoSurtido" maxOccurs="1000">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="CodigoImpuestoSurtido" type="CodigoImpuestoType">
+																				<xs:annotation>
+																					<xs:documentation>Ver nota 8. Es un campo fijo de dos posiciones.
+Al utilizar el código de Naturaleza del Descuento 01 correspondiente a "Regalías" o 03 de "Bonificaciones" y el código de impuesto 01, se debe utilizar para el cálculo del impuesto el campo denominado "Monto total componente de surtido" y la "Tarifa del Impuesto al Valor Agregado para componente de surtido"
+Validación: Se verificará el cumplimiento de la nota 8</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="CodigoImpuestoOTROSurtido" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Será obligatorio en caso de utilizar el código 99 de "Otros" de la nota 8. Se debe describir puntualmente el impuesto utilizado.
+Validación: Deberá contener mínimo 5 caracteres y un máximo de 100</xs:documentation>
+																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="xs:string">
+																						<xs:maxLength value="100"/>
+																						<xs:minLength value="5"/>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:element>
+																			<xs:element name="CodigoTarifaIVASurtido" type="CodigoTarifaIVAType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Se convierte en obligatorio cuando se usa el código 01 de impuestos de surtido
+Validación: Se verificará el cumplimiento de nota 8.1. cuando se utilice el código 01 de campo código del impuesto.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="TarifaSurtido" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Este campo es de condición obligatoria, cuando el componente este gravado con alguna tarifa de impuesto, según corresponda. Debe de expresarse el porcentaje como número entero (Ejemplo: la tarifa del 13% se debe de reflejar como 13, la tarifa del 1% como 1, o bien la tarifa del 0.5% como 0.5)</xs:documentation>
+																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="xs:decimal">
+																						<xs:totalDigits value="4"/>
+																						<xs:fractionDigits value="2"/>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:element>
+																			<xs:element name="DatosImpuestoEspecificoSurtido" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Datos para Impuestos Específicos para componente de surtido</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="CantidadUnidadMedidaSurtido">
+																							<xs:annotation>
+																								<xs:documentation>Cantidad de la unidad de medida a utilizar para componente de surtido. Este campo es de condición obligatoria, cuando se utilicen los códigos de impuesto 04, 05 y 06 de la nota 8</xs:documentation>
+																							</xs:annotation>
+																							<xs:simpleType>
+																								<xs:restriction base="xs:decimal">
+																									<xs:totalDigits value="7"/>
+																									<xs:fractionDigits value="2"/>
+																								</xs:restriction>
+																							</xs:simpleType>
+																						</xs:element>
+																						<xs:element name="PorcentajeSurtido" minOccurs="0">
+																							<xs:annotation>
+																								<xs:documentation>Porcentaje en componente de surtido.  Este campo es de condición obligatoria, cuando se utilice el código de impuesto 04 de la nota 8. Debe de expresarse el porcentaje como número entero (Ejemplo: la tarifa del 13% se debe de reflejar como 13, la tarifa del 1% como 1, o bien la tarifa del 0.5% como 0.5)</xs:documentation>
+																							</xs:annotation>
+																							<xs:simpleType>
+																								<xs:restriction base="xs:decimal">
+																									<xs:totalDigits value="4"/>
+																									<xs:fractionDigits value="2"/>
+																								</xs:restriction>
+																							</xs:simpleType>
+																						</xs:element>
+																						<xs:element name="ProporcionSurtido" minOccurs="0">
+																							<xs:annotation>
+																								<xs:documentation>Este campo es de condición obligatoria, cuando se utilice el código de impuesto 04 de la nota 8
+Este campo se obtiene de multiplicar la "Cantidad de la unidad de medida a utilizar" por el "Porcentaje"</xs:documentation>
+																							</xs:annotation>
+																							<xs:simpleType>
+																								<xs:restriction base="xs:decimal">
+																									<xs:totalDigits value="5"/>
+																									<xs:fractionDigits value="2"/>
+																								</xs:restriction>
+																							</xs:simpleType>
+																						</xs:element>
+																						<xs:element name="VolumenUnidadConsumoSurtido" minOccurs="0">
+																							<xs:annotation>
+																								<xs:documentation>Volumen por Unidad de Consumo componente de surtido.  Este campo es de condición obligatoria, cuando se utilice el código de impuesto 05 de la nota 8</xs:documentation>
+																							</xs:annotation>
+																							<xs:simpleType>
+																								<xs:restriction base="xs:decimal">
+																									<xs:fractionDigits value="2"/>
+																									<xs:totalDigits value="7"/>
+																								</xs:restriction>
+																							</xs:simpleType>
+																						</xs:element>
+																						<xs:element name="ImpuestoUnidadSurtido" type="DecimalDineroType">
+																							<xs:annotation>
+																								<xs:documentation>Este campo es de condición obligatoria, cuando se utilicen los códigos de impuesto 04, 05 y 06 de la nota 8</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="MontoImpuestoSurtido" type="DecimalDineroType">
+																				<xs:annotation>
+																					<xs:documentation>Este campo será de condición obligatoria, cuando el componente este gravado con algún impuesto. Es un número decimal compuesto por 13 enteros y 5 decimales</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
 										</xs:element>
 										<xs:element name="PrecioUnitario" type="DecimalDineroType">
 											<xs:annotation>
@@ -229,27 +599,58 @@
 												<xs:documentation>Se obtiene de la resta del campo monto total menos monto de descuento concedido</xs:documentation>
 											</xs:annotation>
 										</xs:element>
-										<xs:element name="BaseImponible" type="DecimalDineroType" minOccurs="0">
+										<xs:element name="IVACobradoFabrica" minOccurs="0">
 											<xs:annotation>
-												<xs:documentation>Base imponible especial</xs:documentation>
+												<xs:documentation>En este campo se indicará si el Impuesto al Valor Agregado fue cobrado a nivel de fábrica, por lo que deberá ser utilizado únicamente por los obligados tributarios a realizar el pago de
+esta forma. Se convierte en obligatorio cuando el IVA se cobra o se cobró a nivel de fábrica. Al hacer uso del presente campo el producto se entenderá exento para el código 02, por lo cual no deberá llenar el subnodo de impuestos para el cálculo del IVA. Para el código 01 el emisor puede separar los impuestos
+que está cobrando en la fábrica. </xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="2"/>
+													<xs:minLength value="2"/>
+													<xs:enumeration value="01">
+														<xs:annotation>
+															<xs:documentation>Venta de bienes con IVA según el sistema especial de determinación de IVA a nivel de fábrica (Se utiliza cuando se está cobrando el IVA a nivel de fábrica</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="02">
+														<xs:annotation>
+															<xs:documentation>Ventas exentas según el sistema especial de determinación de IVA a nivel de fábrica, mayorista y aduanas (se utiliza cuando el producto se encuentra exento ya que el bien soporto el cobro de impuestos a nivel de fábrica).
+</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="BaseImponible" type="DecimalDineroType">
+											<xs:annotation>
+												<xs:documentation>Este campo será de condición obligatoria, cuando el
+producto/ servicio este gravado con algún impuesto. Se obtiene de la suma entre el campo "Subtotal", más el impuesto selectivo de consumo (02), el Impuesto específico de Bebidas Alcohólicas (04), el Impuesto Específico sobre las bebidas envasadas sin contenido alcohólico y jabones de
+tocador (05) y el impuesto al cemento (12), cuando corresponda.
+Este campo se podrá editar cuando se seleccione en el campo "IVA cobrado a nivel de fábrica" el Código 01 o en el campo de "Código del impuesto" el código 07.</xs:documentation>
 											</xs:annotation>
 										</xs:element>
-										<xs:element name="Impuesto" type="ImpuestoType" minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="Impuesto" type="ImpuestoType" maxOccurs="1000">
 											<xs:annotation>
 												<xs:documentation>Cuando el producto o servicio este gravado con algún impuesto se debe indicar cada uno de ellos.</xs:documentation>
 											</xs:annotation>
 										</xs:element>
-										<xs:element name="ImpuestoNeto" type="DecimalDineroType" minOccurs="0">
+										<xs:element name="ImpuestoAsumidoEmisorFabrica" type="DecimalDineroType">
 											<xs:annotation>
-												<xs:documentation>Impuesto Neto</xs:documentation>
+												<xs:documentation>Impuestos Asumidos por el Emisor o cobrado a Nivel de Fábrica</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ImpuestoNeto" type="DecimalDineroType">
+											<xs:annotation>
+												<xs:documentation>Este monto se obtiene al restar el campo “Monto del Impuesto” menos “Monto del Impuesto Exonerado” o el
+campo “Impuestos Asumidos por el Emisor o cobrado a Nivel de Fábrica” cuando corresponda</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 										<xs:element name="MontoTotalLinea" type="DecimalDineroType">
 											<xs:annotation>
-												<xs:documentation>Existe dos maneras de obtener el resultado del campo:
--	Cuando no existe exoneración, se obtiene de la sumatoria de los campos “subtotal”, “monto del impuesto” .
--	Cuando posee una exoneración, se obtiene de la sumatoria de los campos “Subtotal”, “Impuesto Neto”.
-</xs:documentation>
+												<xs:documentation>Se calcula de la siguiente manera:
+se obtiene de la sumatoria de los campos “Subtotal”, “Impuesto Neto”.</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 									</xs:sequence>
@@ -266,15 +667,15 @@
 				<xs:element name="ResumenFactura">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="CodigoTipoMoneda" type="CodigoMonedaType" minOccurs="0"/>
+							<xs:element name="CodigoTipoMoneda" type="CodigoMonedaType"/>
 							<xs:element name="TotalServGravados" type="DecimalDineroType" minOccurs="0">
 								<xs:annotation>
-									<xs:documentation>Total de los servicios gravados con IV</xs:documentation>
+									<xs:documentation>Total de los servicios gravados con IVA</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 							<xs:element name="TotalServExentos" type="DecimalDineroType" minOccurs="0">
 								<xs:annotation>
-									<xs:documentation>Total de los servicios exentos de IV</xs:documentation>
+									<xs:documentation>Total de los servicios exentos de IVA</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 							<xs:element name="TotalServExonerado" type="DecimalDineroType" minOccurs="0">
@@ -282,19 +683,29 @@
 									<xs:documentation>Total servicios exonerados del IVA</xs:documentation>
 								</xs:annotation>
 							</xs:element>
+							<xs:element name="TotalServNoSujeto" type="DecimalDineroType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Este campo será de condición obligatoria, cuando se seleccionen códigos CAByS que correspondan a un servicio y el servicio sea No Sujeto de IVA</xs:documentation>
+								</xs:annotation>
+							</xs:element>
 							<xs:element name="TotalMercanciasGravadas" type="DecimalDineroType" minOccurs="0">
 								<xs:annotation>
-									<xs:documentation>Total mercancias gravadas con IV</xs:documentation>
+									<xs:documentation>Total mercancias gravadas con IVA</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 							<xs:element name="TotalMercanciasExentas" type="DecimalDineroType" minOccurs="0">
 								<xs:annotation>
-									<xs:documentation>Total mercancias exentas de IV</xs:documentation>
+									<xs:documentation>Total mercancias exentas de IVA</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 							<xs:element name="TotalMercExonerada" type="DecimalDineroType" minOccurs="0">
 								<xs:annotation>
 									<xs:documentation>Total mercancías exoneradas del IVA</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TotalMercNoSujeta" type="DecimalDineroType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Este campo será de condición obligatoria, cuando se seleccionen códigos CAByS que correspondan a una mercancía y la mercancía sea No Sujeta de IVA</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 							<xs:element name="TotalGravado" type="DecimalDineroType" minOccurs="0">
@@ -309,12 +720,17 @@
 							</xs:element>
 							<xs:element name="TotalExonerado" type="DecimalDineroType" minOccurs="0">
 								<xs:annotation>
-									<xs:documentation>Se obtiene de la suma de los campos “total servicios exonerados de IVA” mas “total de mercancías exoneradas del IVA”.</xs:documentation>
+									<xs:documentation>Se obtiene de la suma de los campos "total servicios exonerados de IVA" mas "total de mercancías exoneradas del IVA".</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TotalNoSujeto" type="DecimalDineroType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Se obtiene de la suma de los campos "Total servicios No Sujetos de IVA" mas "Total mercancías No Sujetas de IVA".</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 							<xs:element name="TotalVenta" type="DecimalDineroType">
 								<xs:annotation>
-									<xs:documentation>Se obtiene de la sumatoria de los campos “total gravado”, “total exento” y “Total Exonerado”.</xs:documentation>
+									<xs:documentation>Se obtiene de la sumatoria de los campos “total gravado”, “total exento”, “Total Exonerado” y “Total No Sujeto</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 							<xs:element name="TotalDescuentos" type="DecimalDineroType" minOccurs="0">
@@ -327,9 +743,34 @@
 									<xs:documentation>Se obtiene de la resta de los campos total venta menos total descuento</xs:documentation>
 								</xs:annotation>
 							</xs:element>
+							<xs:element name="TotalDesgloseImpuesto" minOccurs="0" maxOccurs="1000">
+								<xs:annotation>
+									<xs:documentation>Tipo complejo que contiene los montos desglosados por impuesto cobrado en el comprobante electrónico.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Codigo" type="CodigoImpuestoType">
+											<xs:annotation>
+												<xs:documentation>Indicará los códigos de impuesto registrados en las líneas de detalle.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="CodigoTarifaIVA" type="CodigoTarifaIVAType" minOccurs="0"/>
+										<xs:element name="TotalMontoImpuesto" type="DecimalDineroType">
+											<xs:annotation>
+												<xs:documentation>Se obtiene de la sumatoria del monto por código de impuesto cobrado en el comprobante electrónico</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
 							<xs:element name="TotalImpuesto" type="DecimalDineroType" minOccurs="0">
 								<xs:annotation>
 									<xs:documentation>Se obtiene de la suma de todos campos monto del impuesto</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TotalImpAsumEmisorFabrica" type="DecimalDineroType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Este campo es de condición obligatoria, cuando existen producto/servicio gravados con algún impuesto en las líneas de detalle que sean asumidos por el emisor</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 							<xs:element name="TotalIVADevuelto" type="DecimalDineroType" minOccurs="0">
@@ -342,9 +783,80 @@
 									<xs:documentation>Total Otros Cargos </xs:documentation>
 								</xs:annotation>
 							</xs:element>
+							<xs:element name="MedioPago" minOccurs="0" maxOccurs="4">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="TipoMedioPago" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Corresponde al medio de pago empleado: 01 - Efectivo, 02 - Tarjeta, 03 - Cheque, 04 - Transferencia - depósito bancario, 05 - Recaudado por terceros, 06 - SINPE  MOVIL, 07 - Plataforma Digital, 99 -  Otros</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="01">
+														<xs:annotation>
+															<xs:documentation>Efectivo</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="02">
+														<xs:annotation>
+															<xs:documentation> Tarjeta</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="03">
+														<xs:annotation>
+															<xs:documentation>Cheque</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="04">
+														<xs:annotation>
+															<xs:documentation>Transferencia - depósito bancario</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="05">
+														<xs:annotation>
+															<xs:documentation>Recaudado por terceros</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="06">
+														<xs:annotation>
+															<xs:documentation>SINPE MOVIL</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="07">
+														<xs:annotation>
+															<xs:documentation>Plataforma Digital</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="99">
+														<xs:annotation>
+															<xs:documentation>Otros</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="MedioPagoOtros" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Será obligatorio en caso de utilizar el código 99 de "Otros" de la nota 6. Se debe describir puntualmente el medio de pago utilizado</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="3"/>
+													<xs:maxLength value="100"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="TotalMedioPago" type="DecimalDineroType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Se deberá detallar el monto correspondiente al tipo de pago seleccionado. Se volverá obligatorio cuando se utilice más de un medio de pago.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
 							<xs:element name="TotalComprobante" type="DecimalDineroType">
 								<xs:annotation>
-									<xs:documentation>Se obtiene de la suma de los campos “total venta neta”, “monto total del impuesto” y “total otros cargos” menos “total IVA devuelto”, en caso de contar con dichos campos.</xs:documentation>
+									<xs:documentation>Se obtiene de la suma de los campos "total venta neta", "monto total del impuesto" y "total otros cargos" menos "total IVA devuelto", en caso de contar con dichos campos.</xs:documentation>
 								</xs:annotation>
 							</xs:element>
 						</xs:sequence>
@@ -353,70 +865,25 @@
 				<xs:element name="InformacionReferencia" minOccurs="0" maxOccurs="10">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="TipoDoc">
+							<xs:element name="TipoDocIR" type="TipoDocReferenciaType">
 								<xs:annotation>
-									<xs:documentation>Tipo de documento de referencia. 01 Factura electrónica, 02 Nota de débito electrónica, 03 nota de crédito electrónica, 04 Tiquete electrónico, 05 Nota de despacho, 06 Contrato, 07 Procedimiento, 08 Comprobante emitido en contigencia, 09 Devoluicion mercaderia, 10 Sustituye factura rechazada poir Ministerio de Hacienda, 11 Sustituye factura rechazada por el receptor del comprobante, 12 Sustituye factura de exportacion, 13 facturacion mes vencido, 99 otros</xs:documentation>
+									<xs:documentation>Tipo de documento de referencia </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TipoDocRefOTRO" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Será obligatorio en caso de utilizar el código 99 de “Otros” de la nota 10. Se debe describir puntualmente el tipo de documento utilizado</xs:documentation>
 								</xs:annotation>
 								<xs:simpleType>
 									<xs:restriction base="xs:string">
-										<xs:enumeration value="01">
-											<xs:annotation>
-												<xs:documentation>Factura electrónica</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="02">
-											<xs:annotation>
-												<xs:documentation>Nota de debido electrónica</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="03">
-											<xs:annotation>
-												<xs:documentation>nota de crédito electrónica</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="04">
-											<xs:annotation>
-												<xs:documentation>Tiquete electrónico</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="05">
-											<xs:annotation>
-												<xs:documentation>Nota de despacho</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="06">
-											<xs:annotation>
-												<xs:documentation>Contrato</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="07">
-											<xs:annotation>
-												<xs:documentation>Procedimiento</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="08">
-											<xs:annotation>
-												<xs:documentation>Comprobante emitido en contigencia</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="09"/>
-										<xs:enumeration value="10"/>
-										<xs:enumeration value="11"/>
-										<xs:enumeration value="12"/>
-										<xs:enumeration value="13"/>
-										<xs:enumeration value="99">
-											<xs:annotation>
-												<xs:documentation>Otros</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="14"/>
-										<xs:enumeration value="15"/>
+										<xs:minLength value="5"/>
+										<xs:maxLength value="100"/>
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>
 							<xs:element name="Numero" minOccurs="0">
 								<xs:annotation>
-									<xs:documentation>Número de documento de referencia</xs:documentation>
+									<xs:documentation>Clave numérica del comprobante electrónico o consecutivo del documento de referencia</xs:documentation>
 								</xs:annotation>
 								<xs:simpleType>
 									<xs:restriction base="xs:string">
@@ -424,47 +891,24 @@
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>
-							<xs:element name="FechaEmision" type="xs:dateTime">
+							<xs:element name="FechaEmisionIR" type="xs:dateTime">
 								<xs:annotation>
-									<xs:documentation>Fecha y hora de emisión del documento de referencia</xs:documentation>
+									<xs:documentation>Fecha de emisión del documento de referencia</xs:documentation>
 								</xs:annotation>
 							</xs:element>
-							<xs:element name="Codigo" minOccurs="0">
+							<xs:element name="Codigo" type="CodigoReferenciaType" minOccurs="0">
 								<xs:annotation>
-									<xs:documentation>Código de referencia. 01 Anula documento de referencia, 02 Corrige texto de documento de referencia, 03 Corrige monto, 04 Referencia a otro documento, 05 Sustituye comprobante provisional por contigencia, 99 Otros</xs:documentation>
+									<xs:documentation>Código de referencia. 01 Anula documento de referencia, 02 Corrige texto de documento de referencia, 04 Referencia a otro documento, 05 Sustituye comprobante provisional por contigencia, 99 Otros</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CodigoReferenciaOTRO" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Será obligatorio en caso de utilizar el código 99 de “Otros” de la nota 9. Se debe describir puntualmente el código de referencia utilizado</xs:documentation>
 								</xs:annotation>
 								<xs:simpleType>
 									<xs:restriction base="xs:string">
-										<xs:enumeration value="01">
-											<xs:annotation>
-												<xs:documentation>Anula documento de referencia</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="02">
-											<xs:annotation>
-												<xs:documentation>Corrige texto de ocumento de referencia</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="03">
-											<xs:annotation>
-												<xs:documentation>Corrige monto</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="04">
-											<xs:annotation>
-												<xs:documentation>Referencia a otro documento</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="05">
-											<xs:annotation>
-												<xs:documentation>Sustituye comprobante provisional por contigencia</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
-										<xs:enumeration value="99">
-											<xs:annotation>
-												<xs:documentation>Otros</xs:documentation>
-											</xs:annotation>
-										</xs:enumeration>
+										<xs:minLength value="5"/>
+										<xs:maxLength value="100"/>
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>
@@ -486,11 +930,11 @@
 						<xs:sequence>
 							<xs:element name="OtroTexto" minOccurs="0" maxOccurs="unbounded">
 								<xs:annotation>
-									<xs:documentation>Elemento opcional que se puede utilizar la almacenar texto.</xs:documentation>
+									<xs:documentation>Elemento opcional que se puede utilizar para almacenar texto.</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
 									<xs:simpleContent>
-										<xs:extension base="xs:string">
+										<xs:extension base="restrictedString">
 											<xs:attribute name="codigo" type="xs:string">
 												<xs:annotation>
 													<xs:documentation>Código opcional para facilitar la identificación del elemento.</xs:documentation>
@@ -505,14 +949,15 @@
 									<xs:documentation>Elemento opcional que se puede utilizar para almacenar contenido estructurado.</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-									<xs:sequence>
-										<xs:any namespace="##other" processContents="lax"/>
-									</xs:sequence>
-									<xs:attribute name="codigo" type="xs:string">
-										<xs:annotation>
-											<xs:documentation>Código opcional para facilitar la identificación del elemento.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
+									<xs:simpleContent>
+										<xs:extension base="restrictedString">
+											<xs:attribute name="codigo" type="xs:string">
+												<xs:annotation>
+													<xs:documentation>Código opcional para facilitar la identificación del elemento.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
@@ -531,10 +976,24 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="100"/>
+						<xs:minLength value="5"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="Identificacion" type="IdentificacionType"/>
+			<xs:element name="Registrofiscal8707" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Campo condicional. Se convierte en carácter obligatorio cuando se
+estén facturando códigosCAByS de bebidas alcohólicas según la Ley
+8707. Contiene los datos del número de registro de bebidas
+alcohólicas, suministrado por la Dirección General de Aduanas</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="NombreComercial" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>En caso de que se cuente con nombre comercial debe indicarse</xs:documentation>
@@ -542,13 +1001,13 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="80"/>
+						<xs:minLength value="3"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="Ubicacion" type="UbicacionType"/>
 			<xs:element name="Telefono" type="TelefonoType" nillable="true" minOccurs="0"/>
-			<xs:element name="Fax" type="TelefonoType" nillable="true" minOccurs="0"/>
-			<xs:element name="CorreoElectronico">
+			<xs:element name="CorreoElectronico" maxOccurs="4">
 				<xs:annotation>
 					<xs:documentation>Debe cumplir con la siguiente estructura: 
  \s*\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*\s*
@@ -571,20 +1030,11 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="100"/>
+						<xs:minLength value="3"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="Identificacion" type="IdentificacionType"/>
-			<xs:element name="IdentificacionExtranjero" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Este campo será de condición obligatoria, cuando el cliente lo requiera</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:maxLength value="20"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
 			<xs:element name="NombreComercial" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>En caso de que se cuente con nombre comercial debe indicarse</xs:documentation>
@@ -592,6 +1042,7 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="80"/>
+						<xs:minLength value="3"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -603,11 +1054,11 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="300"/>
+						<xs:minLength value="5"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="Telefono" type="TelefonoType" minOccurs="0"/>
-			<xs:element name="Fax" type="TelefonoType" minOccurs="0"/>
 			<xs:element name="CorreoElectronico" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Este campo será de condición obligatoria, cuando el cliente lo requiera. Debe cumplir con la siguiente estructura: 
@@ -626,7 +1077,7 @@
 		<xs:sequence>
 			<xs:element name="Tipo" nillable="false">
 				<xs:annotation>
-					<xs:documentation>Tipo de identificación: 01 Cédula Física, 02 Cédula Jurídica, 03 DIMEX, 04 NITE</xs:documentation>
+					<xs:documentation>Tipo de identificación: 01 Cédula Física, 02 Cédula Jurídica, 03 DIMEX, 04 NITE, 05 Extranjero No Domiciliado, 06 No Contribuyente</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
@@ -650,6 +1101,16 @@
 								<xs:documentation>NITE</xs:documentation>
 							</xs:annotation>
 						</xs:enumeration>
+						<xs:enumeration value="05">
+							<xs:annotation>
+								<xs:documentation>Extranjero No Domiciliado</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="06">
+							<xs:annotation>
+								<xs:documentation>No Contribuyente</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -659,8 +1120,7 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:maxLength value="12"/>
-						<xs:pattern value="\d{9,12}"/>
+						<xs:maxLength value="20"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -694,9 +1154,9 @@
 			</xs:element>
 			<xs:element name="Barrio" minOccurs="0">
 				<xs:simpleType>
-					<xs:restriction base="xs:positiveInteger">
-						<xs:totalDigits value="2"/>
-						<xs:pattern value="\d\d"/>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="50"/>
+						<xs:minLength value="5"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -704,6 +1164,7 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="250"/>
+						<xs:minLength value="5"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -727,7 +1188,8 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:integer">
-						<xs:totalDigits value="20"/>
+						<xs:minInclusive value="10000000"/>
+						<xs:maxInclusive value="99999999999999999999"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -735,52 +1197,19 @@
 	</xs:complexType>
 	<xs:complexType name="ExoneracionType">
 		<xs:sequence>
-			<xs:element name="TipoDocumento">
+			<xs:element name="TipoDocumentoEX1" type="TipoExoneracionType">
 				<xs:annotation>
-					<xs:documentation>Tipo de documento de exoneración o autorización. 01 Compras Autorizadas, 02 Ventas exentas a diplomáticos, 03 Autorizado por Ley Especial, 04 Exenciones Dirección General de Hacienda, 05 Transitorio V, 06 Transitorio IX, 07 Transitorio XVII, 99 Otros</xs:documentation>
+					<xs:documentation>Tipo de documento de exoneración o autorización.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TipoDocumentoOTRO" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Será obligatorio en caso de utilizar el código 99 de “Otros” de la nota 10.1. Se debe describir puntualmente el tipo de documento o autorización utilizado</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="01">
-							<xs:annotation>
-								<xs:documentation>Compras Autorizadas</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="02">
-							<xs:annotation>
-								<xs:documentation>Ventas exentas a diplomáticos</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="03">
-							<xs:annotation>
-								<xs:documentation>Autorizado por Ley Especial</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="04">
-							<xs:annotation>
-								<xs:documentation>Exenciones Direccion General de Hacienda</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="05">
-							<xs:annotation>
-								<xs:documentation>Transitorio V</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="06">
-							<xs:annotation>
-								<xs:documentation>Transitorio IX</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="07">
-							<xs:annotation>
-								<xs:documentation>Transitorio XVII</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="99">
-							<xs:annotation>
-								<xs:documentation>Otros</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
+						<xs:minLength value="5"/>
+						<xs:maxLength value="100"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -791,6 +1220,27 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="40"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Articulo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Número de artículo que establece la exoneración o autorización</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="6"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Inciso" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Número de inciso que establece la exoneración o autorización</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="6"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -800,22 +1250,99 @@
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:enumeration value="01">
+							<xs:annotation>
+								<xs:documentation>Ministerio de Hacienda</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="02">
+							<xs:annotation>
+								<xs:documentation>Ministerio de Relaciones Exteriores y Culto</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="03">
+							<xs:annotation>
+								<xs:documentation>Ministerio de Agricultura y Ganadería</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="04">
+							<xs:annotation>
+								<xs:documentation>Ministerio de Economía, Industria y Comercio</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="05">
+							<xs:annotation>
+								<xs:documentation>Cruz Roja Costarricense</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="06">
+							<xs:annotation>
+								<xs:documentation>Benemérito Cuerpo de Bomberos de Costa Rica</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="07">
+							<xs:annotation>
+								<xs:documentation>Asociación Obras del Espíritu Santo</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="08">
+							<xs:annotation>
+								<xs:documentation>Federación Cruzada Nacional de protección al Anciano (Fecrunapa)</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="09">
+							<xs:annotation>
+								<xs:documentation>Escuela de Agricultura de la Región Húmeda (EARTH)</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="10">
+							<xs:annotation>
+								<xs:documentation>Instituto Centroamericano de Administración de Empresas (INCAE)</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="11">
+							<xs:annotation>
+								<xs:documentation>Junta de Protección Social (JPS)</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="12">
+							<xs:annotation>
+								<xs:documentation>Autoridad Reguladora de los Servicios Públicos (Aresep)</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="99">
+							<xs:annotation>
+								<xs:documentation>Otros</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NombreInstitucionOtros" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Detalle Nombre de institución o dependencia que emitió la exoneración OTRO</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="5"/>
 						<xs:maxLength value="160"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="FechaEmision" type="xs:dateTime">
+			<xs:element name="FechaEmisionEX" type="xs:dateTime">
 				<xs:annotation>
 					<xs:documentation>Fecha y hora de la emisión del documento de exoneración o autorización.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PorcentajeExoneracion">
+			<xs:element name="TarifaExonerada">
 				<xs:annotation>
-					<xs:documentation>Porcentaje de la exoneración</xs:documentation>
+					<xs:documentation>Tarifa exonerada</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
-					<xs:restriction base="xs:positiveInteger">
-						<xs:totalDigits value="3"/>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="4"/>
+						<xs:fractionDigits value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -828,87 +1355,33 @@
 	</xs:complexType>
 	<xs:complexType name="ImpuestoType">
 		<xs:sequence>
-			<xs:element name="Codigo">
+			<xs:element name="Codigo" type="CodigoImpuestoType">
 				<xs:annotation>
 					<xs:documentation>Código del impuesto: 01 Impuesto al valor agregado, 02 Impuesto Selectivo de Consumo, 03 Impuesto único a los combustivos, 04 Impuesto específico de bebidas alcohólicas, 05 Impuesto específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador, 06 Impuesto a los productos de tabaco, 07 IVA (cálculo especial), 08 IVA Regimen de Bienes Usados (Factor), 12 Impuesto Especifico al cemento, 99 Otros</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="01">
-							<xs:annotation>
-								<xs:documentation>Impuesto al Valor Agregado</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="02">
-							<xs:annotation>
-								<xs:documentation> Impuesto Selectivo de Consumo</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="03">
-							<xs:annotation>
-								<xs:documentation>Impuesto unico a los combustivos</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="04">
-							<xs:annotation>
-								<xs:documentation>Impuesto especifico de bebidas alcohólicas</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="05">
-							<xs:annotation>
-								<xs:documentation>impuesto especifico sobre las bebidas envasadas sin contenido alcoholico y jabones de tocador</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="06">
-							<xs:annotation>
-								<xs:documentation>impuesto a los productos de tabaco</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="07">
-							<xs:annotation>
-								<xs:documentation>IVA (cálculo especial)</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="08">
-							<xs:annotation>
-								<xs:documentation>IVA Régimen de Bienes Usados (Factor)</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="12">
-							<xs:annotation>
-								<xs:documentation>Impuesto Especifico al Cemento</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="99">
-							<xs:annotation>
-								<xs:documentation>Otros</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:element>
-			<xs:element name="CodigoTarifa" minOccurs="0">
+			<xs:element name="CodigoImpuestoOTRO" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Código de la tarifa del impuesto. 01 Tarifa 0% (Exento), 02 Tarifa Reducida 1%, 03 Tarifa reducida 2%, 04 Tarifa reducida 4%, 05 Transitorio 0%, 06 Transitorio 4%, 07 Transitorio 8%, 08 Tarifa General 13%</xs:documentation>
+					<xs:documentation>Será obligatorio en caso de utilizar el código 99 de “Otros” de la nota 8. Se debe describir puntualmente el impuesto
+utilizado</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:maxLength value="2"/>
-						<xs:minLength value="2"/>
-						<xs:enumeration value="01"/>
-						<xs:enumeration value="02"/>
-						<xs:enumeration value="03"/>
-						<xs:enumeration value="04"/>
-						<xs:enumeration value="05"/>
-						<xs:enumeration value="06"/>
-						<xs:enumeration value="07"/>
-						<xs:enumeration value="08"/>
+						<xs:minLength value="5"/>
+						<xs:maxLength value="100"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:element name="CodigoTarifaIVA" type="CodigoTarifaIVAType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>En el caso que se utilice el nodo “Detalle de productos del surtido, paquetes o combos”, no se deberá utilizar este
+campo, ya que el impuesto se calcula como la suma de los montos de impuestos individuales de las líneas de detalle de los componentes del surtido que se deben incluir en estos
+casos. La eventual validación de la consistencia de los impuestos calculados y aplicación de tarifas se hará sobre las líneas individuales de detalle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Tarifa" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Tarifa del impuesto</xs:documentation>
+					<xs:documentation>En el caso que se utilice el nodo “Detalle de productos del surtido, paquetes o combos”, no se deberá utilizar este campo, ya que el impuesto se calcula como la suma de los montos de impuestos individuales de las líneas de detalle de componentes del surtido que se deben incluir en estos casos. La eventual validación de la consistencia de los impuestos calculados y aplicación de tarifas se hará sobre las líneas individuales de detalle.</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:decimal">
@@ -917,9 +1390,10 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="FactorIVA" minOccurs="0">
+			<xs:element name="FactorCalculoIVA" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Factor del impuesto</xs:documentation>
+					<xs:documentation>Este campo es de condición obligatoria, cuando el producto/servicio posea un factor para su cálculo.
+Cuando en el código de impuesto se defina IVA Bienes Usados se deberá utilizar este campo con el factor establecido por el Ministerio de Hacienda</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:decimal">
@@ -927,6 +1401,67 @@
 						<xs:fractionDigits value="4"/>
 					</xs:restriction>
 				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DatosImpuestoEspecifico" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tipo complejo con el detalle para calcular impuestos específicos no tarifarios. Este campo es de condición obligatoria, cuando se utilicen
+los códigos de impuesto 03, 04, 05, 06 de la nota 8 y agrupará los campos requeridos para el cálculo de estos impuestos</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CantidadUnidadMedida">
+							<xs:annotation>
+								<xs:documentation>En el caso que se utilice el nodo “Detalle de productos del surtido, paquetes o combos”, no se deberá utilizar este
+campo, para los códigos de impuesto 04, 05, 06 de la nota 8, ya que el impuesto se calcula como la suma de los montos de impuestos individuales de las líneas de detalle de
+componentes del surtido que se deben incluir en estos casos</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:totalDigits value="7"/>
+									<xs:fractionDigits value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Porcentaje" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Este campo es de condición obligatoria, cuando se utilice el código de impuesto 04 de la nota 8</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:totalDigits value="4"/>
+									<xs:fractionDigits value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Proporcion" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Este campo es de condición obligatoria, cuando se utilice el código de impuesto 04 de la nota 8 Este campo se obtiene de multiplicar la “Cantidad de la unidad de medida a utilizar” por el “Porcentaje”</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:totalDigits value="5"/>
+									<xs:fractionDigits value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="VolumenUnidadConsumo" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Este campo es de condición obligatoria, cuando se utilice el código de impuesto 05 de la nota 8</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:totalDigits value="7"/>
+									<xs:fractionDigits value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="ImpuestoUnidad" type="DecimalDineroType">
+							<xs:annotation>
+								<xs:documentation>Este campo es de condición obligatoria, cuando se utilicen los códigos de impuesto 03, 04, 05 y 06 de la nota 8</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
 			</xs:element>
 			<xs:element name="Monto" type="DecimalDineroType">
 				<xs:annotation>
@@ -940,10 +1475,22 @@
 		<xs:sequence>
 			<xs:element name="Tipo">
 				<xs:annotation>
-					<xs:documentation>Tipo de código de producto o servicio: 01: Código del producto del vendedor, 02 Código del producto del comprador, 03 Código del producto asignado por la industria, 04 Código de uso interno, 99 Otros</xs:documentation>
+					<xs:documentation>Será obligatorio para las líneas de detalle que utilicen uno de
+los códigos de producto/servicio de "surtidos" que estén
+habilitados en el CAByS.
+En el caso de la inclusión de paquetes, surtidos o combos,
+entendidos como la combinación de más de dos productos
+con diferentes códigos de producto/servicio, se debe
+seleccionar el código 03 "Código del producto asignado por la
+industria" de la nota 12 e incluir en el campo "código" el
+respectivo código "SKU", GTIN o equivalentes, con el que el
+paquete este identificado en la industria. Estos códigos deben
+ser verificables en los catálogos disponibles en la industria.</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
+						<xs:minLength value="2"/>
+						<xs:maxLength value="2"/>
 						<xs:enumeration value="01">
 							<xs:annotation>
 								<xs:documentation>Código del producto del vendedor</xs:documentation>
@@ -972,9 +1519,11 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="Codigo" minOccurs="0">
+			<xs:element name="Codigo">
 				<xs:annotation>
-					<xs:documentation>Código del producto o servicio</xs:documentation>
+					<xs:documentation>Será obligatorio para las líneas de detalle que utilicen uno de
+los códigos de producto/servicio de "surtidos" que estén
+habilitados en el CAByS.</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
@@ -988,16 +1537,37 @@
 		<xs:sequence>
 			<xs:element name="MontoDescuento" type="DecimalDineroType">
 				<xs:annotation>
-					<xs:documentation>Monto de descuento concedido, el cual es obligatorio si existe descuento</xs:documentation>
+					<xs:documentation>Monto de descuento concedido. Este campo será de condición obligatoria, cuando se indique
+un descuento, en el campo "Código del descuento"</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NaturalezaDescuento">
+			<xs:element name="CodigoDescuento" type="CodigoDescuentoType">
+				<xs:annotation>
+					<xs:documentation>Este campo será de condición obligatoria, cuando se incluya
+información en el campo "monto de descuentos concedidos"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CodigoDescuentoOTRO" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Será obligatorio en caso de utilizar el código 99 de "Otros"
+de la nota 20. Se debe describir puntualmente el descuento
+utilizado</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100"/>
+						<xs:minLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NaturalezaDescuento" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Naturaleza del descuento, que es obligatorio si existe descuento</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="80"/>
+						<xs:minLength value="3"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -1005,33 +1575,30 @@
 	</xs:complexType>
 	<xs:complexType name="OtrosCargosType">
 		<xs:sequence>
-			<xs:element name="TipoDocumento">
+			<xs:element name="TipoDocumentoOC">
 				<xs:annotation>
-					<xs:documentation>01 Contribución parafiscal, 02 Timbre de la Cruz Roja, 03 Timbre de Benemérito Cuerpo de Bomberos de Costa Rica, 04 Cobro de un tercero, 05 Costos de Exportación, 06 Impuesto de Servicio 10%, 07 Timbre de Colegios Profesionales, 99 Otros Cargos</xs:documentation>
+					<xs:documentation>Se verificará el cumplimiento de la nota 16.
+Además, cuando se seleccione el código 04, 08, 09 y 10 de la nota 16 en “Tipo de documento otros cargos” y no se cuente con una línea de servicio o producto, no es obligatorio usar el nodo “Detalle de la mercancía o servicio prestado”.</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="01"/>
-						<xs:enumeration value="02"/>
-						<xs:enumeration value="03"/>
-						<xs:enumeration value="04"/>
-						<xs:enumeration value="05"/>
-						<xs:enumeration value="06"/>
-						<xs:enumeration value="07"/>
-						<xs:enumeration value="99"/>
+					<xs:restriction base="TipoDocOtrosCargosType">
+						<xs:minLength value="2"/>
+						<xs:maxLength value="2"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="NumeroIdentidadTercero" minOccurs="0">
+			<xs:element name="TipoDocumentoOTROS" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Número de cédula física/ jurídica/NITE/DIMEX del emisor </xs:documentation>
+					<xs:documentation>Será obligatorio en caso de utilizar el código 99 de “Otros” de la nota 16. Se debe describir puntualmente el tipo de documento utilizado</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:maxLength value="12"/>
+						<xs:minLength value="5"/>
+						<xs:maxLength value="100"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:element name="IdentificacionTercero" type="IdentificacionType" minOccurs="0"/>
 			<xs:element name="NombreTercero" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Nombre o razón social del receptor</xs:documentation>
@@ -1039,6 +1606,7 @@
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="100"/>
+						<xs:minLength value="5"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -1052,10 +1620,13 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="Porcentaje" minOccurs="0">
+			<xs:element name="PorcentajeOC" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>En el caso que el cargo posea un porcentaje o monto para su cálculo se debe de indicar el mismo</xs:documentation>
+				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:decimal">
-						<xs:totalDigits value="6"/>
+						<xs:totalDigits value="9"/>
 						<xs:fractionDigits value="5"/>
 						<xs:minInclusive value="0"/>
 					</xs:restriction>
@@ -1072,7 +1643,7 @@
 		<xs:sequence>
 			<xs:element name="CodigoMoneda">
 				<xs:annotation>
-					<xs:documentation>Código de la moneda de acuerdo al ISO 4217</xs:documentation>
+					<xs:documentation>Código de la moneda</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
@@ -1296,384 +1867,9 @@
 			<xs:documentation>Unidades de Medida basadas en el estándar RTC 443:2010</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="Al">
-				<xs:annotation>
-					<xs:documentation>Alquiler de uso habitacional</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Alc">
-				<xs:annotation>
-					<xs:documentation>Alquiler de uso comercial</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Cm">
-				<xs:annotation>
-					<xs:documentation>Comisiones</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="I">
-				<xs:annotation>
-					<xs:documentation>Intereses</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Os">
-				<xs:annotation>
-					<xs:documentation>Otro tipo de servicios</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Sp">
-				<xs:annotation>
-					<xs:documentation>Servicios Profesionales</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Spe">
-				<xs:annotation>
-					<xs:documentation>Servicios Personales</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="St">
-				<xs:annotation>
-					<xs:documentation>Servicios Técnicos</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="d">
-				<xs:annotation>
-					<xs:documentation>Día</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="m">
-				<xs:annotation>
-					<xs:documentation>Metro</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="kg">
-				<xs:annotation>
-					<xs:documentation>Kilogramo</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="s">
-				<xs:annotation>
-					<xs:documentation>Segundo</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="A">
-				<xs:annotation>
-					<xs:documentation>Ampere</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="K">
-				<xs:annotation>
-					<xs:documentation>Kelvin</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="mol">
-				<xs:annotation>
-					<xs:documentation>Mol</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="cd">
-				<xs:annotation>
-					<xs:documentation>Candela</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="m²">
-				<xs:annotation>
-					<xs:documentation>metro cuadrado</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="m³">
-				<xs:annotation>
-					<xs:documentation>metro cúbico</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="m/s">
-				<xs:annotation>
-					<xs:documentation>metro por segundo</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="m/s²">
-				<xs:annotation>
-					<xs:documentation>metro por segundo cuadrado</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="1/m">
-				<xs:annotation>
-					<xs:documentation>1 por metro</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="kg/m³">
-				<xs:annotation>
-					<xs:documentation>kilogramo por metro cúbico</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="A/m²">
-				<xs:annotation>
-					<xs:documentation>ampere por metro cuadrado</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="A/m">
-				<xs:annotation>
-					<xs:documentation>ampere por metro</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="mol/m³">
-				<xs:annotation>
-					<xs:documentation>mol por metro cúbico</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="cd/m²">
-				<xs:annotation>
-					<xs:documentation>candela por metro cuadrado</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
 			<xs:enumeration value="1">
 				<xs:annotation>
-					<xs:documentation>uno (indice de refracción)</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="rad">
-				<xs:annotation>
-					<xs:documentation>radián</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="sr">
-				<xs:annotation>
-					<xs:documentation>estereorradián</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Hz">
-				<xs:annotation>
-					<xs:documentation>hertz</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="N">
-				<xs:annotation>
-					<xs:documentation>newton</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Pa">
-				<xs:annotation>
-					<xs:documentation>pascal</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="J">
-				<xs:annotation>
-					<xs:documentation>Joule</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="W">
-				<xs:annotation>
-					<xs:documentation>Watt</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="C">
-				<xs:annotation>
-					<xs:documentation>coulomb</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="V">
-				<xs:annotation>
-					<xs:documentation>volt</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="F">
-				<xs:annotation>
-					<xs:documentation>farad</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Ω">
-				<xs:annotation>
-					<xs:documentation>ohm</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="S">
-				<xs:annotation>
-					<xs:documentation>siemens</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Wb">
-				<xs:annotation>
-					<xs:documentation>weber</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="T">
-				<xs:annotation>
-					<xs:documentation>tesla</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="H">
-				<xs:annotation>
-					<xs:documentation>henry</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="°C">
-				<xs:annotation>
-					<xs:documentation>grado Celsius</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="lm">
-				<xs:annotation>
-					<xs:documentation>lumen</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="lx">
-				<xs:annotation>
-					<xs:documentation>lux</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Bq">
-				<xs:annotation>
-					<xs:documentation>Becquerel</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Gy">
-				<xs:annotation>
-					<xs:documentation>gray</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Sv">
-				<xs:annotation>
-					<xs:documentation>sievert</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="kat">
-				<xs:annotation>
-					<xs:documentation>katal</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Pa·s">
-				<xs:annotation>
-					<xs:documentation>pascal segundo</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="N·m">
-				<xs:annotation>
-					<xs:documentation>newton metro</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="N/m">
-				<xs:annotation>
-					<xs:documentation>newton por metro</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="rad/s">
-				<xs:annotation>
-					<xs:documentation>radián por segundo</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="rad/s²">
-				<xs:annotation>
-					<xs:documentation>radián por segundo cuadrado</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="W/m²">
-				<xs:annotation>
-					<xs:documentation>watt por metro cuadrado</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="J/K">
-				<xs:annotation>
-					<xs:documentation>joule por kelvin</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="J/(kg·K)">
-				<xs:annotation>
-					<xs:documentation>joule por kilogramo kelvin</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="J/kg">
-				<xs:annotation>
-					<xs:documentation>joule por kilogramo</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="W/(m·K)">
-				<xs:annotation>
-					<xs:documentation>watt por metro kevin</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="J/m³">
-				<xs:annotation>
-					<xs:documentation>joule por metro cúbico</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="V/m">
-				<xs:annotation>
-					<xs:documentation>volt por metro</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="C/m³">
-				<xs:annotation>
-					<xs:documentation>coulomb por metro cúbico</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="C/m²">
-				<xs:annotation>
-					<xs:documentation>coulomb por metro cuadrado</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="F/m">
-				<xs:annotation>
-					<xs:documentation>farad por metro</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="H/m">
-				<xs:annotation>
-					<xs:documentation>henry por metro</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="J/mol">
-				<xs:annotation>
-					<xs:documentation>joule por mol</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="J/(mol·K)">
-				<xs:annotation>
-					<xs:documentation>joule por mol kelvin</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="C/kg">
-				<xs:annotation>
-					<xs:documentation>coulomb por kilogramo</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Gy/s">
-				<xs:annotation>
-					<xs:documentation>gray por segundo</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="W/sr">
-				<xs:annotation>
-					<xs:documentation>watt por estereorradián</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="W/(m²·sr)">
-				<xs:annotation>
-					<xs:documentation>watt por metro cuadrado estereorradián</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="kat/m³">
-				<xs:annotation>
-					<xs:documentation>katal por metro cúbico</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="min">
-				<xs:annotation>
-					<xs:documentation>minuto</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="h">
-				<xs:annotation>
-					<xs:documentation>hora</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="d">
-				<xs:annotation>
-					<xs:documentation>día</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="º">
-				<xs:annotation>
-					<xs:documentation>grado</xs:documentation>
+					<xs:documentation>uno (índice de refracción)</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="´">
@@ -1686,19 +1882,44 @@
 					<xs:documentation>segundo</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="L">
+			<xs:enumeration value="°C">
 				<xs:annotation>
-					<xs:documentation>litro</xs:documentation>
+					<xs:documentation>grado Celsius</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="t">
+			<xs:enumeration value="1/m">
 				<xs:annotation>
-					<xs:documentation>tonelada</xs:documentation>
+					<xs:documentation>1 por metro</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="Np">
+			<xs:enumeration value="A">
 				<xs:annotation>
-					<xs:documentation>neper</xs:documentation>
+					<xs:documentation>Ampere</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="A/m">
+				<xs:annotation>
+					<xs:documentation>ampere por metro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="A/m²">
+				<xs:annotation>
+					<xs:documentation>ampere por metro cuadrado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Acv">
+				<xs:annotation>
+					<xs:documentation>Activo Virtual</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Al">
+				<xs:annotation>
+					<xs:documentation>Alquiler de uso habitacional</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Alc">
+				<xs:annotation>
+					<xs:documentation>Alquiler de uso comercial</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="B">
@@ -1706,39 +1927,194 @@
 					<xs:documentation>bel</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="Bq">
+				<xs:annotation>
+					<xs:documentation>Becquerel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation>coulomb</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C/kg">
+				<xs:annotation>
+					<xs:documentation>coulomb por kilogramo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C/m²">
+				<xs:annotation>
+					<xs:documentation>coulomb por metro cuadrado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C/m³">
+				<xs:annotation>
+					<xs:documentation>coulomb por metro cúbico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Cc">
+				<xs:annotation>
+					<xs:documentation>Cajuela de café</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Cd">
+				<xs:annotation>
+					<xs:documentation>Candela</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="cd/m²">
+				<xs:annotation>
+					<xs:documentation>candela por metro cuadrado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Cm">
+				<xs:annotation>
+					<xs:documentation>Comisiones</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="cm">
+				<xs:annotation>
+					<xs:documentation>centímetro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Cu">
+				<xs:annotation>
+					<xs:documentation>cuartillos de café</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>día</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="eV">
 				<xs:annotation>
 					<xs:documentation>electronvolt</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="u">
+			<xs:enumeration value="F">
 				<xs:annotation>
-					<xs:documentation>unidad de masa atómica unificada</xs:documentation>
+					<xs:documentation>farad</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="ua">
+			<xs:enumeration value="F/m">
 				<xs:annotation>
-					<xs:documentation>unidad astronómica</xs:documentation>
+					<xs:documentation>farad por metro</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="Unid">
+			<xs:enumeration value="Fa">
 				<xs:annotation>
-					<xs:documentation>unidad</xs:documentation>
+					<xs:documentation>fanega de café</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="G">
+				<xs:annotation>
+					<xs:documentation>Gramo</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Gal">
 				<xs:annotation>
-					<xs:documentation>galón</xs:documentation>
+					<xs:documentation>Galón</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="g">
+			<xs:enumeration value="Gy">
 				<xs:annotation>
-					<xs:documentation>gramo</xs:documentation>
+					<xs:documentation>gray</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Gy/s">
+				<xs:annotation>
+					<xs:documentation>gray por segundo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="h">
+				<xs:annotation>
+					<xs:documentation>hora</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H">
+				<xs:annotation>
+					<xs:documentation>henry</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H/m">
+				<xs:annotation>
+					<xs:documentation>henry por metro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Hz">
+				<xs:annotation>
+					<xs:documentation>hertz</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="I">
+				<xs:annotation>
+					<xs:documentation>Intereses</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="J">
+				<xs:annotation>
+					<xs:documentation>Joule</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="J/(kg·K)">
+				<xs:annotation>
+					<xs:documentation>joule por kilogramo kelvin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="J/(mol·K)">
+				<xs:annotation>
+					<xs:documentation>joule por mol kelvin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="J/K">
+				<xs:annotation>
+					<xs:documentation>joule por kelvin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="J/kg">
+				<xs:annotation>
+					<xs:documentation>joule por kilogramo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="J/m³">
+				<xs:annotation>
+					<xs:documentation>joule por metro cúbico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="J/mol">
+				<xs:annotation>
+					<xs:documentation>joule por mol</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="K">
+				<xs:annotation>
+					<xs:documentation>Kelvin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Kat">
+				<xs:annotation>
+					<xs:documentation>katal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="kat/m³">
+				<xs:annotation>
+					<xs:documentation>katal por metro cúbico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Kg">
+				<xs:annotation>
+					<xs:documentation>Kilogramo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="kg/m³">
+				<xs:annotation>
+					<xs:documentation>kilogramo por metro cúbico</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Km">
 				<xs:annotation>
-					<xs:documentation>kilometro</xs:documentation>
+					<xs:documentation>Kilometro</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Kw">
@@ -1746,14 +2122,59 @@
 					<xs:documentation>kilovatios</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="ln">
+			<xs:enumeration value="kWh">
+				<xs:annotation>
+					<xs:documentation>Kilovatios por hora</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="L">
+				<xs:annotation>
+					<xs:documentation>litro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Lm">
+				<xs:annotation>
+					<xs:documentation>lumen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Ln">
 				<xs:annotation>
 					<xs:documentation>pulgada</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="cm">
+			<xs:enumeration value="Lx">
 				<xs:annotation>
-					<xs:documentation>centimetro</xs:documentation>
+					<xs:documentation>lux</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>Metro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="m/s">
+				<xs:annotation>
+					<xs:documentation>metro por segundo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="m/s²">
+				<xs:annotation>
+					<xs:documentation>metro por segundo cuadrado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="m²">
+				<xs:annotation>
+					<xs:documentation>metro cuadrado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="m³">
+				<xs:annotation>
+					<xs:documentation>metro cúbico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Min">
+				<xs:annotation>
+					<xs:documentation>minuto</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="mL">
@@ -1761,21 +2182,755 @@
 					<xs:documentation>mililitro</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="mm">
+			<xs:enumeration value="Mm">
 				<xs:annotation>
-					<xs:documentation>milimetro</xs:documentation>
+					<xs:documentation>Milímetro</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="Oz">
+			<xs:enumeration value="Mol">
 				<xs:annotation>
-					<xs:documentation>onzas</xs:documentation>
+					<xs:documentation>Mol</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="mol/m³">
+				<xs:annotation>
+					<xs:documentation>mol por metro cúbico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>newton</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N/m">
+				<xs:annotation>
+					<xs:documentation>newton por metro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N·m">
+				<xs:annotation>
+					<xs:documentation>newton metro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Np">
+				<xs:annotation>
+					<xs:documentation>neper</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="º">
+				<xs:annotation>
+					<xs:documentation>grado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Os">
+				<xs:annotation>
+					<xs:documentation>Otro tipo de servicio</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Otros">
 				<xs:annotation>
-					<xs:documentation/>
+					<xs:documentation>Se debe indicar la descripción de la medida a utilizar</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="Oz">
+				<xs:annotation>
+					<xs:documentation>Onzas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Pa">
+				<xs:annotation>
+					<xs:documentation>pascal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Pa·s">
+				<xs:annotation>
+					<xs:documentation>pascal segundo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Qq">
+				<xs:annotation>
+					<xs:documentation>Quintal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Rad">
+				<xs:annotation>
+					<xs:documentation>radián</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="rad/s">
+				<xs:annotation>
+					<xs:documentation>radián por segundo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="rad/s²">
+				<xs:annotation>
+					<xs:documentation>radián por segundo cuadrado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>Segundo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="s">
+				<xs:annotation>
+					<xs:documentation>siemens</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Sp">
+				<xs:annotation>
+					<xs:documentation>Servicios Profesionales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Spe">
+				<xs:annotation>
+					<xs:documentation>Servicios personales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Sr">
+				<xs:annotation>
+					<xs:documentation>estereorradián</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="St">
+				<xs:annotation>
+					<xs:documentation>Servicios técnicos</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Sv">
+				<xs:annotation>
+					<xs:documentation>sievert</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="t">
+				<xs:annotation>
+					<xs:documentation>tesla</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T">
+				<xs:annotation>
+					<xs:documentation>tonelada</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="U">
+				<xs:annotation>
+					<xs:documentation>unidad de masa atómica unificada</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Ua">
+				<xs:annotation>
+					<xs:documentation>unidad astronómica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Unid">
+				<xs:annotation>
+					<xs:documentation>Unidad</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V">
+				<xs:annotation>
+					<xs:documentation>volt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V/m">
+				<xs:annotation>
+					<xs:documentation>volt por metro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W">
+				<xs:annotation>
+					<xs:documentation>Watt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W/(m·K)">
+				<xs:annotation>
+					<xs:documentation>watt por metro kevin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W/(m²·sr)">
+				<xs:annotation>
+					<xs:documentation>watt por metro cuadrado estereorradián</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W/m²">
+				<xs:annotation>
+					<xs:documentation>watt por metro cuadrado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W/sr">
+				<xs:annotation>
+					<xs:documentation>watt por estereorradián</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Wb">
+				<xs:annotation>
+					<xs:documentation>weber</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Ω">
+				<xs:annotation>
+					<xs:documentation>ohm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TipoTransaccionType">
+		<xs:annotation>
+			<xs:documentation>Tipos de transacción para el caso de transacciones con tratamientos tributarios específicos </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Venta Normal de Bienes y Servicios (Transacción General)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Mercancía de Autoconsumo exento</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Mercancía de Autoconsumo gravado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Servicio de Autoconsumo exento</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>Servicio de Autoconsumo gravado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>Cuota de afiliación</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>Cuota de afiliación Exenta</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="08">
+				<xs:annotation>
+					<xs:documentation>Bienes de Capital para el emisor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="09">
+				<xs:annotation>
+					<xs:documentation>Bienes de Capital para el receptor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Bienes de Capital para el emisor y el receptor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Bienes de capital de autoconsumo exento para el emisor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Bienes de capital sin contraprestación a terceros exento para el emisor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Sin contraprestación a terceros</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodigoDescuentoType">
+		<xs:annotation>
+			<xs:documentation>Los tipos de descuentos a utilizar en el campo "Código del Descuento" del Descuento</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2"/>
+			<xs:minLength value="2"/>
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Descuento por Regalía</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Descuento por Regalía IVA Cobrado al Cliente</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Descuento por Bonificación</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Descuento por volumen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>Descuento por Temporada (estacional)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>Descuento promocional</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>Descuento Comercial</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="08">
+				<xs:annotation>
+					<xs:documentation>Descuento por frecuencia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="09">
+				<xs:annotation>
+					<xs:documentation>Descuento sostenido </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="99">
+				<xs:annotation>
+					<xs:documentation>Otros descuentos</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodigoImpuestoType">
+		<xs:annotation>
+			<xs:documentation>Código del impuesto: 01 Impuesto al valor agregado, 02 Impuesto Selectivo de Consumo, 03 Impuesto único a los combustivos, 04 Impuesto específico de bebidas alcohólicas, 05 Impuesto específico sobre las bebidas envasadas sin contenido alcohólico y jabones de tocador, 06 Impuesto a los productos de tabaco, 07 IVA (cálculo especial), 08 IVA Regimen de Bienes Usados (Factor), 12 Impuesto Especifico al cemento, 99 Otros</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Impuesto al Valor Agregado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation> Impuesto Selectivo de Consumo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Impuesto unico a los combustivos</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Impuesto especifico de bebidas alcohólicas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>impuesto especifico sobre las bebidas envasadas sin contenido alcoholico y jabones de tocador</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>impuesto a los productos de tabaco</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>IVA (cálculo especial)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="08">
+				<xs:annotation>
+					<xs:documentation>IVA Régimen de Bienes Usados (Factor)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Impuesto Especifico al Cemento</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="99">
+				<xs:annotation>
+					<xs:documentation>Otros</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodigoTarifaIVAType">
+		<xs:annotation>
+			<xs:documentation> Cuando se trata del IVA las tarifas y códigos a utilizar son las siguientes</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Tarifa 0% (Artículo 32, num 1, RLIVA)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Tarifa reducida 1%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Tarifa reducida 2%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Tarifa reducida 4%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>Transitorio 0%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>Transitorio 4%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>Tarifa transitoria 8%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="08">
+				<xs:annotation>
+					<xs:documentation>Tarifa general 13%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="09">
+				<xs:annotation>
+					<xs:documentation>Tarifa reducida 0.5%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Tarifa Exenta</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Tarifa 0% sin derecho a crédito</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TipoExoneracionType">
+		<xs:annotation>
+			<xs:documentation>Tipo de documento de exoneración o de autorización.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Compras autorizadas por la Dirección General de Tributación</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Ventas exentas a diplomáticos</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Autorizado por Ley Especial</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Exenciones Dirección General de Hacienda Autorización Local Genérica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>Exenciones Dirección General de Hacienda Transitorio V (servicios de ingeniería, arquitectura, topografía obra civil)
+</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>Servicios turísticos inscritos ante el Instituto Costarricense de Turismo (ICT)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>Transitorio XVII (Recolección, Clasificación, almacenamiento de Reciclaje y reutilizable)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="08">
+				<xs:annotation>
+					<xs:documentation>Exoneración a Zona Franca</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="09">
+				<xs:annotation>
+					<xs:documentation>Exoneración de servicios complementarios para la exportación articulo 11 RLIVA</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Órgano de las corporaciones municipales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Exenciones Dirección General de Hacienda Autorización de Impuesto Local Concreta</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="99">
+				<xs:annotation>
+					<xs:documentation>Otros</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TipoDocOtrosCargosType">
+		<xs:annotation>
+			<xs:documentation>Tipo de documento otros cargos
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Contribución parafiscal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Timbre de la Cruz Roja</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Timbre de Benemérito Cuerpo de Bomberos de Costa Rica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Cobro de un tercero</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>Costos de Exportación</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>Impuesto de servicio 10%</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>Timbre de Colegios Profesionales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="08">
+				<xs:annotation>
+					<xs:documentation>Depósitos de Garantía</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="09">
+				<xs:annotation>
+					<xs:documentation>Multas o Penalizaciones</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Intereses Moratorios</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="99">
+				<xs:annotation>
+					<xs:documentation>Otros Cargos</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TipoDocReferenciaType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Factura electrónica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Nota de debido electrónica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>nota de crédito electrónica</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Tiquete electrónico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>Nota de despacho</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>Contrato</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>Procedimiento</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="08">
+				<xs:annotation>
+					<xs:documentation>Comprobante emitido en contigencia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="09">
+				<xs:annotation>
+					<xs:documentation>Devolución mercadería</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Comprobante electrónico rechazado por el Ministerio de Hacienda</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Sustituye factura rechazada por el Receptor del comprobante</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Sustituye Factura de exportación</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Facturación mes vencido</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="99">
+				<xs:annotation>
+					<xs:documentation>Otros</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation>Comprobante aportado por contribuyente de Régimen Especial.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Sustituye una Factura electrónica de Compra</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="16">
+				<xs:annotation>
+					<xs:documentation>Comprobante de Proveedor No Domiciliado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="17">
+				<xs:annotation>
+					<xs:documentation>Nota de Crédito a Factura Electrónica de Compra</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="18">
+				<xs:annotation>
+					<xs:documentation>Nota de Débito a Factura Electrónica de Compra</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodigoReferenciaType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="2"/>
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Anula documento de referencia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Corrige texto de ocumento de referencia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Referencia a otro documento</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="05">
+				<xs:annotation>
+					<xs:documentation>Sustituye comprobante provisional por contigencia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="06">
+				<xs:annotation>
+					<xs:documentation>Devolución de mercancía</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="07">
+				<xs:annotation>
+					<xs:documentation>Sustituye comprobante electrónico</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="08">
+				<xs:annotation>
+					<xs:documentation>Factura Endosada</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="09">
+				<xs:annotation>
+					<xs:documentation>Nota de crédito financiera</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Nota de débito financiera</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Proveedor No Domiciliado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Crédito por exoneración posterior a la facturación</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="99">
+				<xs:annotation>
+					<xs:documentation>Otros</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="restrictedString">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="500"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

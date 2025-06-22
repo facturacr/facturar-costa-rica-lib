@@ -58,7 +58,7 @@ export class Document {
     return this.props.emitter
   }
 
-  get receiver(): Person {
+  get receiver(): Person | undefined {
     return this.props.receiver
   }
 
