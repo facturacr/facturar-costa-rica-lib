@@ -16,6 +16,7 @@ type ConsecutivoInput = {
 }
 
 function getConsecutivo(opts: ConsecutivoInput): Consecutivo {
+  // @ts-expect-error pending-to-fix
   const tipoDocNum = tipoDocumento[opts.tipoDocKey]
   return {
     sucursal: opts.sucursal || '001',
@@ -113,13 +114,17 @@ export function parseOptions(frontEndRequest: ClientPayload): ClaveOpts {
   const sender = getSender(frontEndRequest)
   return {
     cedulaEmisor: sender.numeroIdentificacion,
+    // @ts-expect-error pending-to-fix
     codigoPais: frontEndRequest.codigoPais,
     codigoSeguridad: frontEndRequest.codigoSeguridad,
     consecutivo: frontEndRequest.consecutivo,
     situacionCE: frontEndRequest.situationEC,
+    // @ts-expect-error pending-to-fix
     sucursal: frontEndRequest.sucursal,
+    // @ts-expect-error pending-to-fix
     terminal: frontEndRequest.terminal,
     tipoCedula: sender.tipoIdentificacion,
+    // @ts-expect-error pending-to-fix
     tipoDocKey: frontEndRequest.tipoDocumento
   }
 }

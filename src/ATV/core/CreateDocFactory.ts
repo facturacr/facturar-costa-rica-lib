@@ -53,12 +53,12 @@ type DocumentInputTiquete = DocumentInputBase & {
   receiver?: PersonInput; // optional
 };
 
-type DocumentInputOther = DocumentInputBase & {
+export type DocumentInputWithReceiver = DocumentInputBase & {
   documentName: Exclude<DocumentNames, 'TiqueteElectronico'>;
   receiver: PersonInput; // required
 };
 
-type DocumentInput = DocumentInputTiquete | DocumentInputOther;
+type DocumentInput = DocumentInputTiquete | DocumentInputWithReceiver;
 
 export type CreateDocumentInput = {
   document: DocumentInput;
@@ -83,7 +83,7 @@ export class CreateDocFactory {
       providerId: document.providerId,
       issueDate: new Date(),
       emitter: Person.create(document.emitter),
-      receiver: Person.create(document.receiver),
+      receiver: document.receiver ? Person.create(document.receiver) : undefined,
       conditionSale: document.conditionSale,
       paymentMethod: document.paymentMethod,
       referenceInformation: document.referenceInfo ? ReferenceInformation.create(document.referenceInfo) : undefined

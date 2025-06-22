@@ -13,7 +13,7 @@ export type TokenServiceProps = {
 
 export type SendResponse = {
   status: number;
-  location: string;
+  location?: string | null;
   errorCause?: string | null;
 }
 

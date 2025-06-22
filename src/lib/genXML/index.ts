@@ -18,6 +18,7 @@ export async function genXML(xmlStructure: string, obj: object, options?: {
   }): Promise<string> {
   const xml = objToXML(xmlStructure, obj)
   if (!options) return xml
+  // @ts-expect-error pending-to-fix
   const signedXML = await sigXML(xml, options.buffer, options.password)
   return signedXML
 }
@@ -31,6 +32,7 @@ export const parseElectronicBillXML = (xml: string): XMLRawDocument => {
     })
     return json.FacturaElectronica
   } catch (err) {
+    // @ts-expect-error pending-to-fix
     return null
   }
 }

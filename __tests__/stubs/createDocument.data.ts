@@ -1,3 +1,4 @@
+import { DocumentInputWithReceiver } from '@src/ATV/core/CreateDocFactory'
 import { CreateDocumentInput } from '@src/index'
 
 const taxStub: CreateDocumentInput['document']['orderLines'][0]['tax'] = {
@@ -75,7 +76,7 @@ export const creditNoteReferenceInfoExample: CreateDocumentInput['document']['re
   reason: 'Se anula documento'
 }
 
-export const FEInputExample: CreateDocumentInput['document'] = {
+export const FEInputExample: DocumentInputWithReceiver = {
   consecutiveIdentifier: '2',
   activityCode: '4',
   providerId: emitterStub.identifier.id,

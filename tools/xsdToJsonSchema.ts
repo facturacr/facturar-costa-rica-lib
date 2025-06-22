@@ -13,6 +13,7 @@ const options = {
   attributeNamePrefix: ''
 }
 const sourceURI = process.env.XSD_SOURCE
+// @ts-expect-error migration pending to fix
 const xmlString = fs.readFileSync(sourceURI, 'utf8')
 
 const json = Parser.parse(xmlString, options)
