@@ -1,3 +1,5 @@
+import { PersonProps } from './Person'
+
 export enum AceptationStates {
     ACCEPTED = 1,
     PARTIALLY_ACCEPTED = 2,
@@ -7,9 +9,9 @@ export enum AceptationStates {
 export type ReceptorMessageProps = {
     clave: string;
     emitterIdentifier: string;
-    emitterIdentifierType: string;
+    emitterIdentifierType: PersonProps['identifier']['type'];
     receptorIdentifier: string;
-    receptorIdentifierType: string;
+    receptorIdentifierType: PersonProps['identifier']['type'];
     documentIssueDate: Date;
     activityCode: string;
     aceptationState: AceptationStates

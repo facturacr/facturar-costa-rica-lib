@@ -48,16 +48,15 @@ export class CreateDocumentCommand {
         clave: document.clave,
         fecha: document.issueDate.toISOString(),
         emisor: {
-          // @ts-expect-error pending-to-fix
           tipoIdentificacion: document.emitter.identifierType,
           numeroIdentificacion: document.emitter.identifierId
         },
-        receptor: {
-          // @ts-expect-error pending-to-fix
-          tipoIdentificacion: document.receiver.identifierType,
-          // @ts-expect-error pending-to-fix
-          numeroIdentificacion: document.receiver.identifierId
-        },
+        ...(document.receiver && {
+          receptor: {
+            tipoIdentificacion: document.receiver.identifierType,
+            numeroIdentificacion: document.receiver.identifierId
+          }
+        }),
         comprobanteXml: this.encodeXML(xml)
       },
       headers: {

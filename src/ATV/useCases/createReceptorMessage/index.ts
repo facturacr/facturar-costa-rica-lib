@@ -4,13 +4,14 @@ import { genXML } from '@src/lib/genXML'
 import { Command } from '../createDocument/types'
 import { ATV } from '@src/ATV'
 import { ReceptorConsecutive } from '@src/ATV/core/ReceptorConsecutive'
+import { PersonProps } from '@src/ATV/core/Person'
 
 export type CreateReceptorMessageCommandInput = {
     clave: string;
     emitterIdentifier: string;
-    emitterIdentifierType: string;
+    emitterIdentifierType: PersonProps['identifier']['type'];
     receptorIdentifier: string;
-    receptorIdentifierType: string;
+    receptorIdentifierType: PersonProps['identifier']['type'];
     documentIssueDate: Date;
     activityCode: string;
     taxCondition: string;

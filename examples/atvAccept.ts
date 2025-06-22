@@ -60,8 +60,8 @@ async function main(): Promise<void> {
     aceptationDetailMessage: 'Accepted',
     clave: electronillBillRaw.Clave,
     emitterIdentifier: electronillBillRaw.Emisor.Identificacion.Numero,
-    // @ts-expect-error migration - for example purposes
     emitterIdentifierType: electronillBillRaw.Emisor.Identificacion.Tipo,
+    // @ts-expect-error migration - for example purposes
     receptorIdentifier: electronillBillRaw.Receptor.Identificacion.Numero,
     // @ts-expect-error migration - for example purposes
     receptorIdentifierType: electronillBillRaw.Receptor.Identificacion.Tipo,
