@@ -92,7 +92,7 @@ export class Document {
     const summary = {
       currency: {
         code: 'CRC',
-        exchangeRate: '585.69'
+        exchangeRate: '1'
       },
       totalExemptServices: 0,
       totalEncumberedServices: servicesLineSumResult.totalAmount,
