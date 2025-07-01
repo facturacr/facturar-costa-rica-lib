@@ -38,7 +38,7 @@ export function getBillResum(frontEndRequest: ClientPayload): Resumen {
   return {
     CodigoTipoMoneda: {
       CodigoMoneda: 'CRC',
-      TipoCambio: '585.69'
+      TipoCambio: '1'
     },
     TotalServGravados: 0,
     TotalServExentos: 0,

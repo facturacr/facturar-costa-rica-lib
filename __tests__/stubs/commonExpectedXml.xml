@@ -71,7 +71,7 @@
     <ResumenFactura>
         <CodigoTipoMoneda>
             <CodigoMoneda>CRC</CodigoMoneda>
-            <TipoCambio>585.69</TipoCambio>
+            <TipoCambio>1</TipoCambio>
         </CodigoTipoMoneda>
         <TotalServGravados>0</TotalServGravados>
         <TotalServExentos>0</TotalServExentos>
