@@ -16,5 +16,10 @@ export type SummaryProps = {
   totalDiscounts?: number; // TotalDescuentos
   totalNetSale?: number; // TotalVentaNeta
   totalTaxes: number; // TotalImpuesto
+  totalTaxBreakdown?: Array<{
+    code: string; // Codigo
+    taxRateCode?: string; // CodigoTarifaIVA
+    totalTaxAmount: number; // TotalMontoImpuesto
+  }>; // TotalDesgloseImpuesto
   totalVoucher: number; // TotalComprobante
 }
