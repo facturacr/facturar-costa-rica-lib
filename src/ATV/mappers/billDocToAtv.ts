@@ -65,6 +65,13 @@ const mapSummaryInvoice = (document: DomainDocument): Resumen => {
     // @ts-expect-error pending-to-fix
     TotalVentaNeta: parseAtvMoneyFormat(summaryInvoice.totalNetSale),
     TotalImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes),
+    TotalDesgloseImpuesto: {
+      DetalleImpuesto: {
+        Codigo: '01', // Tax code
+        CodigoTarifaIVA: '13', // IVA rate code
+        MontoImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes)
+      }
+    },
     MedioPago: {
       // @ts-expect-error pending-to-fix
       TipoMedioPago: document.paymentMethod

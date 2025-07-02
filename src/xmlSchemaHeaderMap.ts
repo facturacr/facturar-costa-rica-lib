@@ -8,7 +8,9 @@ const buildNs = (type: string) =>
 export const declaration = '<?xml version="1.0" encoding="utf-8"?>'
 
 export const defaultOptions = {
-  attrNodeName: 'attr'
+  attrNodeName: 'attr',
+  format: true,
+  indentBy: '  '
 }
 
 const COMMON_STRUCTURE = {
