@@ -28,6 +28,12 @@ export interface DetalleServicio {
   LineaDetalle: Array<LineaDetalle>;
 }
 
+export interface TotalDesgloseImpuesto {
+  Codigo: string; // Representa el tipo "CodigoImpuestoType"
+  CodigoTarifaIVA?: string; // Representa el tipo "CodigoTarifaIVAType"
+  TotalMontoImpuesto: number; // Representa el tipo "DecimalDineroType"
+}
+
 export interface Resumen {
   CodigoTipoMoneda?: {
     CodigoMoneda: string;
@@ -49,6 +55,7 @@ export interface Resumen {
     TipoMedioPago: string;
   };
   TotalComprobante: number;
+  TotalDesgloseImpuesto?: Array<TotalDesgloseImpuesto>; // Agregado aquí
 }
 
 export interface Persona {
