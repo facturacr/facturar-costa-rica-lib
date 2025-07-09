@@ -28,6 +28,7 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
       BaseImponible: orderLine.subTotal,
       Impuesto: {
         Codigo: orderLine.tax.code,
+        CodigoTarifaIVA: orderLine.tax.rateCode,
         Tarifa: orderLine.tax.rate,
         // @ts-expect-error pending-to-fix
         Monto: parseAtvMoneyFormat(orderLine.tax.amount)
@@ -64,14 +65,14 @@ const mapSummaryInvoice = (document: DomainDocument): Resumen => {
     TotalDescuentos: parseAtvMoneyFormat(summaryInvoice.totalDiscounts),
     // @ts-expect-error pending-to-fix
     TotalVentaNeta: parseAtvMoneyFormat(summaryInvoice.totalNetSale),
-    TotalImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes),
-    TotalDesgloseImpuesto: {
-      DetalleImpuesto: {
-        Codigo: '01', // Tax code
-        CodigoTarifaIVA: '13', // IVA rate code
-        MontoImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes)
-      }
+    TotalDesgloseImpuesto: { // Mover TotalDesgloseImpuesto aquí
+      Codigo: '01', // Código de Impuesto
+      CodigoTarifaIVA: '08', // Código de Tarifa IVA
+      TotalMontoImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes)
     },
+    TotalImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes),
+    TotalImpAsumEmisorFabrica: 0,
+    TotalOtrosCargos: 0,
     MedioPago: {
       // @ts-expect-error pending-to-fix
       TipoMedioPago: document.paymentMethod
