@@ -30,8 +30,9 @@ export interface DetalleServicio {
 
 export interface TotalDesgloseImpuesto {
   Codigo: string;
-  CodigoTarifaIVA?: string;
-  TotalMontoImpuesto?: number;
+  CodigoTarifaIVA: string;
+  // ... other properties
+  TotalMontoImpuesto: number;
 }
 
 export interface Resumen {
@@ -51,7 +52,7 @@ export interface Resumen {
   TotalDescuentos?: number;
   TotalVentaNeta?: number;
   TotalImpuesto: number;
-  TotalDesgloseImpuesto?: TotalDesgloseImpuesto;
+  TotalDesgloseImpuesto?: TotalDesgloseImpuesto[];
   MedioPago?: {
     TipoMedioPago: string;
   };

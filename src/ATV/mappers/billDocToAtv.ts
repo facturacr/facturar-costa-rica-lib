@@ -13,6 +13,7 @@ const parseAtvMoneyFormat = (amount: number) => {
 
 const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
   const LineaDetalle = orderLines.map<DetalleServicio['LineaDetalle'][0]>((orderLine) => {
+    const impuestoMonto = orderLine.tax ? parseAtvMoneyFormat(orderLine.tax.amount ?? 0) : 0
     return {
       NumeroLinea: orderLine.lineNumber,
       CodigoCABYS: orderLine.code,
@@ -26,13 +27,15 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
       // Descuento
       SubTotal: orderLine.subTotal,
       BaseImponible: orderLine.subTotal,
-      Impuesto: {
-        Codigo: orderLine.tax.code,
-        CodigoTarifaIVA: orderLine.tax.rateCode,
-        Tarifa: orderLine.tax.rate,
-        // @ts-expect-error pending-to-fix
-        Monto: parseAtvMoneyFormat(orderLine.tax.amount)
-      },
+      ...(orderLine.tax && {
+        Impuesto: {
+          Codigo: orderLine.tax.code,
+          CodigoTarifaIVA: orderLine.tax.rateCode,
+          Tarifa: orderLine.tax.rate,
+          Monto: impuestoMonto
+          // Exoneracion is explicitly excluded here
+        }
+      }),
       ImpuestoAsumidoEmisorFabrica: 0,
       // @ts-expect-error pending-to-fix
       ImpuestoNeto: parseAtvMoneyFormat(orderLine.tax.amount),
@@ -44,6 +47,28 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
 
 const mapSummaryInvoice = (document: DomainDocument): Resumen => {
   const summaryInvoice = document.summaryInvoice
+  const orderLines = document.orderLines // Still need access to order lines for breakdown
+
+  // --- Lógica para TotalDesgloseImpuesto (sin considerar exoneraciones) ---
+  const taxBreakdownMap = new Map<string, number>()
+
+  orderLines.forEach(orderLine => {
+    if (orderLine.tax?.amount !== undefined && orderLine.tax.amount !== null && orderLine.tax.amount > 0) {
+      const key = `${orderLine.tax.code}-${orderLine.tax.rateCode}`
+      const currentTotal = taxBreakdownMap.get(key) || 0
+      taxBreakdownMap.set(key, currentTotal + orderLine.tax.amount)
+    }
+  })
+
+  const TotalDesgloseImpuesto = Array.from(taxBreakdownMap.entries()).map(([key, totalMonto]) => {
+    const [Codigo, CodigoTarifaIVA, Tarifa] = key.split('-')
+    return {
+      Codigo,
+      CodigoTarifaIVA,
+      Tarifa,
+      TotalMontoImpuesto: parseAtvMoneyFormat(totalMonto)
+    }
+  })
   return {
     CodigoTipoMoneda: {
       // @ts-expect-error pending-to-fix
@@ -65,11 +90,7 @@ const mapSummaryInvoice = (document: DomainDocument): Resumen => {
     TotalDescuentos: parseAtvMoneyFormat(summaryInvoice.totalDiscounts),
     // @ts-expect-error pending-to-fix
     TotalVentaNeta: parseAtvMoneyFormat(summaryInvoice.totalNetSale),
-    TotalDesgloseImpuesto: { // Mover TotalDesgloseImpuesto aquí
-      Codigo: '01', // Código de Impuesto
-      CodigoTarifaIVA: '08', // Código de Tarifa IVA
-      TotalMontoImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes)
-    },
+    TotalDesgloseImpuesto,
     TotalImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes),
     TotalImpAsumEmisorFabrica: 0,
     TotalOtrosCargos: 0,
