@@ -8,44 +8,44 @@ const taxStub: CreateDocumentInput['document']['orderLines'][0]['tax'] = {
 }
 
 const orderLines: CreateDocumentInput['document']['orderLines'] = [{
-  code: '7113301000000',
+  code: '9799000000000',
   quantity: 1,
-  measureUnit: 'Unid',
+  measureUnit: 'Sp',
   detail: 'detalle',
   unitaryPrice: 10,
   tax: taxStub
 }]
 
 const receiverStub: CreateDocumentInput['document']['emitter'] = {
-  fullName: 'receiver name SRL',
-  commercialName: 'receiver name',
-  activityCode: '4',
+  fullName: 'Roy',
+  commercialName: 'Roy Arrieta Soto',
+  activityCode: '526005',
   identifier: {
     type: '01',
-    id: '206930143'
+    id: '204500331'
   },
   location: {
     province: '2',
     canton: '06',
     district: '04',
-    neighborhood: '06',
-    details: 'details'
+    neighborhood: '3',
+    details: '500 m oeste Súper Don Jorge, casa mano izquierda'
   },
   phone: {
     countryCode: '506',
-    number: '80808080'
+    number: '87206063'
   },
-  email: 'test@test.com',
+  email: 'sercoe1@hotmail.com',
   fax: {
     countryCode: '506',
-    number: '80808080'
+    number: '87206063'
   }
 }
 
 const emitterStub: CreateDocumentInput['document']['receiver'] = {
-  fullName: 'Emisor name',
-  commercialName: 'emisor comercial name',
-  activityCode: '4',
+  fullName: 'Tek rocks',
+  commercialName: 'Ciencia del sabor',
+  activityCode: '930903',
   identifier: {
     type: '01',
     id: '206920142'
@@ -55,16 +55,16 @@ const emitterStub: CreateDocumentInput['document']['receiver'] = {
     canton: '06',
     district: '04',
     neighborhood: '06',
-    details: 'details'
+    details: 'Calle Arrieta'
   },
-  email: 'test@test.com',
+  email: 'cienciadelsabor@gmail.com',
   fax: {
     countryCode: '506',
-    number: '12341234'
+    number: '88122479'
   },
   phone: {
     countryCode: '506',
-    number: '12341234'
+    number: '88122479'
   }
 }
 
@@ -78,7 +78,7 @@ export const creditNoteReferenceInfoExample: CreateDocumentInput['document']['re
 
 export const FEInputExample: DocumentInputWithReceiver = {
   consecutiveIdentifier: '2',
-  activityCode: '4',
+  activityCode: '930903',
   providerId: emitterStub.identifier.id,
   documentName: 'FacturaElectronica',
   branch: '1', // '001'
