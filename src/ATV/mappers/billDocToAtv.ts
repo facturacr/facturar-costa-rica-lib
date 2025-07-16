@@ -154,7 +154,7 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
     ProveedorSistemas: document.providerId,
     CodigoActividadEmisor: document.emitter.activityCode.padStart(6, '0'),
     ...(document.receiver && { // TODO add && document.name === 'FacturaElectronica'
-      CodigoActividadReceptor: document.receiver.activityCode.padStart(6, '0')
+      CodigoActividadReceptor: document.receiver?.activityCode?.padStart(6, '0')
     }),
     NumeroConsecutivo: document.fullConsecutive,
     FechaEmision: document.issueDate.toISOString(),
