@@ -3,7 +3,7 @@
     <Clave>50601042400020692014200100001010000000002100000001</Clave>
     <ProveedorSistemas>206920142</ProveedorSistemas>
     <CodigoActividadEmisor>930903</CodigoActividadEmisor>
-    <CodigoActividadReceptor>930903</CodigoActividadReceptor>
+    <CodigoActividadReceptor>526005</CodigoActividadReceptor>
     <NumeroConsecutivo>00100001010000000002</NumeroConsecutivo>
     <FechaEmision>2024-04-01T00:00:00.000Z</FechaEmision>
     <Emisor>
@@ -60,13 +60,13 @@
             <BaseImponible>10</BaseImponible>
             <Impuesto>
                 <Codigo>01</Codigo>    
-                <CodigoTarifaIVA>08</CodigoTarifaIVA>   
-                <Tarifa>13</Tarifa> 
-                <Monto>1.3</Monto>                   
+                <CodigoTarifaIVA>01</CodigoTarifaIVA>   
+                <Tarifa>0</Tarifa> 
+                <Monto>0</Monto>                   
             </Impuesto>
             <ImpuestoAsumidoEmisorFabrica>0</ImpuestoAsumidoEmisorFabrica>
-            <ImpuestoNeto>1.3</ImpuestoNeto>
-            <MontoTotalLinea>11.3</MontoTotalLinea>
+            <ImpuestoNeto>0</ImpuestoNeto>
+            <MontoTotalLinea>10</MontoTotalLinea>
         </LineaDetalle>
     </DetalleServicio>
     <ResumenFactura>
@@ -84,17 +84,15 @@
         <TotalVenta>10</TotalVenta>
         <TotalDescuentos>0</TotalDescuentos>
         <TotalVentaNeta>10</TotalVentaNeta>
-        <TotalDesgloseImpuesto>
-            <Codigo>01</Codigo>
-            <CodigoTarifaIVA>08</CodigoTarifaIVA>
-            <TotalMontoImpuesto>1.3</TotalMontoImpuesto>
-        </TotalDesgloseImpuesto>
-        <TotalImpuesto>1.3</TotalImpuesto>
-        <TotalImpAsumEmisorFabrica>0</TotalImpAsumEmisorFabrica> 
+        <TotalServNoSujetos>0</TotalServNoSujetos>
+        <TotalMercanciasNoSujetos>0</TotalMercanciasNoSujetos>
+        <TotalNoSujeto>0</TotalNoSujeto>
+        <TotalImpuesto>0</TotalImpuesto>
+        <TotalImpAsumEmisorFabrica>0</TotalImpAsumEmisorFabrica>
         <TotalOtrosCargos>0</TotalOtrosCargos>
         <MedioPago>
             <TipoMedioPago>03</TipoMedioPago>
-        </MedioPago>     
-        <TotalComprobante>11.3</TotalComprobante>
+        </MedioPago>
+        <TotalComprobante>10</TotalComprobante>
     </ResumenFactura>
 </FacturaElectronica>

@@ -1,165 +1,204 @@
-import { Clave } from './Clave'
-import { FullConsecutive } from './FullConsecutive'
-import { OrderLine } from './OrderLine'
-import { Person } from './Person'
-import { ReferenceInformation } from './ReferenceInformation'
-import { SummaryProps } from './Summary.type'
+import { Clave } from './Clave';
+import { FullConsecutive } from './FullConsecutive';
+import { OrderLine } from './OrderLine';
+import { Person } from './Person';
+import { ReferenceInformation } from './ReferenceInformation';
+import { SummaryProps } from './Summary.type';
 
 export type InvoiceProps = {
   clave: Clave;
-  providerId: string; // ProveedorSistemas
+  providerId: string;
   fullConsecutive: FullConsecutive;
-  issueDate: Date; // FechaEmision
-  emitter: Person; // Emisor
-  receiver?: Person; // Receptor
+  issueDate: Date;
+  emitter: Person;
+  receiver?: Person;
   orderLines: OrderLine[];
-  conditionSale?: string; // CondicionVenta
-  deadlineCredit?: string; // PlazoCredito
-  paymentMethod?: string; // MedioPago
-  summaryInvoice?: SummaryProps; // ResumenFactura
-  referenceInformation?: ReferenceInformation; // InformaciónReferencia
-  others?: { // Otros
+  conditionSale?: string;
+  deadlineCredit?: string;
+  paymentMethod?: string;
+  summaryInvoice?: SummaryProps;
+  referenceInformation?: ReferenceInformation;
+  others?: {
     OtroTexto: string;
   };
-}
+};
 
 type OrderLineSum = {
   totalAmount: number;
   totalTaxes: number;
-}
+  // Campos añadidos para la lógica faltante
+  totalExempt: number;
+  totalExonerated: number;
+  totalNonTaxable: number;
+};
 
 export class Document {
-  public readonly props: InvoiceProps
+  public readonly props: InvoiceProps;
   constructor(props: InvoiceProps) {
-    this.props = props
+    this.props = props;
   }
 
   get clave(): string {
-    return this.props.clave.value
+    return this.props.clave.value;
   }
 
   get fullConsecutive(): string {
-    return this.props.fullConsecutive.value
+    return this.props.fullConsecutive.value;
   }
 
   get providerId(): string {
-    return this.props.providerId
+    return this.props.providerId;
   }
 
   get activityCode(): string {
-    return this.props.emitter.activityCode
+    return this.props.emitter.activityCode;
   }
 
   get issueDate(): Date {
-    return this.props.issueDate
+    return this.props.issueDate;
   }
 
   get emitter(): Person {
-    return this.props.emitter
+    return this.props.emitter;
   }
 
   get receiver(): Person | undefined {
-    return this.props.receiver
+    return this.props.receiver;
   }
 
   get orderLines(): OrderLine[] {
-    return this.props.orderLines
+    return this.props.orderLines;
   }
 
   get conditionSale(): string | undefined {
-    return this.props.conditionSale
+    return this.props.conditionSale;
   }
 
   get deadlineCredit(): string | undefined {
-    return this.props.deadlineCredit
+    return this.props.deadlineCredit;
   }
 
   get paymentMethod(): string | undefined {
-    return this.props.paymentMethod
+    return this.props.paymentMethod;
   }
 
   get others(): { OtroTexto: string } | undefined {
-    return this.props.others
+    return this.props.others;
   }
 
   get summaryInvoice(): SummaryProps {
     if (this.props.summaryInvoice) {
-      return this.props.summaryInvoice
+      return this.props.summaryInvoice;
     }
-    const orderLineSumResult = this.sumOrderLines()
-    const servicesLineSumResult = this.sumServicesLines()
-    const merchandiseLineSumResult = this.sumMerchandiseLines()
-    const summary = {
+    const servicesLinesSum = this.sumServicesLines();
+    const merchandiseLinesSum = this.sumMerchandiseLines();
+    const allLinesSum = this.sumOrderLines();
+
+    // Lógica para calcular los totales del resumen
+    const totalEncumberedServices = servicesLinesSum.totalAmount - servicesLinesSum.totalExempt - servicesLinesSum.totalExonerated - servicesLinesSum.totalNonTaxable;
+    const totalEncumberedMerchandise = merchandiseLinesSum.totalAmount - merchandiseLinesSum.totalExempt - merchandiseLinesSum.totalExonerated - merchandiseLinesSum.totalNonTaxable;
+
+    const totalEncumbered = totalEncumberedServices + totalEncumberedMerchandise;
+    const totalExempt = allLinesSum.totalExempt;
+    const totalExonerated = allLinesSum.totalExonerated;
+    const totalNonTaxable = allLinesSum.totalNonTaxable;
+
+    const totalSale = totalEncumbered + totalExempt + totalExonerated + totalNonTaxable;
+
+    const totalDiscounts = 0; // Asumimos 0 si no se calcula
+    const totalNetSale = totalSale - totalDiscounts;
+    const totalTaxes = allLinesSum.totalTaxes;
+    const totalVoucher = totalNetSale + totalTaxes;
+
+    return {
       currency: {
         code: 'CRC',
-        exchangeRate: '1'
+        exchangeRate: '1',
       },
-      totalExemptServices: 0,
-      totalEncumberedServices: servicesLineSumResult.totalAmount,
-      totalExonerated: 0,
-      totalTaxedServices: servicesLineSumResult.totalTaxes,
-      totalTaxes: orderLineSumResult.totalTaxes,
-      totalDiscounts: 0,
-      totalEncumberedMerchandise: merchandiseLineSumResult.totalAmount,
-      totalTaxed: orderLineSumResult.totalTaxes,
-      totalExemptMerchandise: 0,
-      totalExempt: 0,
-      totalNetSale: orderLineSumResult.totalAmount,
-      totalEncumbered: orderLineSumResult.totalAmount,
-      totalTaxBreakdown: [
-        {
-          code: '01', // Static value for testing
-          taxRateCode: '08', // Static value for testing
-          totalTaxAmount: 100.00 // Static value for testing
-        }
-      ]
-    }
-    const totalSale = summary.totalEncumbered + summary.totalExempt + summary.totalExonerated
-    return {
-      ...summary,
-      totalSale,
-      totalNetSale: totalSale - summary.totalDiscounts,
-      totalVoucher: summary.totalNetSale + summary.totalTaxed
-    }
+      totalExemptServices: servicesLinesSum.totalExempt,
+      totalEncumberedServices: totalEncumberedServices,
+      totalExonerated: totalExonerated,
+      totalTaxedServices: servicesLinesSum.totalTaxes,
+      totalTaxes: totalTaxes,
+      totalDiscounts: totalDiscounts,
+      totalEncumberedMerchandise: totalEncumberedMerchandise,
+      totalTaxed: allLinesSum.totalTaxes,
+      totalExemptMerchandise: merchandiseLinesSum.totalExempt,
+      totalExempt: totalExempt,
+      totalNetSale: totalNetSale,
+      totalEncumbered: totalEncumbered,
+      totalTaxBreakdown: [], // La lógica del desglose de impuestos está en `billDocToAtv.ts`
+      totalSale: totalSale,
+      totalVoucher: totalVoucher,
+      // Se añaden los campos para 'No Sujeto' que estaban causando errores
+      totalNonTaxable: totalNonTaxable,
+      totalNonTaxableServices: servicesLinesSum.totalNonTaxable,
+      totalNonTaxableMerchandise: merchandiseLinesSum.totalNonTaxable,
+    };
   }
 
   get referenceInformation(): ReferenceInformation | undefined {
-    return this.props.referenceInformation
+    return this.props.referenceInformation;
   }
 
   private isAService(orderLine: OrderLine): boolean {
-    const servicesMeasurementUnits = ['Sp', 'St', 'Spe']
-    return servicesMeasurementUnits.includes(orderLine.measureUnit)
+    const servicesMeasurementUnits = ['Sp', 'St', 'Spe'];
+    return servicesMeasurementUnits.includes(orderLine.measureUnit);
+  }
+
+  private isTaxable(orderLine: OrderLine): boolean {
+    if (!orderLine.tax || orderLine.tax.amount === undefined || orderLine.tax.amount === null) {
+      return false;
+    }
+    return orderLine.tax.code === '01' && orderLine.tax.amount > 0;
+  }
+
+  private isExempt(orderLine: OrderLine): boolean {
+    //32 El código 10, Tarifa Exenta Ley 9635, Articulo 8
+    return orderLine.tax?.rateCode === '10';
+  }
+
+  private isExonerated(orderLine: OrderLine): boolean {
+    return orderLine.tax?.rateCode === '01';
+  }
+
+  private isNonTaxable(orderLine: OrderLine): boolean {
+    // Un ítem es "No Sujeto" si su tax.code NO es '01' o si el monto del impuesto es 0.
+    // Esto cubrirá el caso donde un ítem con tax.code '01' y tarifa '0' sea considerado "No Sujeto".
+    return orderLine.tax?.rateCode === '01';
+  }
+
+  private sumLines(lines: OrderLine[]): OrderLineSum {
+    return lines.reduce<OrderLineSum>((previousValue, currentValue) => {
+      const totalAmount = previousValue.totalAmount + currentValue.totalAmount;
+      const totalTaxes = previousValue.totalTaxes + (this.isTaxable(currentValue) ? (currentValue.tax?.amount ?? 0) : 0);
+      const totalExempt = previousValue.totalExempt + (this.isExempt(currentValue) ? currentValue.totalAmount : 0);
+      const totalExonerated = previousValue.totalExonerated + (this.isExonerated(currentValue) ? currentValue.totalAmount : 0);
+      const totalNonTaxable = previousValue.totalNonTaxable + (this.isNonTaxable(currentValue) ? currentValue.totalAmount : 0);
+
+      return {
+        totalAmount,
+        totalTaxes,
+        totalExempt,
+        totalExonerated,
+        totalNonTaxable,
+      };
+    }, { totalAmount: 0, totalTaxes: 0, totalExempt: 0, totalExonerated: 0, totalNonTaxable: 0 });
   }
 
   sumServicesLines(): OrderLineSum {
-    return this.orderLines.filter(this.isAService).reduce<OrderLineSum>((previousValue, currentValue) => {
-      return {
-        totalAmount: previousValue.totalAmount + currentValue.totalAmount,
-        totalTaxes: previousValue.totalTaxes + (currentValue.tax?.amount ?? 0)
-      }
-    }, { totalAmount: 0, totalTaxes: 0 })
+    return this.sumLines(this.orderLines.filter(this.isAService));
   }
 
   sumMerchandiseLines(): OrderLineSum {
-    return this.orderLines.filter((ol) => !this.isAService(ol)).reduce<OrderLineSum>((previousValue, currentValue) => {
-      return {
-        totalAmount: previousValue.totalAmount + currentValue.totalAmount,
-        totalTaxes: previousValue.totalTaxes + (currentValue.tax?.amount ?? 0)
-      }
-    }, { totalAmount: 0, totalTaxes: 0 })
+    return this.sumLines(this.orderLines.filter((ol) => !this.isAService(ol)));
   }
 
   sumOrderLines(): OrderLineSum {
-    return this.orderLines.reduce<OrderLineSum>((previousValue, currentValue) => {
-      return {
-        totalAmount: previousValue.totalAmount + currentValue.totalAmount,
-        totalTaxes: previousValue.totalTaxes + (currentValue.tax?.amount ?? 0)
-      }
-    }, { totalAmount: 0, totalTaxes: 0 })
+    return this.sumLines(this.orderLines);
   }
 
   public static create(props: InvoiceProps): Document {
-    return new Document(props)
+    return new Document(props);
   }
 }

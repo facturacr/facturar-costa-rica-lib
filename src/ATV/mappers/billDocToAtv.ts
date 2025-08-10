@@ -78,15 +78,17 @@ const mapSummaryInvoice = (document: DomainDocument): Resumen => {
     },
     TotalServGravados: parseAtvMoneyFormat(summaryInvoice.totalEncumberedServices),
     TotalServExentos: parseAtvMoneyFormat(summaryInvoice.totalExemptServices),
+    TotalServNoSujeto: parseAtvMoneyFormat(summaryInvoice.totalNonTaxableServices), // Moved here
     // @ts-expect-error pending-to-fix
     TotalMercanciasGravadas: parseAtvMoneyFormat(summaryInvoice.totalEncumberedMerchandise),
     // @ts-expect-error pending-to-fix
     TotalMercanciasExentas: parseAtvMoneyFormat(summaryInvoice.totalExemptMerchandise),
+    TotalMercNoSujeta: parseAtvMoneyFormat(summaryInvoice.totalNonTaxableMerchandise), // Moved here
     TotalGravado: parseAtvMoneyFormat(summaryInvoice.totalEncumbered),
     TotalExento: parseAtvMoneyFormat(summaryInvoice.totalExempt),
-    TotalExonerado: parseAtvMoneyFormat(summaryInvoice.totalExonerated),
+    TotalNoSujeto: parseAtvMoneyFormat(summaryInvoice.totalNonTaxable), // Moved here
     TotalVenta: parseAtvMoneyFormat(summaryInvoice.totalSale),
-    // @ts-expect-error pending-to-fix
+     // @ts-expect-error pending-to-fix
     TotalDescuentos: parseAtvMoneyFormat(summaryInvoice.totalDiscounts),
     // @ts-expect-error pending-to-fix
     TotalVentaNeta: parseAtvMoneyFormat(summaryInvoice.totalNetSale),
@@ -98,9 +100,11 @@ const mapSummaryInvoice = (document: DomainDocument): Resumen => {
       // @ts-expect-error pending-to-fix
       TipoMedioPago: document.paymentMethod
     },
-    TotalComprobante: parseAtvMoneyFormat(summaryInvoice.totalVoucher)
+    TotalComprobante: parseAtvMoneyFormat(summaryInvoice.totalVoucher),
   }
 }
+
+
 
 const mapPerson = (person: Person): Persona => {
   const atvPerson = {
@@ -117,19 +121,19 @@ const mapPerson = (person: Person): Persona => {
   // @ts-expect-error pending-to-fix
   atvPerson.Ubicacion = person.location
     ? {
-        Provincia: person.location?.province,
-        Canton: person.location?.canton?.padStart(2, '0'),
-        Distrito: person.location?.district?.padStart(2, '0'),
-        Barrio: person.location?.neighborhood?.padStart(5, '0'),
-        OtrasSenas: person.location?.details
-      }
+      Provincia: person.location?.province,
+      Canton: person.location?.canton?.padStart(2, '0'),
+      Distrito: person.location?.district?.padStart(2, '0'),
+      Barrio: person.location?.neighborhood?.padStart(5, '0'),
+      OtrasSenas: person.location?.details
+    }
     : undefined
   // @ts-expect-error pending-to-fix
   atvPerson.Telefono = person.phone
     ? {
-        CodigoPais: person.phone?.countryCode,
-        NumTelefono: person.phone?.number
-      }
+      CodigoPais: person.phone?.countryCode,
+      NumTelefono: person.phone?.number
+    }
     : undefined
   // @ts-expect-error pending-to-fix
   atvPerson.CorreoElectronico = person.email

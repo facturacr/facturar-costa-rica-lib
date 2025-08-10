@@ -1,9 +1,9 @@
-import fs from 'fs'
-import { FEInputExample } from '@test/stubs/createDocument.data'
-import { ATV } from '../dist/src'
-import { PersonProps } from 'dist/src/ATV/core/Person'
-import { AceptationStates } from 'dist/src/ATV/core/types'
-import { parseElectronicBillXML } from '@src/lib/genXML'
+import * as fs from 'fs'
+import { FEInputExample } from '../__tests__/stubs/createDocument.data'
+import { ATV } from '../src/ATV'
+import { PersonProps } from '../src/ATV/core/Person'
+import { AceptationStates } from '../src/ATV/core/types'
+import { parseElectronicBillXML } from '../src/lib/genXML'
 
 const IS_STG = process.env.IS_STG
 const USERNAME_TEST = process.env.USERNAME_TEST
@@ -19,12 +19,10 @@ if (!SOURCE_P12_PASSPORT || !SOURCE_P12_URI) {
 }
 
 const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
-// @ts-expect-error migration - for example purposes
-const receivedDocumentXML = fs.readFileSync(XML_TO_CONFIRM, 'utf-8')
+const receivedDocumentXML = fs.readFileSync(XML_TO_CONFIRM!, 'utf-8')
 
 // TODO: dynamic param --identifier 1 args[x]
-// @ts-expect-error migration - for example purposes
-FEInputExample.consecutiveIdentifier = process.env.TEST_CONSECUTIVE
+FEInputExample.consecutiveIdentifier = process.env.TEST_CONSECUTIVE || '1'
 FEInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string
 FEInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type']
 
@@ -49,26 +47,32 @@ function getConfimation(atv: ATV, token: string, location: string, ms: number): 
 async function main(): Promise<void> {
   const atv = new ATV({}, 'stg')
   const tokenData = await atv.getToken({
-    // @ts-expect-error migration - for example purposes
-    username: USERNAME_TEST,
-    // @ts-expect-error migration - for example purposes
-    password: PASSWORD_TEST
+    username: USERNAME_TEST!,
+    password: PASSWORD_TEST!
   })
   const electronillBillRaw = parseElectronicBillXML(receivedDocumentXML)
+  if (!electronillBillRaw.Receptor) {
+    console.error('Error: The "Receptor" property is missing from the electronic bill data.');
+    return; // Exit the function to prevent the crash
+  }
+  if (electronillBillRaw.FechaEmision === undefined) {
+    console.error('Error: FechaEmision is missing.');
+    return; // Or handle the error in another way
+  }
+  if (electronillBillRaw.CondicionVenta === undefined) {
+    console.error("Error: CondicionVenta is missing from the electronic bill data.");
+    return; // Exit the function to prevent the crash
+  }
   const { command, extraData } = await atv.createReceptorMessage({
     aceptationState: AceptationStates.ACCEPTED,
     aceptationDetailMessage: 'Accepted',
     clave: electronillBillRaw.Clave,
     emitterIdentifier: electronillBillRaw.Emisor.Identificacion.Numero,
     emitterIdentifierType: electronillBillRaw.Emisor.Identificacion.Tipo,
-    // @ts-expect-error migration - for example purposes
     receptorIdentifier: electronillBillRaw.Receptor.Identificacion.Numero,
-    // @ts-expect-error migration - for example purposes
     receptorIdentifierType: electronillBillRaw.Receptor.Identificacion.Tipo,
-    // @ts-expect-error migration - for example purposes
     documentIssueDate: new Date(electronillBillRaw.FechaEmision),
     activityCode: electronillBillRaw.CodigoActividadEmisor,
-    // @ts-expect-error migration - for example purposes
     taxCondition: electronillBillRaw.CondicionVenta,
     totalTaxes: electronillBillRaw.ResumenFactura.TotalImpuesto,
     totalSale: electronillBillRaw.ResumenFactura.TotalVenta,
@@ -78,8 +82,7 @@ async function main(): Promise<void> {
     token: tokenData.accessToken,
     signatureOptions: {
       buffer: pem,
-      // @ts-expect-error migration - for example purposes
-      password: SOURCE_P12_PASSPORT
+      password: SOURCE_P12_PASSPORT!
     }
   })
   console.log('extraData', extraData)
@@ -88,8 +91,7 @@ async function main(): Promise<void> {
     console.log('error response', response)
     return
   }
-  // @ts-expect-error pending-to-fix migration
-  const confirmationResponse = await getConfimation(atv, tokenData.accessToken, response.location, 2000)
+  const confirmationResponse = await getConfimation(atv, tokenData.accessToken, response.location!, 2000)
   console.log({ MensajeHacienda: confirmationResponse.confirmation })
 }
 

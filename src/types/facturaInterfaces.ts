@@ -42,12 +42,16 @@ export interface Resumen {
   };
   TotalServGravados: number;
   TotalServExentos: number;
-  // TotalServExonerado: number;
+  TotalServExonerado?: number;
+  TotalServNoSujeto?: number;
   TotalMercanciasGravadas?: number;
   TotalMercanciasExentas?: number;
+  TotalMercExonerada?: number;
+  TotalMercNoSujeta?: number;
   TotalGravado?: number;
   TotalExento: number;
   TotalExonerado: number;
+  TotalNoSujeto?: number;
   TotalVenta: number;
   TotalDescuentos?: number;
   TotalVentaNeta?: number;

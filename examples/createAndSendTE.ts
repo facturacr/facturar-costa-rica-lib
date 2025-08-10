@@ -1,7 +1,7 @@
-import fs from 'fs'
-import { TEInputExample } from '@test/stubs/createDocument.data'
-import { ATV } from '../dist/src'
-import { PersonProps } from 'dist/src/ATV/core/Person'
+import * as fs from 'fs'
+import { TEInputExample } from '../__tests__/stubs/createDocument.data'
+import { ATV } from '../src/ATV'
+import { PersonProps } from '../src/ATV/core/Person'
 
 const USERNAME_TEST = process.env.USERNAME_TEST
 const PASSWORD_TEST = process.env.PASSWORD_TEST
@@ -19,8 +19,7 @@ const paramConsecutive = process.argv[2]
 console.log('paramConsecutive', paramConsecutive)
 
 // TODO: dynamic param --identifier 1 args[x]
-// @ts-expect-error migration - for example purposes
-TEInputExample.consecutiveIdentifier = paramConsecutive || process.env.TEST_CONSECUTIVE
+TEInputExample.consecutiveIdentifier = paramConsecutive || process.env.TEST_CONSECUTIVE || '1'
 TEInputExample.emitter.identifier.id = process.env.EMITTER_IDENTIFIER_ID as string
 TEInputExample.emitter.identifier.type = process.env.EMITTER_IDENTIFIER_TYPE as PersonProps['identifier']['type']
 

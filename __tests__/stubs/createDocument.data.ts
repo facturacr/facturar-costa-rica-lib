@@ -3,42 +3,42 @@ import { CreateDocumentInput } from '@src/index'
 
 const taxStub: CreateDocumentInput['document']['orderLines'][0]['tax'] = {
   code: '01',
-  rateCode: '08',
-  rate: 13
+  rateCode: '03',
+  rate: 2
 }
 
 const orderLines: CreateDocumentInput['document']['orderLines'] = [{
-  code: '9799000000000',
+  code: '8715600009900',
   quantity: 1,
   measureUnit: 'Sp',
   detail: 'detalle',
   unitaryPrice: 10,
-  tax: taxStub
+  tax: taxStub,
 }]
 
 const receiverStub: CreateDocumentInput['document']['emitter'] = {
-  fullName: 'Roy',
-  commercialName: 'Roy Arrieta Soto',
-  activityCode: '526005',
+  fullName: 'EXCLUSIVE COFFEES',
+  commercialName: 'EXCLUSIVE COFFEES S.A',
+  activityCode: '930903',
   identifier: {
-    type: '01',
-    id: '204500331'
+    type: '02',
+    id: '3101538252'
   },
   location: {
     province: '2',
-    canton: '06',
-    district: '04',
-    neighborhood: '3',
-    details: '500 m oeste Súper Don Jorge, casa mano izquierda'
+    canton: '01',
+    district: '08',
+    neighborhood: '00006',
+    details: '600 metros sur y 400 oeste ofibodegas del oeste'
   },
   phone: {
     countryCode: '506',
-    number: '87206063'
+    number: '22390301'
   },
-  email: 'sercoe1@hotmail.com',
+  email: 'facturaelectronica@exclusivecoffeecr.com',
   fax: {
     countryCode: '506',
-    number: '87206063'
+    number: '22390301'
   }
 }
 
