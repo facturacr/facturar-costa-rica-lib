@@ -13,7 +13,7 @@ const orderLines: CreateDocumentInput['document']['orderLines'] = [{
   measureUnit: 'Sp',
   detail: 'detalle',
   unitaryPrice: 10,
-  tax: taxStub,
+  tax: taxStub
 }]
 
 const receiverStub: CreateDocumentInput['document']['emitter'] = {
