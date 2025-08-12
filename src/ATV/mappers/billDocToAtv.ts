@@ -78,13 +78,16 @@ const mapSummaryInvoice = (document: DomainDocument): Resumen => {
     },
     TotalServGravados: parseAtvMoneyFormat(summaryInvoice.totalEncumberedServices),
     TotalServExentos: parseAtvMoneyFormat(summaryInvoice.totalExemptServices),
+    TotalServNoSujeto: parseAtvMoneyFormat(summaryInvoice.totalNonTaxableServices), // Moved here
     // @ts-expect-error pending-to-fix
     TotalMercanciasGravadas: parseAtvMoneyFormat(summaryInvoice.totalEncumberedMerchandise),
     // @ts-expect-error pending-to-fix
     TotalMercanciasExentas: parseAtvMoneyFormat(summaryInvoice.totalExemptMerchandise),
+    TotalMercNoSujeta: parseAtvMoneyFormat(summaryInvoice.totalNonTaxableMerchandise), // Moved here
     TotalGravado: parseAtvMoneyFormat(summaryInvoice.totalEncumbered),
     TotalExento: parseAtvMoneyFormat(summaryInvoice.totalExempt),
     TotalExonerado: parseAtvMoneyFormat(summaryInvoice.totalExonerated),
+    TotalNoSujeto: parseAtvMoneyFormat(summaryInvoice.totalNonTaxable), // Moved here
     TotalVenta: parseAtvMoneyFormat(summaryInvoice.totalSale),
     // @ts-expect-error pending-to-fix
     TotalDescuentos: parseAtvMoneyFormat(summaryInvoice.totalDiscounts),

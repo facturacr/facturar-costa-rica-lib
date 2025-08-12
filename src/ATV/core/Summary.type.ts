@@ -16,6 +16,9 @@ export type SummaryProps = {
   totalDiscounts?: number; // TotalDescuentos
   totalNetSale?: number; // TotalVentaNeta
   totalTaxes: number; // TotalImpuesto
+  totalNonTaxable: number; // TotalNoSujeto
+  totalNonTaxableServices: number; // TotalServNoSujetos
+  totalNonTaxableMerchandise: number; // TotalMercanciasNoSujetos
   totalTaxBreakdown?: Array<{
     code: string; // Codigo
     taxRateCode?: string; // CodigoTarifaIVA

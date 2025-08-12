@@ -1,6 +1,6 @@
 {
   "name": "@facturacr/atv-sdk",
-  "version": "2.0.5-alpha",
+  "version": "2.0.6-alpha",
   "description": "Librería (SDK) de Javascript/NodeJS para acceder al API de Administración Tributaria Virtual (ATV) del Ministerio de Hacienda.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -14,7 +14,7 @@
     "test:cov": "npx jest",
     "type:check": "tsc --noEmit",
     "dev": "dotenv -- nodemon -e ts,graphql -x 'yarn lint & ts-node -r tsconfig-paths/register src/index.ts'",
-    "build": "rm -r dist; tspc -p tsconfig-prod.json",
+    "build": "rimraf dist && tspc -p tsconfig-prod.json",
     "lint": "eslint --ext .ts, --ignore-path .gitignore .",
     "test:createAndSend": "yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSend.ts"
   },
@@ -48,6 +48,7 @@
     "jest": "^29.7",
     "jest-xml-matcher": "^1.2.0",
     "nodemon": "^2.0.19",
+    "rimraf": "^6.0.1",
     "ts-jest": "^29.1",
     "ts-node": "10.9.1",
     "ts-patch": "^3.1.2",
