@@ -113,7 +113,7 @@ export class Document {
 
     return {
       currency: {
-         code: this.props.currencyCode ?? 'CRC', 
+        code: this.props.currencyCode ?? 'CRC',
         exchangeRate: this.props.exchangeRate ?? '1'
       },
       totalExemptServices: servicesLinesSum.totalExempt,
