@@ -39,7 +39,9 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
       ImpuestoAsumidoEmisorFabrica: 0,
       // @ts-expect-error pending-to-fix
       ImpuestoNeto: parseAtvMoneyFormat(orderLine.tax.amount),
-      MontoTotalLinea: parseAtvMoneyFormat(orderLine.totalOrderLineAmount)
+      MontoTotalLinea: parseAtvMoneyFormat(orderLine.totalOrderLineAmount),
+      exchangeRate: orderLine.exchangeRate,
+      currency: orderLine.currency
     }
   })
   return { LineaDetalle }
