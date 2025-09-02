@@ -17,6 +17,8 @@ type OrderLineProps = {
   tax?: TaxProps;
   totalOrderLineAmount?: number;
   // BaseImponible?: number;
+  exchangeRate?: number;
+  currency?: string;
 }
 
 export class OrderLine {
@@ -62,6 +64,14 @@ export class OrderLine {
     return this.props.totalOrderLineAmount || this.subTotal + (this.tax?.amount ?? 0)
   }
 
+  get exchangeRate(): number | undefined {
+    return this.props.exchangeRate
+  }
+
+  get currency(): string | undefined {
+    return this.props.currency
+  }
+
   get tax(): TaxProps {
     // @ts-expect-error pending-to-fix
     const rate = this.props.tax.rate
@@ -83,7 +93,9 @@ export class OrderLine {
       measureUnit: props.measureUnit || 'Sp',
       detail: props.detail,
       unitaryPrice: props.unitaryPrice,
-      totalAmount: props.totalAmount
+      totalAmount: props.totalAmount,
+      exchangeRate: props.exchangeRate,
+      currency: props.currency
     }
     const tax: TaxProps = {
       // @ts-expect-error pending-to-fix
