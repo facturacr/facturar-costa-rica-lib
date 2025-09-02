@@ -18,6 +18,8 @@ export type InvoiceProps = {
   paymentMethod?: string; // MedioPago
   summaryInvoice?: SummaryProps; // ResumenFactura
   referenceInformation?: ReferenceInformation; // InformaciónReferencia
+  currencyCode?: string; // Nuevo campo
+  exchangeRate?: string; // Nuevo campo
   others?: { // Otros
     OtroTexto: string;
   };
@@ -111,8 +113,8 @@ export class Document {
 
     return {
       currency: {
-        code: 'CRC',
-        exchangeRate: '1'
+        code: this.props.currencyCode ?? 'CRC',
+        exchangeRate: this.props.exchangeRate ?? '1'
       },
       totalExemptServices: servicesLinesSum.totalExempt,
       totalEncumberedServices,
