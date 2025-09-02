@@ -64,13 +64,12 @@ export class OrderLine {
     return this.props.totalOrderLineAmount || this.subTotal + (this.tax?.amount ?? 0)
   }
 
-
   get exchangeRate(): number | undefined {
-    return this.props.exchangeRate;
+    return this.props.exchangeRate
   }
 
   get currency(): string | undefined {
-    return this.props.currency;
+    return this.props.currency
   }
 
   get tax(): TaxProps {
