@@ -46,6 +46,8 @@ type DocumentInputBase = {
   referenceInfo?: ReferenceInfoInput;
   conditionSale: string;
   paymentMethod: string;
+  currencyCode?: string;
+  exchangeRate?: string;
 };
 
 type DocumentInputTiquete = DocumentInputBase & {
