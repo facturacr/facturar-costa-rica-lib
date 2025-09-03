@@ -88,7 +88,9 @@ export class CreateDocFactory {
       receiver: document.receiver ? Person.create(document.receiver) : undefined,
       conditionSale: document.conditionSale,
       paymentMethod: document.paymentMethod,
-      referenceInformation: document.referenceInfo ? ReferenceInformation.create(document.referenceInfo) : undefined
+      referenceInformation: document.referenceInfo ? ReferenceInformation.create(document.referenceInfo) : undefined,
+      currencyCode: document.currencyCode,
+      exchangeRate: document.exchangeRate
     })
   }
 
