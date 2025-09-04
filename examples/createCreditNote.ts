@@ -19,7 +19,7 @@ const pem = fs.readFileSync(SOURCE_P12_URI, 'binary')
 console.log('requestStub consecutivo', FEInputExample.consecutiveIdentifier)
 
 // TODO: dynamic param --identifier 1 args[x]
-FEInputExample.consecutiveIdentifier = '5'
+FEInputExample.consecutiveIdentifier = '100'
 
 function getConfimation(atv: ATV, token: string, location: string, ms: number): Promise<any> {
   return new Promise((resolve, reject): any => {

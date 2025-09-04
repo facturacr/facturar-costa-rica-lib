@@ -90,9 +90,9 @@ export interface Message {
 }
 
 export interface InformacionReferencia {
-  TipoDoc: string;
+  TipoDocIR: string;
   Numero: string;
-  FechaEmision: string;
+  FechaEmisionIR: string;
   Codigo: string;
   Razon: string;
 }
