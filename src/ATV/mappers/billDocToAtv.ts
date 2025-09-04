@@ -144,9 +144,9 @@ const mapPerson = (person: Person): Persona => {
 
 const mapReferenceInformation = (referenceInfo: ReferenceInformation): InformacionReferencia => {
   return {
-    TipoDoc: referenceInfo.docType,
+    TipoDocIR: referenceInfo.docType,
     Numero: referenceInfo.refNumber,
-    FechaEmision: referenceInfo.issueDate.toISOString(),
+    FechaEmisionIR: referenceInfo.issueDate.toISOString(),
     Codigo: referenceInfo.code,
     Razon: referenceInfo.reason
   }
