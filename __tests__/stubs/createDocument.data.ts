@@ -47,8 +47,8 @@ const emitterStub: CreateDocumentInput['document']['receiver'] = {
   commercialName: 'Ciencia del sabor',
   activityCode: '930903',
   identifier: {
-    type: '02',
-    id: '3102759157'
+    type: '01',
+    id: '206920142'
   },
   location: {
     province: '2',
@@ -77,7 +77,7 @@ export const creditNoteReferenceInfoExample: CreateDocumentInput['document']['re
 }
 
 export const FEInputExample: DocumentInputWithReceiver = {
-  consecutiveIdentifier: '111',
+  consecutiveIdentifier: '2',
   activityCode: '930903',
   providerId: emitterStub.identifier.id,
   documentName: 'FacturaElectronica',
