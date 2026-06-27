@@ -128,7 +128,7 @@ const mapPerson = (person: Person): Persona => {
         Distrito: person.location?.district?.padStart(2, '0'),
         Barrio: person.location?.neighborhood?.padStart(5, '0'),
         OtrasSenas: person.location?.details
-    }
+      }
     : undefined
   // @ts-expect-error pending-to-fix
   atvPerson.OtrasSenasExtranjero = person.foreignAddress
