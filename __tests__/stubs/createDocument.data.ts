@@ -108,3 +108,37 @@ export const TEInputExample: CreateDocumentInput['document'] = {
   paymentMethod: '03',
   conditionSale: '01'
 }
+
+export const FECInputExample: CreateDocumentInput['document'] = {
+  consecutiveIdentifier: '2',
+  activityCode: '729001',
+  providerId: emitterStub.identifier.id,
+  documentName: 'FacturaElectronicaCompra',
+  branch: '1',
+  terminal: '1',
+  ceSituation: '1',
+  countryCode: '506',
+  emitter: {
+    fullName: 'Airbnb',
+    commercialName: 'Airbnb',
+    activityCode: '729001',
+    identifier: {
+      type: '05',
+      id: '000000000001'
+    },
+    foreignAddress: 'Proveedor extranjero no domiciliado',
+    email: 'no-reply@airbnb.com'
+  },
+  receiver: receiverStub,
+  orderLines,
+  securityCode: '1',
+  paymentMethod: '04',
+  conditionSale: '01',
+  referenceInfo: {
+    docType: '16',
+    refNumber: 'HMX5HK4SNQ',
+    issueDate: new Date(),
+    code: '11',
+    reason: 'Proveedor no domiciliado - comision Airbnb'
+  }
+}
