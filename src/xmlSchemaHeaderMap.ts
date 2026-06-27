@@ -28,6 +28,7 @@ function buildAttrs(type: string) {
 
 export const xmlExtructures = {
   FacturaElectronica: buildAttrs('facturaElectronica'),
+  FacturaElectronicaCompra: buildAttrs('facturaElectronicaCompra'),
   TiqueteElectronico: buildAttrs('tiqueteElectronico'),
   FacturaElectronicaExportacion: buildAttrs('facturaElectronica'),
   NotaCreditoElectronica: buildAttrs('notaCreditoElectronica'),
