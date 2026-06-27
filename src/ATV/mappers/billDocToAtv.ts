@@ -108,39 +108,35 @@ const mapSummaryInvoice = (document: DomainDocument): Resumen => {
 }
 
 const mapPerson = (person: Person): Persona => {
-  const atvPerson = {
+  const atvPerson: Persona = {
     Nombre: person.fullName,
     Identificacion: {
       Tipo: person.identifierType,
       Numero: person.identifierId
     },
-    NombreComercial: person.commercialName,
-    Ubicacion: undefined,
-    OtrasSenasExtranjero: undefined,
-    Telefono: undefined,
-    CorreoElectronico: undefined
+    NombreComercial: person.commercialName
   }
-  // @ts-expect-error pending-to-fix
-  atvPerson.Ubicacion = person.location
-    ? {
-        Provincia: person.location?.province,
-        Canton: person.location?.canton?.padStart(2, '0'),
-        Distrito: person.location?.district?.padStart(2, '0'),
-        Barrio: person.location?.neighborhood?.padStart(5, '0'),
-        OtrasSenas: person.location?.details
-      }
-    : undefined
-  // @ts-expect-error pending-to-fix
-  atvPerson.OtrasSenasExtranjero = person.foreignAddress
-  // @ts-expect-error pending-to-fix
-  atvPerson.Telefono = person.phone
-    ? {
-        CodigoPais: person.phone?.countryCode,
-        NumTelefono: person.phone?.number
-      }
-    : undefined
-  // @ts-expect-error pending-to-fix
-  atvPerson.CorreoElectronico = person.email
+  if (person.location?.province && person.location?.canton && person.location?.district) {
+    atvPerson.Ubicacion = {
+      Provincia: person.location?.province,
+      Canton: person.location?.canton?.padStart(2, '0'),
+      Distrito: person.location?.district?.padStart(2, '0'),
+      Barrio: person.location?.neighborhood?.padStart(5, '0'),
+      OtrasSenas: person.location?.details
+    }
+  }
+  if (person.foreignAddress) {
+    atvPerson.OtrasSenasExtranjero = person.foreignAddress
+  }
+  if (person.phone?.countryCode && person.phone?.number) {
+    atvPerson.Telefono = {
+      CodigoPais: person.phone?.countryCode,
+      NumTelefono: person.phone?.number
+    }
+  }
+  if (person.email) {
+    atvPerson.CorreoElectronico = person.email
+  }
 
   return atvPerson
 }
