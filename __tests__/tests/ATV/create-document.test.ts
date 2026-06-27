@@ -2,6 +2,13 @@ import fs from 'fs'
 import { ATV } from '@src/ATV'
 import 'jest-xml-matcher'
 import { FECInputExample, FEInputExample } from '@test/stubs/createDocument.data'
+import { Clave } from '@src/ATV/core/Clave'
+import { Document as DomainDocument } from '@src/ATV/core/Document'
+import { FullConsecutive } from '@src/ATV/core/FullConsecutive'
+import { OrderLine } from '@src/ATV/core/OrderLine'
+import { Person } from '@src/ATV/core/Person'
+import { ReferenceInformation } from '@src/ATV/core/ReferenceInformation'
+import { mapDocumentToAtvFormat } from '@src/ATV/mappers/billDocToAtv'
 const fakePem = fs.readFileSync('__tests__/stubs/dummyKeys/client-identity.p12', 'binary')
 const fakePassword = '1234'
 const expectXml = fs.readFileSync('__tests__/stubs/commonExpectedXml.xml', 'utf-8')
@@ -70,6 +77,58 @@ describe('Create Document (Invoice)', () => {
     expect(createdDoc.extraData.xml).toContain('<ImpuestoNeto>')
     expect(createdDoc.extraData.xml).not.toContain('<ImpuestoAsumidoEmisorFabrica>')
     expect(createdDoc.extraData.xml).not.toContain('<TotalImpAsumEmisorFabrica>')
+  })
+
+  it('should place purchase invoice reference information before other text', async () => {
+    const receiver = FECInputExample.receiver
+    const referenceInfo = FECInputExample.referenceInfo
+    if (!receiver || !referenceInfo) throw new Error('FECInputExample receiver and referenceInfo are required')
+
+    const document = DomainDocument.create({
+      clave: Clave.create({
+        branch: FECInputExample.branch,
+        ceSituation: FECInputExample.ceSituation,
+        consecutiveIdentifier: FECInputExample.consecutiveIdentifier,
+        countryCode: FECInputExample.countryCode,
+        docKeyType: 'FEC',
+        emitterIdentifier: receiver.identifier.id,
+        identifierType: receiver.identifier.type || '01',
+        securityCode: FECInputExample.securityCode,
+        terminal: FECInputExample.terminal
+      }),
+      fullConsecutive: FullConsecutive.create({
+        consecutiveIdentifier: FECInputExample.consecutiveIdentifier,
+        branch: FECInputExample.branch,
+        terminal: FECInputExample.terminal,
+        documentType: 'FEC'
+      }),
+      orderLines: FECInputExample.orderLines.map((orderLine, index) => OrderLine.create({
+        detail: orderLine.detail,
+        unitaryPrice: orderLine.unitaryPrice,
+        lineNumber: orderLine.lineNumber || (index + 1).toString(),
+        code: orderLine.code,
+        quantity: orderLine.quantity,
+        measureUnit: orderLine.measureUnit,
+        totalAmount: orderLine.totalAmount,
+        tax: orderLine.tax
+      })),
+      providerId: FECInputExample.providerId,
+      issueDate: new Date(),
+      emitter: Person.create(FECInputExample.emitter),
+      receiver: Person.create(receiver),
+      conditionSale: FECInputExample.conditionSale,
+      paymentMethod: FECInputExample.paymentMethod,
+      referenceInformation: ReferenceInformation.create(referenceInfo),
+      others: {
+        OtroTexto: 'Factura Electronica de Compra generada automaticamente.'
+      }
+    })
+    const createdDoc = mapDocumentToAtvFormat('FacturaElectronicaCompra', document)
+    const keys = Object.keys(createdDoc.FacturaElectronicaCompra)
+
+    expect(keys.indexOf('InformacionReferencia')).toBeGreaterThan(-1)
+    expect(keys.indexOf('Otros')).toBeGreaterThan(-1)
+    expect(keys.indexOf('InformacionReferencia')).toBeLessThan(keys.indexOf('Otros'))
   })
 
   it('should create a purchase invoice key and activity from the signing receiver', async () => {

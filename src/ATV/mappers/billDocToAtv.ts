@@ -179,10 +179,10 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
     PlazoCredito: document.deadlineCredit,
     DetalleServicio: mapOrderLinesToAtvFormat(document.orderLines, docName),
     ResumenFactura: mapSummaryInvoice(document, docName),
+    ...(document.referenceInformation && {
+      InformacionReferencia: mapReferenceInformation(document.referenceInformation)
+    }),
     Otros: document.others
-  }
-  if (document.referenceInformation) {
-    doc.InformacionReferencia = mapReferenceInformation(document.referenceInformation)
   }
   return {
     [key]: doc
