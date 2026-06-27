@@ -116,6 +116,7 @@ const mapPerson = (person: Person): Persona => {
     },
     NombreComercial: person.commercialName,
     Ubicacion: undefined,
+    OtrasSenasExtranjero: undefined,
     Telefono: undefined,
     CorreoElectronico: undefined
   }
@@ -127,8 +128,10 @@ const mapPerson = (person: Person): Persona => {
         Distrito: person.location?.district?.padStart(2, '0'),
         Barrio: person.location?.neighborhood?.padStart(5, '0'),
         OtrasSenas: person.location?.details
-      }
+    }
     : undefined
+  // @ts-expect-error pending-to-fix
+  atvPerson.OtrasSenasExtranjero = person.foreignAddress
   // @ts-expect-error pending-to-fix
   atvPerson.Telefono = person.phone
     ? {

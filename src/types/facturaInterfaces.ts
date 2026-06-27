@@ -62,7 +62,7 @@ export interface Resumen {
 export interface Persona {
   Nombre: string;
   Identificacion: {
-    Tipo?: '01' | '02';
+    Tipo?: '01' | '02' | '03' | '04' | '05' | '06';
     Numero: string;
   };
   NombreComercial?: string;
@@ -73,6 +73,7 @@ export interface Persona {
     Barrio?: string;
     OtrasSenas?: string;
   };
+  OtrasSenasExtranjero?: string;
   Telefono?: {
     CodigoPais?: string;
     NumTelefono?: string;

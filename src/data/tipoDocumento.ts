@@ -11,6 +11,9 @@ export const tipoDocumento = {
   TE: { // Tiquete Electronico
     code: '04'
   },
+  FEC: { // Factura Electronica de Compra
+    code: '08'
+  },
   CCE: { // Confirmacion Comprobante Electronico
     code: '05',
     msjReceptorCode: '1'

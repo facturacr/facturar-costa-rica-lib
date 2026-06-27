@@ -14,12 +14,13 @@ export type PhoneProps = {
 export type PersonProps = {
   fullName: string;
   identifier: {
-    type: '01' | '02' | undefined;
+    type: '01' | '02' | '03' | '04' | '05' | '06' | undefined;
     id: string;
   };
   commercialName: string;
   activityCode: string;
   location?: LocationProps;
+  foreignAddress?: string;
   phone?: PhoneProps;
   fax?: PhoneProps;
   email?: string;
@@ -53,6 +54,10 @@ export class Person {
 
   get location(): LocationProps | undefined {
     return this.props.location
+  }
+
+  get foreignAddress(): string | undefined {
+    return this.props.foreignAddress
   }
 
   get phone(): PhoneProps | undefined {
