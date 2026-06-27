@@ -11,7 +11,9 @@ const parseAtvMoneyFormat = (amount: number) => {
   return parseFloat(amount.toFixed(5))
 }
 
-const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
+const isPurchaseInvoice = (docName: string) => docName === 'FacturaElectronicaCompra'
+
+const mapOrderLinesToAtvFormat = (orderLines: OrderLine[], docName: string): DetalleServicio => {
   const LineaDetalle = orderLines.map<DetalleServicio['LineaDetalle'][0]>((orderLine) => {
     const impuestoMonto = orderLine.tax ? parseAtvMoneyFormat(orderLine.tax.amount ?? 0) : 0
     return {
@@ -36,7 +38,9 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
           // Exoneracion is explicitly excluded here
         }
       }),
-      ImpuestoAsumidoEmisorFabrica: 0,
+      ...(!isPurchaseInvoice(docName) && {
+        ImpuestoAsumidoEmisorFabrica: 0
+      }),
       // @ts-expect-error pending-to-fix
       ImpuestoNeto: parseAtvMoneyFormat(orderLine.tax.amount),
       MontoTotalLinea: parseAtvMoneyFormat(orderLine.totalOrderLineAmount),
@@ -47,7 +51,7 @@ const mapOrderLinesToAtvFormat = (orderLines: OrderLine[]): DetalleServicio => {
   return { LineaDetalle }
 }
 
-const mapSummaryInvoice = (document: DomainDocument): Resumen => {
+const mapSummaryInvoice = (document: DomainDocument, docName: string): Resumen => {
   const summaryInvoice = document.summaryInvoice
   const orderLines = document.orderLines // Still need access to order lines for breakdown
 
@@ -97,7 +101,9 @@ const mapSummaryInvoice = (document: DomainDocument): Resumen => {
     TotalVentaNeta: parseAtvMoneyFormat(summaryInvoice.totalNetSale),
     TotalDesgloseImpuesto,
     TotalImpuesto: parseAtvMoneyFormat(summaryInvoice.totalTaxes),
-    TotalImpAsumEmisorFabrica: 0,
+    ...(!isPurchaseInvoice(docName) && {
+      TotalImpAsumEmisorFabrica: 0
+    }),
     TotalOtrosCargos: 0,
     MedioPago: {
       // @ts-expect-error pending-to-fix
@@ -153,10 +159,13 @@ const mapReferenceInformation = (referenceInfo: ReferenceInformation): Informaci
 
 export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument): AtvFormat => {
   const key = docName
+  const activitySource = isPurchaseInvoice(docName) && document.receiver
+    ? document.receiver
+    : document.emitter
   const doc: AtvDocument = {
     Clave: document.clave,
     ProveedorSistemas: document.providerId,
-    CodigoActividadEmisor: document.emitter.activityCode.padStart(6, '0'),
+    CodigoActividadEmisor: activitySource.activityCode.padStart(6, '0'),
     ...(document.receiver && { // TODO add && document.name === 'FacturaElectronica'
       CodigoActividadReceptor: document.receiver?.activityCode?.padStart(6, '0')
     }),
@@ -168,8 +177,8 @@ export const mapDocumentToAtvFormat = (docName: string, document: DomainDocument
     }),
     CondicionVenta: document.conditionSale,
     PlazoCredito: document.deadlineCredit,
-    DetalleServicio: mapOrderLinesToAtvFormat(document.orderLines),
-    ResumenFactura: mapSummaryInvoice(document),
+    DetalleServicio: mapOrderLinesToAtvFormat(document.orderLines, docName),
+    ResumenFactura: mapSummaryInvoice(document, docName),
     Otros: document.others
   }
   if (document.referenceInformation) {

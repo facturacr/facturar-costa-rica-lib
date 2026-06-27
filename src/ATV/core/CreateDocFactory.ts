@@ -119,14 +119,18 @@ export class CreateDocFactory {
   }
 
   private createClave(dto: CreateDocumentInput['document'], docType: DocumentType): Clave {
+    const keyPerson = dto.documentName === 'FacturaElectronicaCompra' && dto.receiver
+      ? dto.receiver
+      : dto.emitter
+
     return Clave.create({
       branch: dto.branch,
       ceSituation: dto.ceSituation,
       consecutiveIdentifier: dto.consecutiveIdentifier,
       countryCode: dto.countryCode,
       docKeyType: docType.value,
-      emitterIdentifier: dto.emitter.identifier.id,
-      identifierType: dto.emitter.identifier.type || '01',
+      emitterIdentifier: keyPerson.identifier.id,
+      identifierType: keyPerson.identifier.type || '01',
       securityCode: dto.securityCode,
       terminal: dto.terminal
     })

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { ATV } from '@src/ATV'
 import 'jest-xml-matcher'
-import { FEInputExample } from '@test/stubs/createDocument.data'
+import { FECInputExample, FEInputExample } from '@test/stubs/createDocument.data'
 const fakePem = fs.readFileSync('__tests__/stubs/dummyKeys/client-identity.p12', 'binary')
 const fakePassword = '1234'
 const expectXml = fs.readFileSync('__tests__/stubs/commonExpectedXml.xml', 'utf-8')
@@ -55,5 +55,38 @@ describe('Create Document (Invoice)', () => {
       signatureOptions: undefined
     })
     expect(createdDoc.extraData.xml).toEqualXML(expectXml)
+  })
+
+  it('should create a purchase invoice without factory-assumed tax fields', async () => {
+    const atv = new ATV({}, 'stg')
+    const createdDoc = await atv.createDocumentCommand({
+      document: FECInputExample,
+      token: 'fake-token',
+      // @ts-expect-error only for testing
+      signatureOptions: undefined
+    })
+
+    expect(createdDoc.extraData.xml).toContain('<FacturaElectronicaCompra')
+    expect(createdDoc.extraData.xml).toContain('<ImpuestoNeto>')
+    expect(createdDoc.extraData.xml).not.toContain('<ImpuestoAsumidoEmisorFabrica>')
+    expect(createdDoc.extraData.xml).not.toContain('<TotalImpAsumEmisorFabrica>')
+  })
+
+  it('should create a purchase invoice key and activity from the signing receiver', async () => {
+    const receiver = FECInputExample.receiver
+    if (!receiver) throw new Error('FECInputExample.receiver is required')
+
+    const atv = new ATV({}, 'stg')
+    const createdDoc = await atv.createDocumentCommand({
+      document: FECInputExample,
+      token: 'fake-token',
+      // @ts-expect-error only for testing
+      signatureOptions: undefined
+    })
+
+    expect(createdDoc.command.data.clave).toContain(receiver.identifier.id.padStart(12, '0'))
+    expect(createdDoc.extraData.xml).toContain(`<CodigoActividadEmisor>${receiver.activityCode.padStart(6, '0')}</CodigoActividadEmisor>`)
+    expect(createdDoc.extraData.xml).toContain(`<Numero>${FECInputExample.emitter.identifier.id}</Numero>`)
+    expect(createdDoc.extraData.xml).toContain(`<Numero>${receiver.identifier.id}</Numero>`)
   })
 })

@@ -11,6 +11,11 @@ Para probar crear y enviar tiquete electronico. Ejemplo:
 yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSendTE.ts 1
 ```
 
+Para probar crear y enviar factura electronica de compra. Ejemplo:
+```
+yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/createAndSendFEC.ts 1
+```
+
 Para aceptar una factura. Ejemplo:
 ```
 yarn ts-node -r tsconfig-paths/register --require dotenv/config examples/atvAccept.ts
