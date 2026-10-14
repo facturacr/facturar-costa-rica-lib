@@ -1,8 +1,17 @@
-import { Application, SignedXml, Parse, OptionsXAdES } from 'xadesjs'
+import { Application, SignedXml, Parse, OptionsXAdES, setNodeDependencies } from 'xadesjs'
+import * as xmldom from '@xmldom/xmldom'
+import xpath from 'xpath'
 import { Crypto } from '@peculiar/webcrypto'
 import { genKeysAndCert } from '@src/lib/genXML/sigXML/genKeysAndCert'
 import { XMLSerializer } from 'xmldom-alpha'
 import { ATV_VERSION } from '@src/xmlSchemaHeaderMap'
+
+setNodeDependencies({
+  XMLSerializer: xmldom.XMLSerializer,
+  DOMParser: xmldom.DOMParser,
+  DOMImplementation: xmldom.DOMImplementation,
+  xpath
+})
 
 function addSigToXML(xml: Document, signature: any): string {
   xml.documentElement.appendChild(signature.GetXml())
@@ -63,13 +72,9 @@ export default async function signXML(xmlStr: string, p12: string, p12Password: 
   }
   const crypto = new Crypto()
   const referenceId = generateId(crypto)
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   Application.setEngine('OpenSSL', crypto)
   const xadesXml = new SignedXml()
   const algorithm = getAlgorithm()
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   const result = genKeysAndCert(crypto, {
     algorithm,
     keyStr: p12,
